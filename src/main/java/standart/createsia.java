@@ -1,5 +1,8 @@
 package standart;
 
+import Message.abstractions.BinaryMessage;
+import Message.toSMEV.ESIACreate.ESIACreateInit;
+import Message.toSMEV.ESIAFind.ESIAFindMessageInitial;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
@@ -118,6 +121,39 @@ public class createsia extends Standart {
 
     @Override
     public byte[] generateUnsSOAP(byte[] input) throws IOException {
-        return new byte[0];
+        ESIACreateInit restored = (ESIACreateInit) BinaryMessage.restored(input);
+        String dwithId0 = inj.injectTag(rawxml, ":MessageID>", gen.generate());
+        String dwithId = inj.flushTagData(dwithId0, "CallerInformationSystemSignature");
+        String dwithId2 = inj.flushTagData(dwithId, "ns:PersonalSignature");
+        return injectdatainXML(restored, dwithId2).getBytes();
+    }
+
+    public String injectdatainXML(ESIACreateInit msg, String whereInject) {
+        String[] massive = new String[24];
+        massive[0] = inj.injectTag(whereInject, "tns:SnilsOperator>", msg.SNILSOper);
+        massive[1] = inj.injectTag(massive[0], "tns:ra>", msg.RA);
+        massive[2] = inj.injectTag(massive[1], "tns:lastName>", msg.Surname);
+        massive[3] = inj.injectTag(massive[2], "tns:firstName>", msg.Name);
+        massive[4] = inj.injectTag(massive[3], "tns:middleName>", msg.MiddleName);
+        massive[5] = inj.injectTag(massive[4], "ns2:series>", msg.PassSeria);
+        massive[6] = inj.injectTag(massive[5], "ns2:number>", msg.PassNumber);
+        massive[7] = inj.injectTag(massive[6], "tns:mobile>", msg.Mobile);
+        massive[8] = inj.injectTag(massive[7], "tns:snils>", msg.SNILS);
+        massive[9] = inj.injectTag(massive[8], "tns:gender>", msg.Gender.toString());
+        massive[10] = inj.injectTag(massive[9], "tns:birthDate>", msg.Birthdate);
+        massive[11] = inj.injectTag(massive[10], "ns2:issueId>", msg.IssuedPassID);
+        massive[12] = inj.injectTag(massive[11], "ns2:issueDate>", msg.IssuedDatePass);
+        massive[13] = inj.injectTag(massive[12], "ns2:issuedBy>", msg.IssuedBy);
+        massive[14] = inj.injectTag(massive[13], "ns2:region>", msg.Region);
+        massive[15] = inj.injectTag(massive[14], "ns2:fiasCode>", msg.FIAS);
+        massive[16] = inj.injectTag(massive[15], "ns2:addressStr>", msg.AddressStr);
+        massive[17] = inj.injectTag(massive[16], "ns2:zipCode>", msg.ZIP);
+        massive[18] = inj.injectTag(massive[17], "ns2:street>", msg.Street);
+        massive[19] = inj.injectTag(massive[18], "ns2:house>", msg.House);
+        massive[20] = inj.injectTag(massive[19], "ns2:flat>", msg.Flat);
+        massive[21] = inj.injectTag(massive[20], "ns2:frame>", msg.Frame);
+        massive[22] = inj.injectTag(massive[21], "ns2:building>", msg.Building);
+        massive[23] = inj.injectTag(massive[22], "tns:birthPlace>", msg.BirthPlace);
+        return massive[23];
     }
 }

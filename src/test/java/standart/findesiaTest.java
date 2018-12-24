@@ -13,6 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 public class findesiaTest {
     DependencyContainer deps = new DependencyContainer();
+
     public findesiaTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
         msg.ID="";
         msg.Ra="1000321282";
@@ -22,6 +23,7 @@ public class findesiaTest {
         msg.OperatorSnils="123456789";
         msg.Passseria="1111";
         msg.Passnumber="111111";
+        deps.findesia.ProdModeRoutingEnabled=false;
     }
     ESIAFindMessageInitial msg = new ESIAFindMessageInitial();
 
@@ -45,7 +47,7 @@ public class findesiaTest {
     @Test
     public void sendSimple() throws Exception {
 
-        deps.findesia.setinput(BinaryMessage.savedToBLOB(msg));
+        deps.findesia.setinput(deps.findesia.generateUnsSOAP(BinaryMessage.savedToBLOB(msg)));
         assertNotEquals(null, deps.findesia.injectdatainXML(msg, deps.findesia.rawxml));
         System.out.println(deps.findesia.injectdatainXML(msg, deps.findesia.rawxml));
         deps.findesia.SendSoapSigned();
@@ -55,7 +57,7 @@ public class findesiaTest {
     @Test
     public void generateSOAP1() throws IOException {
         String etalon = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID></ns:MessageID><ns2:MessagePrimaryContent><tns:ESIAFindAccountRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/find_account/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
-                "   \t<tns:RoutingCode>DEV</tns:RoutingCode>\n" +
+                "   \t<tns:RoutingCode></tns:RoutingCode>\n" +
                 "  \t<tns:SnilsOperator></tns:SnilsOperator>\n" +
                 "    <tns:ra></tns:ra>\n" +
                 "    <tns:lastName></tns:lastName>\n" +

@@ -24,8 +24,11 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public class findesia extends Standart {
+
+
+
     public final String root ="<tns:ESIAFindAccountRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/find_account/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
-            "   \t<tns:RoutingCode>DEV</tns:RoutingCode>\n" +
+            "   \t<tns:RoutingCode></tns:RoutingCode>\n" +
             "  \t<tns:SnilsOperator></tns:SnilsOperator>\n" +
             "    <tns:ra></tns:ra>\n" +
             "    <tns:lastName></tns:lastName>\n" +
@@ -179,7 +182,7 @@ public class findesia extends Standart {
 
 
     public String injectdatainXML(ESIAFindMessageInitial msg, String whereInject) {
-        String[] massive = new String[9];
+        String[] massive = new String[10];
         printMSG(msg);
         massive[0] = inj.injectTag(whereInject, "tns:SnilsOperator>", msg.OperatorSnils);
         massive[1] = inj.injectTag(massive[0], "tns:ra>", msg.Ra);
@@ -190,7 +193,11 @@ public class findesia extends Standart {
         massive[6] = inj.injectTag(massive[5], "ns2:number>", msg.Passnumber);
         massive[7] = inj.injectTag(massive[6], "tns:mobile>", msg.MobileNumber);
         massive[8] = inj.injectTag(massive[7], "tns:snils>", msg.SNILS);
-        return massive[8];
+        if (this.ProdModeRoutingEnabled)
+            massive[9] = inj.injectTag(massive[8], "tns:RoutingCode>", "PROD");
+        else
+            massive[9] = inj.injectTag(massive[8], "tns:RoutingCode>", "DEV");
+        return massive[9];
     }
 
 
