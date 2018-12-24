@@ -30,8 +30,8 @@ public class findesiaResult implements ResultProcess {
         System.out.println("\n\n\nFLASHING UUID=>"+Result.Identifier );
         String result = Result.ResponsedXML;
         ESIAFindMessageResult Rmsg = new ESIAFindMessageResult();
-        Rmsg.oid=Ext.extractTagValue(result, "oid");
-        Rmsg.trusted=Ext.extractTagValue(result, "tns:stu");
+        Rmsg.oid=null;
+        Rmsg.trusted="bad";
         Rmsg.ID=inputFlow.get(Result.Identifier).Id;
         System.out.println("Sending asyncronously! to "+inputFlow.get(Result.Identifier).addressToReply);
         HttpClient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
