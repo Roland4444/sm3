@@ -18,13 +18,10 @@ import static org.junit.Assert.*;
 
 public class createsiaTest {
     DependencyContainer deps = new DependencyContainer();
-
+    ESIACreateInit msg = new ESIACreateInit();
     public createsiaTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
-    }
+        deps.createsia.ProdModeRoutingEnabled=false;
 
-    @Test
-    public void signedSoap() throws IOException {
-        ESIACreateInit msg = new ESIACreateInit();
         msg.ID="0000";
         msg.Birthdate="11.11.1988";
         msg.SNILSOper="135-419-238 52";
@@ -50,6 +47,11 @@ public class createsiaTest {
         msg.Frame="204у";
         msg.Building="e";
         msg.BirthPlace="воронеж";
+
+    }
+
+    @Test
+    public void UnssignedSoap() throws IOException {
 
         String Etalon = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID></ns:MessageID><ns2:MessagePrimaryContent><tns:ESIARegisterRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/register/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
                 "    <tns:RoutingCode>DEV</tns:RoutingCode>\n" +
@@ -96,4 +98,15 @@ public class createsiaTest {
         System.out.println(flushed);
 
     }
+
+    @Test
+    public void sendSimple() throws Exception {
+
+        deps.createsia.setinput(deps.createsia.generateUnsSOAP(BinaryMessage.savedToBLOB(msg)));
+        assertNotEquals(null, deps.createsia.injectdatainXML(msg, deps.createsia.rawxml));
+        System.out.println(deps.createsia.injectdatainXML(msg, deps.createsia.rawxml));
+        deps.createsia.SendSoapSigned();
+
+    }
+
 }

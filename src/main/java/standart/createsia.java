@@ -31,7 +31,7 @@ public class createsia extends Standart {
     }
 
     public final String root ="<tns:ESIARegisterRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/register/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
-            "    <tns:RoutingCode>DEV</tns:RoutingCode>\n" +
+            "    <tns:RoutingCode></tns:RoutingCode>\n" +
             "\t<tns:SnilsOperator></tns:SnilsOperator>\n" +
             "    <tns:ra></tns:ra>\n" +
             "    <tns:snils></tns:snils>\n" +
@@ -129,7 +129,7 @@ public class createsia extends Standart {
     }
 
     public String injectdatainXML(ESIACreateInit msg, String whereInject) {
-        String[] massive = new String[24];
+        String[] massive = new String[25];
         massive[0] = inj.injectTag(whereInject, "tns:SnilsOperator>", msg.SNILSOper);
         massive[1] = inj.injectTag(massive[0], "tns:ra>", msg.RA);
         massive[2] = inj.injectTag(massive[1], "tns:lastName>", msg.Surname);
@@ -154,6 +154,10 @@ public class createsia extends Standart {
         massive[21] = inj.injectTag(massive[20], "ns2:frame>", msg.Frame);
         massive[22] = inj.injectTag(massive[21], "ns2:building>", msg.Building);
         massive[23] = inj.injectTag(massive[22], "tns:birthPlace>", msg.BirthPlace);
-        return massive[23];
+        if (this.ProdModeRoutingEnabled)
+            massive[24] = inj.injectTag(massive[23], "tns:RoutingCode>", "PROD");
+        else
+            massive[24] = inj.injectTag(massive[23], "tns:RoutingCode>", "DEV");
+        return massive[24];
     }
 }
