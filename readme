@@ -1,0 +1,13 @@
+Порядок запуска
+
+1) Установить JCP (пропатчить существующую jdk8)
+
+2) Импортировать ключи для криптопро копированием VCAJ2018.000 в папку hdaimage => путь узнать из контрольной панели jcp 
+
+3) отключить редупреждающие окна о необходимости скорого перехода на ГОСТ Р 34.10-2012
+
+https://support.cryptopro.ru/index.php?/Knowledgebase/Article/View/226/0/otkljuchenie-preduprezhdjushhikh-okon-o-neobkhodimosti-skorogo-perekhod-n-gost-r-3410-2012
+
+4) В файле sqlset в параметр address прописать адрес продуктивной среды СМЕВ3
+
+5) запустить приложение java -jar <target>/sm3-1.0-SNAPSHOT.jar

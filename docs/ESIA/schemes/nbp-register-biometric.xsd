@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0"
+        elementFormDefault="qualified"
+        targetNamespace="urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0"
+        xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+        vc:minVersion="1.1">
+    <xs:annotation>
+        <xs:documentation>Универсальный вид сведений для приёма заявлений на биометрическую регистрацию</xs:documentation>
+    </xs:annotation>
+    
+    <xs:element name="RegisterBiometricDataRequest" type="tns:RegisterBiometricDataRequestType" />
+    
+    <xs:element name="RegisterBiometricDataResponse" type="tns:RegisterBiometricDataResponseType" />
+    
+    <xs:complexType name="RegisterBiometricDataRequestType">
+        <xs:annotation>
+            <xs:documentation>Запрос на регистрацию биометрических образцов с дополнительной информацией</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="RegistrarMnemonic" type="tns:string-50">
+                <xs:annotation>
+                    <xs:documentation>Мнемоника информационной системы поставщика БДн</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EmployeeId" type="tns:string-50">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор сотрудника осуществляющего регистрацию (Справочник идентификаторов ведется банком)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BiometricData" type="tns:RegisterBiometricDataType" maxOccurs="100">
+                <xs:annotation>
+                    <xs:documentation>Набор регистрируемых биометрических образцов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RegisterBiometricDataType">
+        <xs:annotation>
+            <xs:documentation>Класс описывающий биометрический образец и его метаинформацию</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="xs:ID">
+                <xs:annotation>
+                    <xs:documentation>Уникальный идентификатор биометрического образца в рамках запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Date" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата и время создания биометрического образка для регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RaId" type="tns:string-36">
+                <xs:annotation>
+                    <xs:documentation> Идентификатор центра обслуживания в реестре поставщика идентификации Idp </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PersonId" type="tns:string-100">
+                <xs:annotation>
+                    <xs:documentation>Уникальный идентификатор субъекта регистрации в рамках его поставщика</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="IdpMnemonic" type="tns:string-50">
+                <xs:annotation>
+                    <xs:documentation>Мнемоника поставшика идентификации субъекта регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Data" type="tns:BiometricDataType" maxOccurs="30">
+                <xs:annotation>
+                    <xs:documentation>Набор элементов биометрической информации с указанием модальности</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PersonMetadata" type="tns:MetadataType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Метаданные субъекта регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BiometricDataType">
+        <xs:sequence>
+            <xs:element name="Modality" type="tns:string-20">
+                <xs:annotation>
+                    <xs:documentation>Мнемоника модальности биометрического образца</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AttachmentRef" type="tns:AttachmentRefType">
+                <xs:annotation>
+                    <xs:documentation>Ссылка на вложение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BioMetadata" type="tns:MetadataType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Метаданные биометрического образца</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MetadataType">
+        <xs:sequence>
+            <xs:element name="Key" type="tns:string-50">
+                <xs:annotation>
+                    <xs:documentation>Ключевое значение метаданных</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Value" type="tns:string-500">
+                <xs:annotation>
+                    <xs:documentation>Значение метаданных</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RegisterBiometricDataResponseType">
+        <xs:annotation>
+            <xs:documentation>Ответ с результатами регистрации биометрических образцов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="RegistrarResult" type="tns:RegistrarResultType" maxOccurs="100">
+                <xs:annotation>
+                    <xs:documentation>Перечень результатаов регистрации образцов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RegistrarResultType">
+        <xs:annotation>
+            <xs:documentation>Статус регистрации образца</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="tns:string-50">
+                <xs:annotation>
+                    <xs:documentation>Ссылка на идентификатор образца</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Code" type="tns:ResultCodeType">
+                <xs:annotation>
+                    <xs:documentation>Код статуса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Description" type="tns:string-500" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Описание в текстовом виде</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="ResultCodeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUCCESS"/>
+            <xs:enumeration value="NO_SUCH_MODALITY"/>
+            <xs:enumeration value="NO_BUILD_TEMPLATE"/>
+            <xs:enumeration value="NO_DATA"/>
+            <xs:enumeration value="NO_METADATA"/>
+            <xs:enumeration value="ACCESS_DENIED"/>
+            <xs:enumeration value="INTERNAL_ERROR"/>
+        </xs:restriction>
+    </xs:simpleType>
+   
+    <xs:simpleType name="string-50">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="50"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="string-20">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="string-500">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="500"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="string-100">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="string-36">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="36"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="AttachmentRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Ссылка из содержательной части запроса (заявки, ответа) на вложение, находящееся в том же
+                СМЭВ-сообщении.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="attachmentId" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>
+                    Идентификатор вложения, на которое ссылаемся. Должен быть равен значению
+                    //{urn://x-artefacts-smev-gov-ru/smev-core/client-interaction/basic/1.0}AttachedFile[n]/Id/text()
+                    того вложения, на которое нужно сослаться.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+</xs:schema>

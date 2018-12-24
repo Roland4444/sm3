@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tns:ESIARegisterBySimplifiedResponse xmlns:tns="urn://mincomsvyaz/esia/reg_service/register_by_simplified/1.4.1" xmlns:ns2="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1">
+    <tns:status>SUCCEEDED</tns:status>
+   </tns:ESIARegisterBySimplifiedResponse>

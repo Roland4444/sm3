@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<RegisterBiometricDataResponse xmlns="urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0">
+   <RegistrarResult>
+       <Id>ID-1</Id>
+       <Code>SUCCESS</Code>
+   </RegistrarResult>
+    <RegistrarResult>
+        <Id>ID-2</Id>
+        <Code>NO_SUCH_MODALITY</Code>
+        <Description>Регистрация прошла не успешно. Модальность типа 'FINGERPRINT' не поддерживается</Description>
+    </RegistrarResult>
+</RegisterBiometricDataResponse>

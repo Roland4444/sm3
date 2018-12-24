@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<RegisterBiometricDataRequest
+        xmlns="urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0">
+    <RegistrarMnemonic>TEST01</RegistrarMnemonic>
+    <EmployeeId>123-456-789 00</EmployeeId>
+    <BiometricData>
+        <Id>ID-1</Id>
+        <Date>2017-07-31T16:54:52+03:00</Date>
+        <RaId>0c2c345f-cd7b-4011-9f3b-65095ab4c186</RaId>
+        <PersonId>240631324</PersonId>
+        <IdpMnemonic>ESIA</IdpMnemonic>      
+        <Data>
+            <Modality>SOUND</Modality>
+            <AttachmentRef attachmentId="ef37b493-e94f-4f27-9e86-f4cd80f1057f"/>
+            <BioMetadata>
+                <Key>voice_1_start</Key>
+                <Value>00.000</Value>
+            </BioMetadata>
+            <BioMetadata>
+                <Key>voice_1_end</Key>
+                <Value>10.002</Value>
+            </BioMetadata>
+            <BioMetadata>
+                <Key>voice_1_desc</Key>
+                <Value>digits_asc</Value>
+            </BioMetadata>
+            <BioMetadata>
+                <Key>voice_2_start</Key>
+                <Value>12.601</Value>
+            </BioMetadata>
+            <BioMetadata>
+                <Key>voice_2_end</Key>
+                <Value>20.199</Value>
+            </BioMetadata>
+            <BioMetadata>
+                <Key>voice_2_desc</Key>
+                <Value>digits_desc</Value>
+            </BioMetadata>
+            <BioMetadata>
+                <Key>voice_3_start</Key>
+                <Value>22.001</Value>
+            </BioMetadata>
+            <BioMetadata>
+                <Key>voice_3_end</Key>
+                <Value>30.102</Value>
+            </BioMetadata>
+            <BioMetadata>
+                <Key>voice_3_desc</Key>
+                <Value>digits_random</Value>
+            </BioMetadata>
+        </Data>
+        <Data>
+            <Modality>PHOTO</Modality>
+            <AttachmentRef attachmentId="397af8d0-d456-4dc1-9353-1d6822a02200"/>
+        </Data>
+    </BiometricData>
+    <BiometricData>
+        <Id>ID-2</Id>
+        <Date>2017-07-31T16:50:16+03:00</Date>
+        <RaId>0c2c345f-cd7b-4011-9f3b-65095ab4c186</RaId>
+        <PersonId>215979546</PersonId>
+        <IdpMnemonic>ESIA</IdpMnemonic>
+        <Data>
+            <Modality>FINGERPRINT</Modality>
+            <AttachmentRef attachmentId="acf4bf60-af0f-4479-a338-d3410e532bf5"/>
+        </Data>
+    </BiometricData>
+</RegisterBiometricDataRequest>

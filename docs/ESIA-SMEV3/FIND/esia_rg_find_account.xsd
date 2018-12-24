@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://mincomsvyaz/esia/reg_service/find_account/1.4.1" xmlns:ns2="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1" targetNamespace="urn://mincomsvyaz/esia/reg_service/find_account/1.4.1" elementFormDefault="qualified">
+	<xs:import namespace="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1" schemaLocation="./commons/rg_services_type.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Вид сведений "Поиск учетной записи в ЕСИА (аналог FindAccount для SID0003923)"
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ESIAFindAccountRequest" type="tns:ESIAFindAccountRequestType">
+		<xs:annotation>
+			<xs:documentation>Описание запросной части</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ESIAFindAccountResponse" type="tns:ESIAFindAccountResponseType">
+		<xs:annotation>
+			<xs:documentation>Описание ответной части</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ESIAFindAccountRequestType">
+		<xs:annotation>
+			<xs:documentation>Описание элементов запроса</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RoutingCode" type="ns2:EnvType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Код маршрутизации на cреду ЕСИА</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SnilsOperator" type="ns2:snilsType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>СНИЛС оператора центра обслуживания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ra" type="ns2:raType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Идентификатор центра обслуживания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastName" type="ns2:lastNameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Фамилия</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstName" type="ns2:firstNameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Имя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="middleName" type="ns2:middleNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Отчество</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="doc" type="ns2:document1Type" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Документ, удостоверяющий личность пользователя </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="email" type="ns2:emailType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Адрес электронной почты пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mobile" type="ns2:mobileType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Номер мобильного телефона пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="snils" type="ns2:snilsType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>СНИЛС пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ESIAFindAccountResponseType">
+		<xs:annotation>
+			<xs:documentation>Описание элементов ответа</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="account" type="tns:Account" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Информация о найденном аккаунте пользователя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="errorStatusInfo" type="ns2:errorstatusinfoType" minOccurs="0" maxOccurs="11">
+				<xs:annotation>
+					<xs:documentation>Детальная информация об ошибке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Account">
+		<xs:sequence>
+			<xs:element name="oid" type="ns2:oidType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Идентификатор учетной записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="stu" type="ns2:stuType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Статус учетной записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="matches" type="ns2:matchesType">
+				<xs:annotation>
+					<xs:documentation>Перечень параметров, по которым была найдена учетная запись</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regDate" type="ns2:dateType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации учетной записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cfmTyp" type="ns2:cfmtypType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Тип подтверждения учетной записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="biomStu" type="ns2:biomstuType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Наличие биометрической информации (Y/N)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

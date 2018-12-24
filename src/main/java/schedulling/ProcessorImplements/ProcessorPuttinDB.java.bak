@@ -1,0 +1,130 @@
+package schedulling.ProcessorImplements;
+
+
+import schedulling.abstractions.DependencyContainer;
+import schedulling.abstractions.InputDataBlock;
+import schedulling.abstractions.Processor;
+import schedulling.abstractions.RequestData;
+import standart.Standart;
+
+import java.sql.SQLException;
+
+import static java.lang.Thread.sleep;
+
+public class ProcessorPuttinDB implements Processor {
+    private String Identifier ="";
+    private String currentnewId="";
+    public DependencyContainer deps;
+    public Standart operator;
+    public ProcessorPuttinDB(DependencyContainer deps) throws SQLException {
+        this.deps=deps;
+    }
+
+    public void succesquued(Object key){
+        this.deps.dbReqs.put((RequestData) key);
+        this.deps.logger.log("id ="+ Identifier +"  success queueuing");
+    }
+
+    public void errorquued(Object key){
+        this.deps.dbReqs.put((RequestData) key);
+        this.deps.logger.log("id ="+ Identifier +"  error queueuing");
+    }
+
+    public boolean check_passed(String input){
+        return true;
+    }
+
+    public void sendAll() throws Exception {
+        if (deps.inputDataFlow.pool.size()==0){
+            System.out.println("Empty Input Flow");
+            return ;
+        }
+        for (int i=0; i<deps.inputDataFlow.pool.size();i++) {
+            InputDataBlock inputcluster = deps.inputDataFlow.pool.get(i);
+            System.out.println("***********getOperator*****************");
+            System.out.println(inputcluster.operator);
+            if (inputcluster.operator.equals(deps.gis_)) {
+                System.out.println("GIS perfom");
+                String originalMessage = new String(inputcluster.DataToWork);
+                Identifier = inputcluster.Id;
+                if (check_passed(Identifier)) {
+                    this.deps.gis.setinput(originalMessage);
+                    String gennedId = this.deps.gis.currentMessageIdregister;
+                    RequestData info = new RequestData();
+                    info.Identifier = Identifier;
+                    assert (info.Identifier.equals(inputcluster.Id));
+                    info.GennedId = gennedId;
+                    info.operator = deps.gis_;
+                    String result = new String(deps.tableProcessor.OperatorMap.get(info.operator).SendSoapSigned());
+                    if (result.indexOf("requestIsQueued") > 0) {
+                        info.Status = this.deps.sucesfullqueed;
+                        this.succesquued(info);
+                    } else {
+                        info.Status = this.deps.errorqueed;
+                        this.errorquued(info);
+                    }
+                }
+            }
+        }
+    }
+
+    public void getAllResponses() throws Exception {
+        while (!deps.dbReqs.check_complete()){
+            String resss = new String(this.deps.gis.GetResponceRequestCompiled());
+            while (!resss.equals(this.deps.stopperGetResponce)) {
+                System.out.println("IN WHILE");
+                System.out.println("***************************************ResultProcess>>>>>");
+                System.out.println(resss);
+                String originalMessageID = this.deps.ext.extractTagValue(resss, ":OriginalMessageId");
+                String MessageID = this.deps.ext.extractTagValue(resss, ":MessageId");
+                this.deps.logger.log("getting data @MessageIDReq" + originalMessageID);
+                if (this.deps.dbReqs.get(originalMessageID, false) != null)
+                    this.deps.dbReqs.get(originalMessageID, false).ResponsedXML = resss;
+                deps.gis.Ack(MessageID);
+                resss = new String(this.deps.gis.GetResponceRequestCompiled());
+            }
+        }
+    }
+
+    public void getAllResponses(Integer delayInSeconds) throws Exception {
+        while (!deps.dbReqs.check_complete()){
+            String resss = new String(this.deps.gis.GetResponceRequestCompiled());
+            //this.deps.logger.logToBuffer("received", resss);
+            while (!resss.equals(this.deps.stopperGetResponce)) {
+                String originalMessageID = this.deps.ext.extractTagValue(resss, ":OriginalMessageId");
+                String MessageID = this.deps.ext.extractTagValue(resss, ":MessageId");
+                this.deps.logger.logToBuffer("getting data @MessageIDReq" + originalMessageID);
+                if (this.deps.dbReqs.get(originalMessageID, false) != null){
+                    this.deps.dbReqs.get(originalMessageID,  false).ResponsedXML = resss;
+                    this.deps.logger.logToBuffer("SIZE!"+originalMessageID,  String.valueOf(resss.length()));
+                }
+                deps.gis.Ack(MessageID);
+                this.deps.logger.logToBuffer("ack",  MessageID);
+                resss = new String(this.deps.gis.GetResponceRequestCompiled());
+            }
+            sleep(delayInSeconds*1000);
+        }
+    }
+
+
+    private String extractTrace(String input) {
+        return deps.ext.extractTagValue(input, "ns:MessageID");
+    }
+
+
+    public void run() throws Exception {
+        String result = new String(deps.gis.GetResponceRequestCompiled());
+        System.out.println("result>>>>\n"+result);
+        while (result.indexOf("ns2:MessageID")>0){
+            String id=deps.ext.extractTagValue(result, ":MessageID");
+            if (id.equals(null))
+                break;
+            System.out.println("Extract id="+ id);
+            perfom(result);
+            deps.gis.Ack(id);
+            result = new String(deps.gis.GetResponceRequestCompiled());
+        }
+    };
+
+    public void perfom(String result){};
+}

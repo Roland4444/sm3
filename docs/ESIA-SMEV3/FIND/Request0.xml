@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tns:ESIAFindAccountRequest xmlns:tns="urn://mincomsvyaz/esia/reg_service/find_account/1.4.1" xmlns:ns2="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1">
+	<tns:RoutingCode>DEV</tns:RoutingCode>
+  	<tns:SnilsOperator>135-419-238 52</tns:SnilsOperator>
+    <tns:ra>1000321282</tns:ra>
+    <tns:lastName>Тестов</tns:lastName>
+    <tns:firstName>Тест</tns:firstName>
+    <tns:middleName>Тестович</tns:middleName>
+    <tns:doc>
+        <ns2:type>RF_PASSPORT</ns2:type>
+        <ns2:series>1111</ns2:series>
+        <ns2:number>111111</ns2:number>
+    </tns:doc>
+    <tns:mobile>+7(920)4021351</tns:mobile>
+    <tns:snils>229-785-346 20</tns:snils>
+</tns:ESIAFindAccountRequest>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tns:ESIARegisterRequest xmlns:tns="urn://mincomsvyaz/esia/reg_service/register/1.4.1" xmlns:ns2="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1">
+    <tns:RoutingCode>DEV</tns:RoutingCode>
+	<tns:SnilsOperator>135-419-238 52</tns:SnilsOperator>
+    <tns:ra>1000321282</tns:ra>
+    <tns:snils>229-785-346 20</tns:snils>
+    <tns:lastName>Тестов</tns:lastName>
+    <tns:firstName>Тест</tns:firstName>
+    <tns:middleName>Тестович</tns:middleName>
+    <tns:gender>M</tns:gender>
+    <tns:birthDate>11.11.1988</tns:birthDate>
+    <tns:doc>
+        <ns2:type>RF_PASSPORT</ns2:type>
+        <ns2:series>1111</ns2:series>
+        <ns2:number>111111</ns2:number>
+        <ns2:issueId>111111</ns2:issueId>
+        <ns2:issueDate>01.10.2017</ns2:issueDate>
+        <ns2:issuedBy>выдан</ns2:issuedBy>
+    </tns:doc>
+    <tns:mobile>+7(920)4021351</tns:mobile>
+    <tns:citizenship>RUS</tns:citizenship>
+    <tns:mode>mobile</tns:mode>
+    <tns:address>
+        <ns2:type>PLV</ns2:type>
+        <ns2:region>23</ns2:region>
+        <ns2:fiasCode>720b25da-f43e-4204-9013-3cb06be3e9e4</ns2:fiasCode>
+        <ns2:addressStr>Кемеровская Область, Таштагольский Район, Шерегеш Поселок городского типа</ns2:addressStr>
+        <ns2:countryId>RUS</ns2:countryId>
+        <ns2:zipCode>394000</ns2:zipCode>
+        <ns2:street>Советская Улица</ns2:street>
+        <ns2:house>86/1</ns2:house>
+        <ns2:flat>пом.419</ns2:flat>
+        <ns2:frame>204у</ns2:frame>
+        <ns2:building>e</ns2:building>
+    </tns:address>
+    <tns:birthPlace>воронеж</tns:birthPlace>
+</tns:ESIARegisterRequest>

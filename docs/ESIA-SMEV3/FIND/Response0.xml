@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tns:ESIAFindAccountResponse xmlns:tns="urn://mincomsvyaz/esia/reg_service/find_account/1.4.1" xmlns:ns2="urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1">
+    <tns:account>
+        <tns:oid>1000349826</tns:oid>
+        <tns:stu>trusted</tns:stu>
+        <tns:matches>
+            <ns2:match>snils</ns2:match>
+            <ns2:match>mobile</ns2:match>
+            <ns2:match>idoc</ns2:match>
+        </tns:matches>
+        <tns:regDate>14.11.2017</tns:regDate>
+        <tns:cfmTyp>RA</tns:cfmTyp>
+        <tns:biomStu>N</tns:biomStu>
+    </tns:account>
+</tns:ESIAFindAccountResponse>
+
+

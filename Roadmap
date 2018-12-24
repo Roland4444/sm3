@@ -1,0 +1,100 @@
+Whats done:
+    Embed server
+    Reading Data From Database
+    Packaging to EXE
+    Getting data in UTF-8 //system locale must set to UTF8!
+    Adding UUID gen in xml injection
+ 	SOAP 1.1 request, response
+ 	Digest gost3411
+ 	Transform! stolen from Voskhod idiots
+ 	Signing with CryptoPro JCP
+
+ 	need pass full tests!
+    https://smev3.gosuslugi.ru/portal/inquirytype_one.jsp?zone=fed&id=81435
+
+    гис гмп протестирован 300 запросов за 200 секунд/sendrequestrequest ;
+    sendrequest; getresponserequest; ackReq;
+
+    http://www.sql.ru/forum/1193215/otpravka-gotovogo-soap-xml
+    https://stackoverflow.com/questions/9203177/pkcs-7-signeddata-issue-in-bouncycastle
+    https://club.directum.ru/post/546
+    http://khpi-iip.mipk.kharkiv.edu/library/extent/prog/iipXML/x-udom.html
+
+    TO MAKE CODE MORE CLEAN ALL SHIT WITH SQL EXECUTE MOVED IN SQLWRAPPER AND LOGGING ETC
+    ALL LOGGING SHITMOVED ON ATOMA VOID PROCS..
+    need stored proc to info about incorrect message
+
+    Realize binary logging and http aceess to view binary Log  => Visor CLASS
+    Check document for signing!!!
+    Execption on SQL
+
+    Addimg Feature Visor load sets via sqlset
+    Adding saving recs and sended soap in filesystem via config file property
+    adding ftp support: download upload;
+    ftp acess to SMEV3
+    build verification modules;
+    1) subtarget :: Learning CMAKE;
+    2) BUILD BKK;
+
+    ESIA service @ SMEV3:
+    build verification modules;
+    Esia smev3 getting info;
+
+    send biometrics to smev3
+    make esia service; Register at ESIA getting OID;
+
+    register ESIA test passed;
+    find ESIA passed;
+    ESIA FIND test passed; with mobile SNILS pass;
+
+    TEST short soap package without mobile number; =>failed;
+    Must ALL info in FIND ESIA;!!!!!!!!
+TODO TASKS:
+    FINISH TODAY FIND ESIA acc;
+    CREATE ESIA ACC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Info:
+    raw @  cert.pem =>  <ds:X509Certificate>
+    Digest = Hash @ Tranform @[{raw} SenderProvidedRequestData]
+    Certificate = Public key???
+
+
+
+    Есть подозрение что поодпись считается для всего элемента а не для хеша!
+    Высадки вообще
+Links
+    https://stackoverflow.com/questions/25396664/shared-memory-between-two-jvms
+    https://www.w3.org/TR/xmldsig-core/#sec-SignatureValue    !!!
+
+
+
+    В datacoveer пихаются данные сырые в хеш мап по значению old uuid затем делается sendall
+    из мапы делаются sendreqreq для всех элементов/ Для хранения соотвествия старый айди новый айди применяется hashmap
+     relation .
+      Relation map =[ oldIdMessage => New Genned Id + MessageID @ SMEV]
+      При получении isqueued данный new Id
+    Перед отсправкой sendreqreq проверяется сатаус обработки
+
+    смев3 обрабатывает запрос около минуты ТЕСЧТ успешен
+     getAllResponsesPart1,2,3()
+
+     total=820   Sekunden  за 500 запросов
+
+     https://docs.oracle.com/javase/tutorial/networking/nifs/parameters.html
