@@ -1,5 +1,7 @@
 package schedulling.abstractions;
 import DB.Executor;
+import essent.Client;
+import essent.J8Client;
 import logging.MyLogger;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
@@ -24,7 +26,7 @@ import java.util.HashMap;
 import schedulling.ResultsProcessors.*;
 
 public class DependencyContainer implements Serializable {
-    public POST Postman;
+    public Client HttpClient;
     public Readfile r;
     public String pathtoLog="";
     public boolean useExternalSigner;
@@ -123,7 +125,7 @@ public class DependencyContainer implements Serializable {
     }
 
     private void init() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
-        Postman= new POST();
+        HttpClient = new J8Client();
         initDataSource();
         this.r = new Readfile("sqlset");
         pathtoLog = r.binaryLogPath();
@@ -199,7 +201,7 @@ public class DependencyContainer implements Serializable {
         this.passResult.setExtractor(this.ext);
         this.ebsResult = new ebsResult();
         this.findesiaResult = new findesiaResult();
-        this.findesiaResult.setPost(this.Postman);
+        this.findesiaResult.setPost(this.HttpClient);
         this.findesiaResult.setExtractor(this.ext);
 
 
