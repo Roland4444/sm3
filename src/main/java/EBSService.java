@@ -1,13 +1,13 @@
 import Message.abstractions.BinaryMessage;
 import Message.toSMEV.MessageSMEV;
 import crypto.Gost3411Hash;
+import impl.JAktor;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import readfile.Readfile;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
 import schedulling.abstractions.InputDataBlock;
-import service.impl.JAktor;
 import util.SignatureProcessorException;
 import java.io.IOException;
 import java.sql.SQLException;
