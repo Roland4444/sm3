@@ -29,7 +29,7 @@ public class Sign2018Test {
                 return super.hashCode();
             }
         };
-        const_.
+
     }
 
 }

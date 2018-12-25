@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import ru.CryptoPro.JCPxml.Consts;
 import schedulling.abstractions.Sign;
 import util.crypto.Sign2018;
 import util.crypto.Sign2019;
@@ -35,28 +36,6 @@ import java.security.cert.X509Certificate;
 
 
 public class SignerXML {
-    public static final String URN_GOST_SIGN_2012_256 =
-            "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34102012-gostr34112012-256";
-
-    /**
-     * алгоритм хеширования, ГОСТ Р 34.11-2012 (256)
-     */
-    public static final String URN_GOST_DIGEST_2012_256 =
-            "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34112012-256";
-
-    /**
-     * алгоритм подписи, ГОСТ Р 34.10-2012 (512)
-     */
-    public static final String URN_GOST_SIGN_2012_512 =
-            "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34102012-gostr34112012-512";
-
-    /**
-     * алгоритм хеширования, ГОСТ Р 34.11-2012 (512)
-     */
-    public static final String URN_GOST_DIGEST_2012_512 =
-            "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34112012-512";
-    private static final String XMLDSIG_MORE_GOSTR34102001_GOSTR3411 = "http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411";
-    private static final String XMLDSIG_MORE_GOSTR3411 = "http://www.w3.org/2001/04/xmldsig-more#gostr3411";//http://www.w3.org/2001/04/xmldsig-more#gostr3411
     private static final String CANONICALIZATION_METHOD = "http://www.w3.org/2001/10/xml-exc-c14n#";
     private static final String DS_SIGNATURE = "//ds:Signature";
     private static final String SIG_ID = "sigID";
@@ -121,7 +100,7 @@ public class SignerXML {
         final String canonicalizationMethod = CANONICALIZATION_METHOD;
         String[][] filters = {{XPath2FilterContainer.SUBTRACT, DS_SIGNATURE}};
         String sigId = SIG_ID;
-        XMLSignature sig = new XMLSignature(doc, "", XMLDSIG_MORE_GOSTR34102001_GOSTR3411, canonicalizationMethod);
+        XMLSignature sig = new XMLSignature(doc, "", Consts.URN_GOST_SIGN, canonicalizationMethod);
         sig.setId(sigId);
         Element anElement = null;
         if (xmlElementName == null) {
@@ -135,7 +114,7 @@ public class SignerXML {
         Transforms transforms = new Transforms(doc);
         transforms.addTransform(Transforms.TRANSFORM_C14N_EXCL_OMIT_COMMENTS);
         transforms.addTransform(SmevTransformSpi.ALGORITHM_URN);
-        sig.addDocument(xmlElementID == null ? "" : GRID + xmlElementID, transforms, XMLDSIG_MORE_GOSTR3411);
+        sig.addDocument(xmlElementID == null ? "" : GRID + xmlElementID, transforms, Consts.URN_GOST_DIGEST);
         sig.addKeyInfo(certificate);
         sig.sign(privateKey);
         ByteArrayOutputStream bais = new ByteArrayOutputStream();

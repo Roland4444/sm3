@@ -140,7 +140,7 @@ public class DependencyContainer implements Serializable {
         this.logger.setFreezer(this.freezer);
         this.dbReqs = new InfoAllRequests();
         this.inputDataFlow = new InputDataContainer();
-        this.sign = new Sign2019();
+        this.sign = new Sign2018();
         if (this.useExternalSigner==false) {
             this.xmlsign = new SignerXML();
             this.xmlsign.setSign(this.sign);
