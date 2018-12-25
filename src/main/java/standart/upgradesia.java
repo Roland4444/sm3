@@ -1,7 +1,9 @@
 package standart;
 
 import Message.abstractions.BinaryMessage;
+import Message.toSMEV.ESIACreate.ESIACreateInit;
 import Message.toSMEV.ESIAFind.ESIAFindMessageInitial;
+import Message.toSMEV.ESIAUpgrade.ESIAUpgradeInitial;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
@@ -26,7 +28,7 @@ import java.security.cert.CertificateException;
 
 public class upgradesia extends Standart {
     public final String root ="<tns:ESIARegisterBySimplifiedRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/register_by_simplified/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
-            "    <tns:RoutingCode>DEV</tns:RoutingCode>\n" +
+            "    <tns:RoutingCode></tns:RoutingCode>\n" +
             "\t<tns:SnilsOperator></tns:SnilsOperator>\n" +
             "    <tns:oid></tns:oid>\n" +
             "    <tns:ra></tns:ra>\n" +
@@ -37,7 +39,7 @@ public class upgradesia extends Standart {
             "    <tns:gender></tns:gender>\n" +
             "    <tns:birthDate></tns:birthDate>\n" +
             "    <tns:birthPlace></tns:birthPlace>\n" +
-            "    <tns:citizenship></tns:citizenship>\n" +
+            "    <tns:citizenship>RUS</tns:citizenship>\n" +
             "    <tns:doc>\n" +
             "        <ns2:type>RF_PASSPORT</ns2:type>\n" +
             "        <ns2:series></ns2:series>\n" +
@@ -48,18 +50,18 @@ public class upgradesia extends Standart {
             "    </tns:doc>\n" +
             "    <tns:addressRegistration>\n" +
             "        <ns2:type>PLV</ns2:type>\n" +
-            "        <ns2:region>23</ns2:region>\n" +
-            "        <ns2:fiasCode>720b25da-f43e-4204-9013-3cb06be3e9e4</ns2:fiasCode>\n" +
-            "        <ns2:addressStr>Кемеровская Область, Таштагольский Район, Шерегеш Поселок городского типа</ns2:addressStr>\n" +
+            "        <ns2:region></ns2:region>\n" +
+            "        <ns2:fiasCode></ns2:fiasCode>\n" +
+            "        <ns2:addressStr></ns2:addressStr>\n" +
             "        <ns2:countryId>RUS</ns2:countryId>\n" +
-            "        <ns2:zipCode>394000</ns2:zipCode>\n" +
-            "        <ns2:street>Советская Улица</ns2:street>\n" +
-            "        <ns2:house>86/1</ns2:house>\n" +
-            "        <ns2:flat>пом.419</ns2:flat>\n" +
-            "        <ns2:frame>204у</ns2:frame>\n" +
-            "        <ns2:building>e</ns2:building>\n" +
+            "        <ns2:zipCode></ns2:zipCode>\n" +
+            "        <ns2:street></ns2:street>\n" +
+            "        <ns2:house></ns2:house>\n" +
+            "        <ns2:flat></ns2:flat>\n" +
+            "        <ns2:frame></ns2:frame>\n" +
+            "        <ns2:building></ns2:building>\n" +
             "    </tns:addressRegistration>\n" +
-            "    <tns:mobile>+7(920)4021351</tns:mobile>\n" +
+            "    <tns:mobile></tns:mobile>\n" +
             "    <tns:mode>mobile</tns:mode>\n" +
             "</tns:ESIARegisterBySimplifiedRequest>";
     public String rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
@@ -148,7 +150,7 @@ public class upgradesia extends Standart {
 
     @Override
     public byte[] generateUnsSOAP(byte[] input) throws IOException {
-        ESIAFindMessageInitial restored = (ESIAFindMessageInitial) BinaryMessage.restored(input);
+        ESIAUpgradeInitial restored = (ESIAUpgradeInitial) BinaryMessage.restored(input);
         String dwithId0 = inj.injectTag(rawxml, ":MessageID>", gen.generate());
         String dwithId = inj.flushTagData(dwithId0, "CallerInformationSystemSignature");
         String dwithId2 = inj.flushTagData(dwithId, "ns:PersonalSignature");
@@ -201,32 +203,39 @@ public class upgradesia extends Standart {
     }
 
 
-    public String injectdatainXML(ESIAFindMessageInitial msg, String whereInject) {
-        String[] massive = new String[9];
-        printMSG(msg);
-        massive[0] = inj.injectTag(whereInject, "tns:SnilsOperator>", msg.OperatorSnils);
-        massive[1] = inj.injectTag(massive[0], "tns:ra>", msg.Ra);
+
+    public String injectdatainXML(ESIAUpgradeInitial msg, String whereInject) {
+        String[] massive = new String[26];
+        massive[0] = inj.injectTag(whereInject, "tns:SnilsOperator>", msg.SNILSOper);
+        massive[1] = inj.injectTag(massive[0], "tns:ra>", msg.RA);
         massive[2] = inj.injectTag(massive[1], "tns:lastName>", msg.Surname);
         massive[3] = inj.injectTag(massive[2], "tns:firstName>", msg.Name);
         massive[4] = inj.injectTag(massive[3], "tns:middleName>", msg.MiddleName);
-        massive[5] = inj.injectTag(massive[4], "ns2:series>", msg.Passseria);
-        massive[6] = inj.injectTag(massive[5], "ns2:number>", msg.Passnumber);
-        massive[7] = inj.injectTag(massive[6], "tns:mobile>", msg.MobileNumber);
+        massive[5] = inj.injectTag(massive[4], "ns2:series>", msg.PassSeria);
+        massive[6] = inj.injectTag(massive[5], "ns2:number>", msg.PassNumber);
+        massive[7] = inj.injectTag(massive[6], "tns:mobile>", msg.Mobile);
         massive[8] = inj.injectTag(massive[7], "tns:snils>", msg.SNILS);
-        return massive[8];
-    }
-
-
-    public void printMSG(ESIAFindMessageInitial msg){
-        System.out.println("##############\n"+msg.OperatorSnils);
-        System.out.println(msg.Ra);
-        System.out.println(msg.Surname);
-        System.out.println(msg.Name);
-        System.out.println(msg.MiddleName);
-        System.out.println(msg.Passseria);
-        System.out.println(msg.Passnumber);
-        System.out.println(msg.MobileNumber);
-        System.out.println(msg.SNILS);
+        massive[9] = inj.injectTag(massive[8], "tns:gender>", msg.Gender.toString());
+        massive[10] = inj.injectTag(massive[9], "tns:birthDate>", msg.Birthdate);
+        massive[11] = inj.injectTag(massive[10], "ns2:issueId>", msg.IssuedPassID);
+        massive[12] = inj.injectTag(massive[11], "ns2:issueDate>", msg.IssuedDatePass);
+        massive[13] = inj.injectTag(massive[12], "ns2:issuedBy>", msg.IssuedBy);
+        massive[14] = inj.injectTag(massive[13], "ns2:region>", msg.Region);
+        massive[15] = inj.injectTag(massive[14], "ns2:fiasCode>", msg.FIAS);
+        massive[16] = inj.injectTag(massive[15], "ns2:addressStr>", msg.AddressStr);
+        massive[17] = inj.injectTag(massive[16], "ns2:zipCode>", msg.ZIP);
+        massive[18] = inj.injectTag(massive[17], "ns2:street>", msg.Street);
+        massive[19] = inj.injectTag(massive[18], "ns2:house>", msg.House);
+        massive[20] = inj.injectTag(massive[19], "ns2:flat>", msg.Flat);
+        massive[21] = inj.injectTag(massive[20], "ns2:frame>", msg.Frame);
+        massive[22] = inj.injectTag(massive[21], "ns2:building>", msg.Building);
+        massive[23] = inj.injectTag(massive[22], "tns:birthPlace>", msg.BirthPlace);
+        if (this.ProdModeRoutingEnabled)
+            massive[24] = inj.injectTag(massive[23], "tns:RoutingCode>", "PROD");
+        else
+            massive[24] = inj.injectTag(massive[23], "tns:RoutingCode>", "DEV");
+        massive[25] = inj.injectTag(massive[24], "tns:oid>", msg.OID);
+        return massive[25];
     }
 
 }
