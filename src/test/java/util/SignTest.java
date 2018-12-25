@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotEquals;
 public class SignTest {
     Sign signer = new Sign2018();
 
-    SignerXML n= new SignerXML();
+    SignerXML n= new SignerXML(signer);
 
     public SignTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
     }

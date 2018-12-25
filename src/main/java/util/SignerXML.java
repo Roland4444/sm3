@@ -33,20 +33,18 @@ import java.lang.reflect.Field;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-
-
 public class SignerXML {
-    private static final String CANONICALIZATION_METHOD = "http://www.w3.org/2001/10/xml-exc-c14n#";
-    private static final String DS_SIGNATURE = "//ds:Signature";
-    private static final String SIG_ID = "sigID";
-    private static final String COULD_NOT_FIND_XML_ELEMENT_NAME = "ERROR! Could not find xmlElementName = ";
-    private static final String GRID = "#";
-    private static final String XML_SIGNATURE_ERROR = "xmlDSignature ERROR: ";
-    private Sign x ;
-    public void setSign(Sign sign){
-        this.x=sign;
-    }
-    public SignerXML() throws InvalidTransformException,  ClassNotFoundException, SignatureProcessorException {
+    private String SignatureLink;
+    private String DigestLink;
+    protected static final String CANONICALIZATION_METHOD = "http://www.w3.org/2001/10/xml-exc-c14n#";
+    protected static final String DS_SIGNATURE = "//ds:Signature";
+    protected static final String SIG_ID = "sigID";
+    protected static final String GRID = "#";
+    protected Sign x;
+
+
+
+    public SignerXML(Sign x) throws InvalidTransformException,  ClassNotFoundException, SignatureProcessorException {
         System.out.println("1:   ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();");
         ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();
         System.out.println("1:ok");
@@ -57,11 +55,19 @@ public class SignerXML {
 
         } catch (AlgorithmAlreadyRegisteredException e) {
             System.out.println("2:ERROR");
-
-
         }
         santuarioIgnoreLineBreaks(true);
         System.out.println("3:END");
+        if (x instanceof Sign2018){
+            SignatureLink = Consts.URN_GOST_SIGN;
+            DigestLink = Consts.URN_GOST_DIGEST;
+        };
+        if (x instanceof Sign2019){
+            SignatureLink = Consts.URN_GOST_SIGN_2012_256;
+            DigestLink = Consts.URN_GOST_DIGEST_2012_512;
+        };
+        System.out.println("Setted up=>"+SignatureLink);
+        System.out.println(DigestLink);
 
     }
 
@@ -100,7 +106,7 @@ public class SignerXML {
         final String canonicalizationMethod = CANONICALIZATION_METHOD;
         String[][] filters = {{XPath2FilterContainer.SUBTRACT, DS_SIGNATURE}};
         String sigId = SIG_ID;
-        XMLSignature sig = new XMLSignature(doc, "", Consts.URN_GOST_SIGN, canonicalizationMethod);
+        XMLSignature sig = new XMLSignature(doc, "", SignatureLink, canonicalizationMethod);
         sig.setId(sigId);
         Element anElement = null;
         if (xmlElementName == null) {
@@ -114,7 +120,7 @@ public class SignerXML {
         Transforms transforms = new Transforms(doc);
         transforms.addTransform(Transforms.TRANSFORM_C14N_EXCL_OMIT_COMMENTS);
         transforms.addTransform(SmevTransformSpi.ALGORITHM_URN);
-        sig.addDocument(xmlElementID == null ? "" : GRID + xmlElementID, transforms, Consts.URN_GOST_DIGEST);
+        sig.addDocument(xmlElementID == null ? "" : GRID + xmlElementID, transforms, DigestLink);
         sig.addKeyInfo(certificate);
         sig.sign(privateKey);
         ByteArrayOutputStream bais = new ByteArrayOutputStream();

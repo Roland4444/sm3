@@ -1,10 +1,6 @@
 package util.crypto;
-
-
 import schedulling.abstractions.Sign;
-
 import java.io.IOException;
-import java.io.Serializable;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;

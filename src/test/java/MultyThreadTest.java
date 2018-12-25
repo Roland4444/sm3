@@ -5,6 +5,7 @@ import schedulling.abstractions.DependencyContainer;
 import schedulling.gettingDataImplem.DataSource;
 import util.SignatureProcessorException;
 import util.SignerXML;
+import util.crypto.Sign2018;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class MultyThreadTest {
 
    ////////////////// @Test
     public void run() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, InterruptedException, IOException {
-        SignerXML signer = new SignerXML();
+        SignerXML signer = new SignerXML(new Sign2018());
 
         DataSource datasource1 = new DataSource();
         datasource1.Source.put(pass_, "fms_zap");

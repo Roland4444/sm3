@@ -32,6 +32,7 @@ public class DependencyContainer implements Serializable {
     public Readfile r;
     public String pathtoLog="";
     public boolean useExternalSigner;
+    public boolean UseGOST2012=false;
     public HashMap<String, String> ignored ;
     public TempDataContainer temp;
     public String IdBuffer="";
@@ -141,10 +142,10 @@ public class DependencyContainer implements Serializable {
         this.dbReqs = new InfoAllRequests();
         this.inputDataFlow = new InputDataContainer();
         this.sign = new Sign2018();
-        if (this.useExternalSigner==false) {
-            this.xmlsign = new SignerXML();
-            this.xmlsign.setSign(this.sign);
-        }
+        if (UseGOST2012)
+            this.sign = new Sign2019();
+        if (this.useExternalSigner==false)
+            this.xmlsign = new SignerXML(this.sign);
         this.personalSign  = new PersonalSign();
         this.os = new ByteArrayOutputStream();
         this.sr = new StreamResult(os);
@@ -233,5 +234,12 @@ public class DependencyContainer implements Serializable {
         init();
     }
 
+    public DependencyContainer(boolean wait){
+
+    };
+
+    public void initContainer() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
+        init();
+    }
 
 }
