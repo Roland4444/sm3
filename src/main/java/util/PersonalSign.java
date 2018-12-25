@@ -1,4 +1,6 @@
 package util;
 
-public class PersonalSign extends Sign {
+import util.crypto.Sign2018;
+
+public class PersonalSign extends Sign2018 {
 }

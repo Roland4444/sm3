@@ -7,8 +7,8 @@ import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.xml.sax.SAXException;
+import schedulling.abstractions.Sign;
 import schedulling.abstractions.TempDataContainer;
-import util.Sign;
 import util.SignatureProcessorException;
 import util.SignerXML;
 
@@ -23,7 +23,7 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public class createsia extends Standart {
-    public createsia(StreamResult sr, SignerXML sihner, util.Sign personal, Sign Full){
+    public createsia(StreamResult sr, SignerXML sihner, Sign personal, Sign Full){
         this.out = sr;
         this.signer =sihner;
         this.personal=personal;

@@ -4,9 +4,8 @@ import Message.abstractions.BinaryMessage;
 import Message.toSMEV.ESIAFind.ESIAFindMessageInitial;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
+import schedulling.abstractions.Sign;
 import schedulling.abstractions.TempDataContainer;
-import util.Injector;
-import util.Sign;
 import util.SignatureProcessorException;
 import util.SignerXML;
 
@@ -44,7 +43,7 @@ public class findesia extends Standart {
             "</tns:ESIAFindAccountRequest>\n";
     public String rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
 
-    public findesia(StreamResult sr, SignerXML sihner, util.Sign personal, Sign Full){
+    public findesia(StreamResult sr, SignerXML sihner, Sign personal, Sign Full){
         this.out = sr;
         this.signer =sihner;
         this.personal=personal;

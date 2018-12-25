@@ -5,7 +5,6 @@ import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
-import util.Sign;
 import util.SignatureProcessorException;
 
 import java.io.IOException;
@@ -16,7 +15,6 @@ import static org.junit.Assert.*;
 public class esiaTest {
     DependencyContainer deps = new DependencyContainer();
     Scheduller sch = new Scheduller(deps);
-    Sign signer = new Sign();
     public boolean supress=false;
 
     public esiaTest() throws ClassNotFoundException, SQLException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, IOException {

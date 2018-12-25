@@ -4,6 +4,7 @@ import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.xml.sax.SAXException;
+import schedulling.abstractions.Sign;
 import schedulling.abstractions.TempDataContainer;
 import se.roland.Extractor;
 import transport.Transport;

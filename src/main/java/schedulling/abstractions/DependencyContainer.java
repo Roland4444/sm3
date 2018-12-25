@@ -24,6 +24,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import schedulling.ResultsProcessors.*;
+import util.crypto.Sign2018;
+import util.crypto.Sign2019;
 
 public class DependencyContainer implements Serializable {
     public Client HttpClient;
@@ -138,9 +140,11 @@ public class DependencyContainer implements Serializable {
         this.logger.setFreezer(this.freezer);
         this.dbReqs = new InfoAllRequests();
         this.inputDataFlow = new InputDataContainer();
-        this.sign = new Sign();
-        if (this.useExternalSigner==false)
+        this.sign = new Sign2019();
+        if (this.useExternalSigner==false) {
             this.xmlsign = new SignerXML();
+            this.xmlsign.setSign(this.sign);
+        }
         this.personalSign  = new PersonalSign();
         this.os = new ByteArrayOutputStream();
         this.sr = new StreamResult(os);

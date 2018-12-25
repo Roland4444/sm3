@@ -5,10 +5,12 @@ import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
+import schedulling.abstractions.Sign;
 import util.Injector;
-import util.Sign;
+
 import util.SignatureProcessorException;
-import util.SignerXML;
+
+import util.crypto.Sign2018;
 
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
@@ -25,7 +27,7 @@ import static org.junit.Assert.assertNotEquals;
 public class egrTest {
     DependencyContainer deps = new DependencyContainer();
     Scheduller sch = new Scheduller(deps);
-    Sign signer = new Sign();
+    Sign signer = new Sign2018();
     public boolean supress=false;
     Injector inj = new Injector();
 

@@ -2,9 +2,11 @@ package standart;
 
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
+import schedulling.abstractions.Sign;
 import schedulling.abstractions.TempDataContainer;
 import se.roland.Extractor;
 import util.*;
+import util.crypto.Sign2018;
 
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
@@ -17,7 +19,7 @@ public class passTest {
     TempDataContainer temp = new TempDataContainer();
     Extractor ext = new Extractor();
     Injector inj = new Injector();
-    Sign s = new Sign();
+    Sign s = new Sign2018();
     SignerXML x = new SignerXML();
     PersonalSign ps = new PersonalSign();
     OutputStream os = new ByteArrayOutputStream();

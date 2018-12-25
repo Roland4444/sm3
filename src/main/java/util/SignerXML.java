@@ -12,6 +12,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import schedulling.abstractions.Sign;
+import util.crypto.Sign2018;
+import util.crypto.Sign2019;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,15 +35,38 @@ import java.security.cert.X509Certificate;
 
 
 public class SignerXML {
+    public static final String URN_GOST_SIGN_2012_256 =
+            "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34102012-gostr34112012-256";
+
+    /**
+     * алгоритм хеширования, ГОСТ Р 34.11-2012 (256)
+     */
+    public static final String URN_GOST_DIGEST_2012_256 =
+            "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34112012-256";
+
+    /**
+     * алгоритм подписи, ГОСТ Р 34.10-2012 (512)
+     */
+    public static final String URN_GOST_SIGN_2012_512 =
+            "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34102012-gostr34112012-512";
+
+    /**
+     * алгоритм хеширования, ГОСТ Р 34.11-2012 (512)
+     */
+    public static final String URN_GOST_DIGEST_2012_512 =
+            "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34112012-512";
     private static final String XMLDSIG_MORE_GOSTR34102001_GOSTR3411 = "http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411";
-    private static final String XMLDSIG_MORE_GOSTR3411 = "http://www.w3.org/2001/04/xmldsig-more#gostr3411";
+    private static final String XMLDSIG_MORE_GOSTR3411 = "http://www.w3.org/2001/04/xmldsig-more#gostr3411";//http://www.w3.org/2001/04/xmldsig-more#gostr3411
     private static final String CANONICALIZATION_METHOD = "http://www.w3.org/2001/10/xml-exc-c14n#";
     private static final String DS_SIGNATURE = "//ds:Signature";
     private static final String SIG_ID = "sigID";
     private static final String COULD_NOT_FIND_XML_ELEMENT_NAME = "ERROR! Could not find xmlElementName = ";
     private static final String GRID = "#";
     private static final String XML_SIGNATURE_ERROR = "xmlDSignature ERROR: ";
-    private Sign x = new Sign();
+    private Sign x ;
+    public void setSign(Sign sign){
+        this.x=sign;
+    }
     public SignerXML() throws InvalidTransformException,  ClassNotFoundException, SignatureProcessorException {
         System.out.println("1:   ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();");
         ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();
@@ -91,12 +117,11 @@ public class SignerXML {
         dbf.setNamespaceAware(true);
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.parse(new ByteArrayInputStream(data));
-        final String signMethod = XMLDSIG_MORE_GOSTR34102001_GOSTR3411;
-        final String digestMethod = XMLDSIG_MORE_GOSTR3411;
+
         final String canonicalizationMethod = CANONICALIZATION_METHOD;
         String[][] filters = {{XPath2FilterContainer.SUBTRACT, DS_SIGNATURE}};
         String sigId = SIG_ID;
-        XMLSignature sig = new XMLSignature(doc, "", signMethod, canonicalizationMethod);
+        XMLSignature sig = new XMLSignature(doc, "", XMLDSIG_MORE_GOSTR34102001_GOSTR3411, canonicalizationMethod);
         sig.setId(sigId);
         Element anElement = null;
         if (xmlElementName == null) {
@@ -110,7 +135,7 @@ public class SignerXML {
         Transforms transforms = new Transforms(doc);
         transforms.addTransform(Transforms.TRANSFORM_C14N_EXCL_OMIT_COMMENTS);
         transforms.addTransform(SmevTransformSpi.ALGORITHM_URN);
-        sig.addDocument(xmlElementID == null ? "" : GRID + xmlElementID, transforms, digestMethod);
+        sig.addDocument(xmlElementID == null ? "" : GRID + xmlElementID, transforms, XMLDSIG_MORE_GOSTR3411);
         sig.addKeyInfo(certificate);
         sig.sign(privateKey);
         ByteArrayOutputStream bais = new ByteArrayOutputStream();

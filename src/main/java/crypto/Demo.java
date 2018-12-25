@@ -4,7 +4,8 @@ import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
-import util.Sign;
+import schedulling.abstractions.Sign;
+import util.crypto.Sign2018;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class Demo {
     Gost3411Hash hasher = new Gost3411Hash();
     byte[] dataForSign=hasher.getBytesFromBase64("/jXl70XwnttJB5sSokwh8SaVHwo2gjgILSu0qBaLUAo=");
 
-    Sign m = new Sign();
+    Sign m = new Sign2018();
     byte[] sig = crypto.sign(dataForSign, m.getPrivate());
 
     byte[] signature = crypto.sign(dataForSign, subject.getPrivate());

@@ -1,8 +1,8 @@
 package standart;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
+import schedulling.abstractions.Sign;
 import schedulling.abstractions.TempDataContainer;
-import util.Sign;
 import util.SignatureProcessorException;
 import util.SignerXML;
 

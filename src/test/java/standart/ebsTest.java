@@ -7,9 +7,10 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
+import schedulling.abstractions.Sign;
 import util.Injector;
-import util.Sign;
 import util.SignatureProcessorException;
+import util.crypto.Sign2018;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -27,7 +28,7 @@ import static org.junit.Assert.*;
 public class ebsTest {
     DependencyContainer deps = new DependencyContainer();
     Scheduller sch = new Scheduller(deps);
-    Sign signer = new Sign();
+    Sign signer = new Sign2018();
     public boolean supress=false;
     Injector inj = new Injector();
 

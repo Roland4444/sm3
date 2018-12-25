@@ -6,6 +6,8 @@ import org.apache.xml.security.transforms.InvalidTransformException;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+import schedulling.abstractions.Sign;
+import util.crypto.Sign2018;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -16,7 +18,7 @@ import java.security.GeneralSecurityException;
 import static org.junit.Assert.assertNotEquals;
 
 public class SignTest {
-    Sign signer = new Sign();
+    Sign signer = new Sign2018();
 
     SignerXML n= new SignerXML();
 
