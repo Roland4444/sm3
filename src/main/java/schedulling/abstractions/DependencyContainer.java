@@ -31,7 +31,6 @@ public class DependencyContainer implements Serializable {
     public Client HttpClient;
     public Readfile r;
     public String pathtoLog="";
-    public boolean useExternalSigner;
     public boolean UseGOST2012=false;
     public HashMap<String, String> ignored ;
     public TempDataContainer temp;
@@ -127,6 +126,8 @@ public class DependencyContainer implements Serializable {
 
     }
 
+
+
     private void init() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
         HttpClient = new J8Client();
         initDataSource();
@@ -143,15 +144,7 @@ public class DependencyContainer implements Serializable {
         this.inputDataFlow = new InputDataContainer();
 
 
-        if (this.useExternalSigner==false){
-            System.out.println("USIUNG INTERNAL SIGNER!");
-            this.sign = new Sign2018();
-            this.personalSign  = this.sign;
-            this.xmlsign = new SignerXML(this.sign);
-            if (UseGOST2012)
-                this.sign = new Sign2019();
-            this.personalSign=
-        }
+
         this.os = new ByteArrayOutputStream();
         this.sr = new StreamResult(os);
         this.ext=new Extractor();
@@ -159,31 +152,31 @@ public class DependencyContainer implements Serializable {
         this.uuidgen=new timeBasedUUID();
         this.inj = new Injector();
 
-        this.gis = new gis(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.gis = new gis(this.sr, this.xmlsign);
         this.gis.setLink(this.temp);
 
-        this.egr = new egr(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.egr = new egr(this.sr, this.xmlsign);
         this.egr.setLink(this.temp);
 
-        this.pass = new pass(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.pass = new pass(this.sr, this.xmlsign);
         this.pass.setLink(this.temp);
 
-        this.inn =  new inn(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.inn =  new inn(this.sr, this.xmlsign);
         this.inn.setLink(this.temp);
 
-        this.esia = new esia(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.esia = new esia(this.sr, this.xmlsign);
         this.esia.setLink(this.temp);
 
-        this.ebs = new ebs(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.ebs = new ebs(this.sr, this.xmlsign);
         this.ebs.setLink(this.temp);
 
-        this.findesia = new findesia(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.findesia = new findesia(this.sr, this.xmlsign);
         this.findesia.setLink(this.temp);
 
-        this.upgradesia = new upgradesia(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.upgradesia = new upgradesia(this.sr, this.xmlsign);
         this.upgradesia.setLink(this.temp);
 
-        this.createsia = new createsia(this.sr, this.xmlsign, this.personalSign, this.sign);
+        this.createsia = new createsia(this.sr, this.xmlsign);
         this.createsia.setLink(this.temp);
 
         inn.setTransport(this.transport);
@@ -221,20 +214,20 @@ public class DependencyContainer implements Serializable {
 
 
     public DependencyContainer() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
-        this.useExternalSigner = false;
+
         this.transport = new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl");
         init();
     }
 
     public DependencyContainer(String addres) throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
-        this.useExternalSigner = false;
+
         this.transport = new SAAJ(addres);
         init();
     }
 
     public DependencyContainer(SignerXML signer) throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
         this.transport = new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl");
-        this.useExternalSigner=true;
+
         this.xmlsign = signer;
         init();
     }

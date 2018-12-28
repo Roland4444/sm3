@@ -20,12 +20,12 @@ public class passTest {
     Extractor ext = new Extractor();
     Injector inj = new Injector();
     Sign s = new Sign2018();
-    SignerXML x = new SignerXML(s);
+    SignerXML x = new SignerXML(s,s);
     Sign ps = new Sign2018();
     OutputStream os = new ByteArrayOutputStream();
     StreamResult sr = new StreamResult(os);
     boolean supress = false;
-    pass pass = new pass(sr,x, ps, s);
+    pass pass = new pass(sr,x);
 
     public passTest() throws SignatureProcessorException, InvalidTransformException, ClassNotFoundException {
     }

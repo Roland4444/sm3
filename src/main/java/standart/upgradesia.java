@@ -62,11 +62,9 @@ public class upgradesia extends Standart {
             "</tns:ESIARegisterBySimplifiedRequest>";
     public String rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
 
-    public upgradesia(StreamResult sr, SignerXML sihner, Sign personal, Sign Full){
+    public upgradesia(StreamResult sr, SignerXML sihner){
         this.out = sr;
         this.signer =sihner;
-        this.personal=personal;
-        this.MainSign =Full;
     }
 
 
@@ -80,23 +78,23 @@ public class upgradesia extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-        return signer.signconsumerns4(MainSign, GetSoap());
+        return signer.signconsumerns4(signer.getmainSign(), GetSoap());
     };
 
     public byte[] GetResponseRequest() throws Exception {
-        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(MainSign, GetSoap()));
+        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(signer.getmainSign(), GetSoap()));
         StreamSource input=new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }
 
     public byte[] GetResponseRequestwoFilter() throws Exception {
-        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(MainSign, GetSoap()));
+        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(signer.getmainSign(), GetSoap()));
         StreamSource input=new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }
 
     public byte[] ack() throws Exception {
-        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(MainSign, GetSoap()));
+        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(signer.getmainSign(), GetSoap()));
         StreamSource input=new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }
@@ -139,7 +137,7 @@ public class upgradesia extends Standart {
                 "</soapenv:Envelope>";
         //    String prepared=inj.injectAttribute(data, "Id", "SIGNED_BY_CONSUMER");
         this.setinput(inj.injectTagDirect(prepared, "ns2:AckTargetMessage", id).getBytes());
-        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(MainSign, GetSoap()));
+        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(signer.getmainSign(), GetSoap()));
         StreamSource input = new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }

@@ -23,7 +23,7 @@ public class MultyThreadTest {
 
    ////////////////// @Test
     public void run() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, InterruptedException, IOException {
-        SignerXML signer = new SignerXML(new Sign2018());
+        SignerXML signer = new SignerXML(new Sign2018(), new Sign2018());
 
         DataSource datasource1 = new DataSource();
         datasource1.Source.put(pass_, "fms_zap");

@@ -20,13 +20,13 @@ public class StandartTest {
     Extractor ext = new Extractor();
     Injector inj = new Injector();
     Sign s = new Sign2018();
-    SignerXML x = new SignerXML(s);
+    SignerXML x = new SignerXML(s,s);
     Sign2018 ps = new Sign2018();;
     OutputStream os = new ByteArrayOutputStream();
     StreamResult sr = new StreamResult(os);
     boolean supress= false;
-    gis gis = new gis(sr,x, ps, s);
-    egr inn = new egr(sr,x, ps, s);
+    gis gis = new gis(sr,x);
+    egr inn = new egr(sr,x);
 
     public StandartTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
     }
@@ -34,7 +34,7 @@ public class StandartTest {
     @Test
     public void getResReq() throws Exception {
         TempDataContainer temp = new TempDataContainer();
-        egr egr = new egr(sr,x, s, s);
+        egr egr = new egr(sr,x);
         egr.setLink(temp);
         egr.setTransport(new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl"));
         assertNotEquals(null, egr.GetResReq());

@@ -32,8 +32,6 @@ public abstract class Standart implements Serializable {
 
     }
     public boolean bypassID=false;
-    protected Sign MainSign;
-    protected Sign personal;
     protected TempDataContainer temp;
     public void setTransport(Transport set) {
         this.transport = set;
@@ -84,7 +82,7 @@ public abstract class Standart implements Serializable {
                 "</soapenv:Envelope>";
         //    String prepared=inj.injectAttribute(data, "Id", "SIGNED_BY_CONSUMER");
         this.setinput(prepared.getBytes());
-        InputStream in = new ByteArrayInputStream(signer.signcallernsbycaller(MainSign, GetSoap()));
+        InputStream in = new ByteArrayInputStream(signer.signcallernsbycaller(signer.getmainSign(), GetSoap()));
         StreamSource input = new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }
@@ -104,7 +102,7 @@ public abstract class Standart implements Serializable {
                 "</soapenv:Envelope>";
         //    String prepared=inj.injectAttribute(data, "Id", "SIGNED_BY_CONSUMER");
         this.setinput(inj.injectTagDirect(prepared, "ns2:AckTargetMessage", id).getBytes());
-        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(MainSign, GetSoap()));
+        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(signer.getmainSign(), GetSoap()));
         StreamSource input = new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }

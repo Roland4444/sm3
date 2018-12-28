@@ -23,11 +23,10 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public class createsia extends Standart {
-    public createsia(StreamResult sr, SignerXML sihner, Sign personal, Sign Full){
+    public createsia(StreamResult sr, SignerXML sihner){
         this.out = sr;
         this.signer =sihner;
-        this.personal=personal;
-        this.MainSign =Full;
+
     }
 
     public final String root ="<tns:ESIARegisterRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/register/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
@@ -101,7 +100,7 @@ public class createsia extends Standart {
 
     @Override
     public byte[] SignedSoap() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, XMLSecurityException, IOException, CertificateException, NoSuchAlgorithmException, TransformerException, ParserConfigurationException, UnrecoverableEntryException, NoSuchProviderException, SAXException, KeyStoreException {
-        return signer.signconsumerns4(MainSign, GetSoap());
+        return signer.signconsumerns4(signer.getmainSign(), GetSoap());
     }
 
     @Override

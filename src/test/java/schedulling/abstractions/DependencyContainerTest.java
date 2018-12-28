@@ -17,14 +17,12 @@ public class DependencyContainerTest {
     DependencyContainer depsUseExtern = new DependencyContainer(true);
 
     public DependencyContainerTest() throws SignatureProcessorException, InvalidTransformException, ClassNotFoundException, IOException, SQLException, AlgorithmAlreadyRegisteredException {
-        depsUseExtern.useExternalSigner=true;
         depsUseExtern.initContainer();
 
     }
 
     @Test
     public void TestDependencyContainer() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
-        assertEquals(true, depsUseExtern.useExternalSigner);
         assertNotEquals(null,depsUseExtern.sign);
     }
 

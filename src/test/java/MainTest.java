@@ -16,8 +16,13 @@ import java.sql.SQLException;
 import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 import org.junit.Test;
+import util.SignerXML;
+import util.crypto.Sign2018;
+
 public class MainTest {
-    DependencyContainer deps = new DependencyContainer();
+    SignerXML signer = new SignerXML(new Sign2018(), new Sign2018());
+    DependencyContainer deps = new DependencyContainer(signer);
+
     Scheduller sch = new Scheduller(deps);
     String rawSave = "binData/dumpREQS.bin";
     String SaveInputFlow = "binData/dumpINPUTFLOW.bin";

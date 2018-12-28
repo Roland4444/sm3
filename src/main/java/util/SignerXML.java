@@ -35,15 +35,21 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 public class SignerXML {
-    protected String SignatureLink;
-    protected String DigestLink;
     protected final String CANONICALIZATION_METHOD = "http://www.w3.org/2001/10/xml-exc-c14n#";
     protected final String DS_SIGNATURE = "//ds:Signature";
     protected final String SIG_ID = "sigID";
     protected final String GRID = "#";
-    public Sign x;
+    private Sign MainSign, PersonalSign;
 
-    public SignerXML(Sign x) throws InvalidTransformException,  ClassNotFoundException, SignatureProcessorException {
+    public Sign getmainSign(){
+        return MainSign;
+    }
+
+    public Sign getPersonalSign(){
+        return PersonalSign;
+    }
+
+    public SignerXML(Sign x, Sign Personal) throws InvalidTransformException,  ClassNotFoundException, SignatureProcessorException {
         System.out.println("1:   ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();");
         ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();
         System.out.println("1:ok");
@@ -57,23 +63,8 @@ public class SignerXML {
         }
         santuarioIgnoreLineBreaks(true);
         System.out.println("3:END");
-        if (x instanceof Sign2018){
-            SignatureLink = Consts.URI_GOST_SIGN;
-            DigestLink = Consts.URI_GOST_DIGEST;
-           // SignatureLink = Consts.URN_GOST_SIGN;
-           // DigestLink = Consts.URN_GOST_DIGEST;
-        };
-        if (x instanceof Sign2019) {
-            SignatureLink = Consts.URN_GOST_SIGN_2012_256;
-            DigestLink = Consts.URN_GOST_DIGEST;;
-        };
-
-        if  (x instanceof TestSign2019){
-            SignatureLink = Consts.URN_GOST_SIGN_2012_256;
-            DigestLink = Consts.URN_GOST_DIGEST_2012_256;
-        };
-        System.out.println("Setted up=>"+SignatureLink);
-        System.out.println(DigestLink);
+        this.MainSign=x;
+        this.PersonalSign=Personal;
 
     }
 
@@ -112,7 +103,8 @@ public class SignerXML {
         final String canonicalizationMethod = CANONICALIZATION_METHOD;
         String[][] filters = {{XPath2FilterContainer.SUBTRACT, DS_SIGNATURE}};
         String sigId = SIG_ID;
-        XMLSignature sig = new XMLSignature(doc, "", SignatureLink, canonicalizationMethod);
+
+        XMLSignature sig = new XMLSignature(doc, "", signer.SIGNATURE_LINK, canonicalizationMethod);
         sig.setId(sigId);
         Element anElement = null;
         if (xmlElementName == null) {
@@ -126,7 +118,7 @@ public class SignerXML {
         Transforms transforms = new Transforms(doc);
         transforms.addTransform(Transforms.TRANSFORM_C14N_EXCL_OMIT_COMMENTS);
         transforms.addTransform(SmevTransformSpi.ALGORITHM_URN);
-        sig.addDocument(xmlElementID == null ? "" : GRID + xmlElementID, transforms, DigestLink);
+        sig.addDocument(xmlElementID == null ? "" : GRID + xmlElementID, transforms, signer.DIGEST_LINK);
         sig.addKeyInfo(certificate);
         sig.sign(privateKey);
         ByteArrayOutputStream bais = new ByteArrayOutputStream();

@@ -19,11 +19,9 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public class gis extends Standart {
-    public gis(StreamResult sr, SignerXML sihner, Sign personal, Sign Full){
+    public gis(StreamResult sr, SignerXML sihner){
         this.out = sr;
         this.signer =sihner;
-        this.personal=personal;
-        this.MainSign =Full;
     }
     public void setLink(TempDataContainer temp){
         this.temp=temp;
@@ -35,17 +33,17 @@ public class gis extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-        return signer.signconsumerns4(MainSign, signer.personalsign(personal, GetSoap()));
+        return signer.signconsumerns4(signer.getmainSign(), signer.personalsign(signer.getPersonalSign(), GetSoap()));
     };
 
     public byte[] GetResponseRequest() throws Exception {
-        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(MainSign, GetSoap()));
+        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(signer.getmainSign(), GetSoap()));
         StreamSource input=new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }
 
     public byte[] GetResponseRequestwoFilter() throws Exception {
-        InputStream in = new ByteArrayInputStream(signer.signcallernsbycaller(MainSign, GetSoap()));
+        InputStream in = new ByteArrayInputStream(signer.signcallernsbycaller(signer.getmainSign(), GetSoap()));
         StreamSource input=new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }
