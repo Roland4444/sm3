@@ -38,8 +38,8 @@ public class findesia extends Standart {
             "        <ns2:series></ns2:series>\n" +
             "        <ns2:number></ns2:number>\n" +
             "    </tns:doc>\n" +
-            "<tns:mobile>+7(920)4021351</tns:mobile>\n"+
-            "<tns:snils>229-785-346 20</tns:snils>\n"+
+            "<tns:mobile></tns:mobile>\n"+
+            "<tns:snils></tns:snils>\n"+
             "</tns:ESIAFindAccountRequest>\n";
     public String rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
 

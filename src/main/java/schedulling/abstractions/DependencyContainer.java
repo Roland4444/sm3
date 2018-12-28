@@ -39,7 +39,7 @@ public class DependencyContainer implements Serializable {
     public MapProcessor tableProcessor;
     public Sign sign;
     public SignerXML xmlsign;
-    public PersonalSign personalSign ;
+    public Sign personalSign ;
     public OutputStream os;
     public StreamResult sr;
     public Extractor ext;
@@ -141,12 +141,17 @@ public class DependencyContainer implements Serializable {
         this.logger.setFreezer(this.freezer);
         this.dbReqs = new InfoAllRequests();
         this.inputDataFlow = new InputDataContainer();
-        this.sign = new Sign2018();
-        if (UseGOST2012)
-            this.sign = new Sign2019();
-        if (this.useExternalSigner==false)
+
+
+        if (this.useExternalSigner==false){
+            System.out.println("USIUNG INTERNAL SIGNER!");
+            this.sign = new Sign2018();
+            this.personalSign  = this.sign;
             this.xmlsign = new SignerXML(this.sign);
-        this.personalSign  = new PersonalSign();
+            if (UseGOST2012)
+                this.sign = new Sign2019();
+            this.personalSign=
+        }
         this.os = new ByteArrayOutputStream();
         this.sr = new StreamResult(os);
         this.ext=new Extractor();
@@ -235,7 +240,10 @@ public class DependencyContainer implements Serializable {
     }
 
     public DependencyContainer(boolean wait){
-
+        //need to set !
+        //this.useExternalSigner
+        //XMLSigner    PersonalSign    Sign
+        //after all initContainer()
     };
 
     public void initContainer() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {

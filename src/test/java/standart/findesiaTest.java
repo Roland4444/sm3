@@ -20,24 +20,17 @@ public class findesiaTest {
         msg.Surname="Тестов";
         msg.Name="Тест";
         msg.MiddleName="Тестович";
-        msg.OperatorSnils="123456789";
+        msg.OperatorSnils="135-419-238 52";
         msg.Passseria="1111";
         msg.Passnumber="111111";
+        msg.MobileNumber="+7(920)4021351";
+        msg.SNILS="229-785-346 20";
         deps.findesia.ProdModeRoutingEnabled=false;
     }
     ESIAFindMessageInitial msg = new ESIAFindMessageInitial();
 
     @Test
     public void generateSOAP() {
-        ESIAFindMessageInitial msg = new ESIAFindMessageInitial();
-        msg.ID="";
-        msg.Ra="001";
-        msg.Surname="Forgerman";
-        msg.Name="Roman";
-        msg.MiddleName="Otto";
-        msg.OperatorSnils="123456789";
-        msg.Passseria="1210";
-        msg.Passnumber="355555555";
 
         //deps.findesia.set
         assertNotEquals(null, deps.findesia.injectdatainXML(msg, deps.findesia.rawxml));
@@ -68,8 +61,8 @@ public class findesiaTest {
                 "        <ns2:series></ns2:series>\n" +
                 "        <ns2:number></ns2:number>\n" +
                 "    </tns:doc>\n" +
-                "<tns:mobile>+7(920)4021351</tns:mobile>\n" +
-                "<tns:snils>229-785-346 20</tns:snils>\n" +
+                "<tns:mobile></tns:mobile>\n" +
+                "<tns:snils></tns:snils>\n" +
                 "</tns:ESIAFindAccountRequest>\n</ns2:MessagePrimaryContent><ns:TestMessage/></ns:SenderProvidedRequestData><ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"></ns4:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>\n";
         System.out.println(deps.findesia.emptySOAP);
         System.out.println(deps.findesia.root);

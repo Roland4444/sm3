@@ -3,10 +3,7 @@ package util.crypto;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableEntryException;
+import java.security.*;
 import java.security.cert.CertificateException;
 
 import static org.junit.Assert.*;
@@ -32,4 +29,15 @@ public class Sign2018Test {
 
     }
 
+    @Test
+    public void getCert1() throws NoSuchProviderException, KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
+        KeyStore keyStore = KeyStore.getInstance("HDImageStore", "JCP");
+        keyStore.load(null, null);
+        int i=0;
+        while (i++<10){
+            System.out.println(keyStore.aliases().nextElement());
+
+        }
+
+    }
 }

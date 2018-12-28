@@ -16,6 +16,7 @@ import ru.CryptoPro.JCPxml.Consts;
 import schedulling.abstractions.Sign;
 import util.crypto.Sign2018;
 import util.crypto.Sign2019;
+import util.crypto.TestSign2019;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,13 +35,13 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 public class SignerXML {
-    private String SignatureLink;
-    private String DigestLink;
+    protected String SignatureLink;
+    protected String DigestLink;
     protected final String CANONICALIZATION_METHOD = "http://www.w3.org/2001/10/xml-exc-c14n#";
     protected final String DS_SIGNATURE = "//ds:Signature";
     protected final String SIG_ID = "sigID";
     protected final String GRID = "#";
-    protected Sign x;
+    public Sign x;
 
     public SignerXML(Sign x) throws InvalidTransformException,  ClassNotFoundException, SignatureProcessorException {
         System.out.println("1:   ru.CryptoPro.JCPxml.xmldsig.JCPXMLDSigInit.init();");
@@ -57,12 +58,19 @@ public class SignerXML {
         santuarioIgnoreLineBreaks(true);
         System.out.println("3:END");
         if (x instanceof Sign2018){
-            SignatureLink = Consts.URN_GOST_SIGN;
-            DigestLink = Consts.URN_GOST_DIGEST;
+            SignatureLink = Consts.URI_GOST_SIGN;
+            DigestLink = Consts.URI_GOST_DIGEST;
+           // SignatureLink = Consts.URN_GOST_SIGN;
+           // DigestLink = Consts.URN_GOST_DIGEST;
         };
-        if (x instanceof Sign2019){
+        if (x instanceof Sign2019) {
             SignatureLink = Consts.URN_GOST_SIGN_2012_256;
-            DigestLink = Consts.URN_GOST_DIGEST_2012_512;
+            DigestLink = Consts.URN_GOST_DIGEST;;
+        };
+
+        if  (x instanceof TestSign2019){
+            SignatureLink = Consts.URN_GOST_SIGN_2012_256;
+            DigestLink = Consts.URN_GOST_DIGEST_2012_256;
         };
         System.out.println("Setted up=>"+SignatureLink);
         System.out.println(DigestLink);

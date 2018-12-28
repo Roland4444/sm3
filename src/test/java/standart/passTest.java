@@ -21,7 +21,7 @@ public class passTest {
     Injector inj = new Injector();
     Sign s = new Sign2018();
     SignerXML x = new SignerXML(s);
-    PersonalSign ps = new PersonalSign();
+    Sign ps = new Sign2018();
     OutputStream os = new ByteArrayOutputStream();
     StreamResult sr = new StreamResult(os);
     boolean supress = false;

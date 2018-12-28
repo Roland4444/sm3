@@ -35,17 +35,16 @@ public class ProcessorPuttinDBTest {
     Scheduller sch = new Scheduller(deps);
 
     Extractor ext = new Extractor();
-    Injector inj = new Injector();
+
     InputDataBlock resulter = new InputDataBlock();
 
-    PersonalSign ps = new PersonalSign();
     OutputStream os = new ByteArrayOutputStream();
-    StreamResult sr = new StreamResult(os);
+
 
     String rawSave="binData/raw.bin";
     String initial="binData/initial.bin";
     String genned="binData/injectdatainXML.bin";
-    String datamapFile="binData/datamap.bin";
+
     String inputFlowDump="binData/inputflow.bin";
     String ReqDump="binData/ReqInfoDump.bin";
     String resulttext="xml4test/resulttext.xml";
