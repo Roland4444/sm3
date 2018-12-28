@@ -8,6 +8,8 @@ import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
 import schedulling.abstractions.DependencyContainer;
 import util.SignatureProcessorException;
+import util.SignerXML;
+import util.crypto.Sign2018;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 public class createsiaTest {
-    DependencyContainer deps = new DependencyContainer();
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
     ESIACreateInit msg = new ESIACreateInit();
     public createsiaTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
         deps.createsia.ProdModeRoutingEnabled=false;

@@ -213,34 +213,27 @@ public class DependencyContainer implements Serializable {
     }
 
 
-    public DependencyContainer() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
 
-        this.transport = new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl");
+    public DependencyContainer(SignerXML signer, String addres) throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
+        this.transport = new SAAJ(addres);
+        this.xmlsign = signer;
         init();
     }
 
-    public DependencyContainer(String addres) throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
-
+    public DependencyContainer(String addres, SignerXML signer ) throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
         this.transport = new SAAJ(addres);
+        this.xmlsign = signer;
         init();
     }
 
     public DependencyContainer(SignerXML signer) throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
         this.transport = new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl");
-
         this.xmlsign = signer;
         init();
     }
 
-    public DependencyContainer(boolean wait){
-        //need to set !
-        //this.useExternalSigner
-        //XMLSigner    PersonalSign    Sign
-        //after all initContainer()
-    };
 
-    public void initContainer() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
-        init();
-    }
+
+
 
 }

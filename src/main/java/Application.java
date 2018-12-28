@@ -4,6 +4,8 @@ import readfile.Readfile;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
 import util.SignatureProcessorException;
+import util.SignerXML;
+import util.crypto.Sign2018;
 
 import java.sql.SQLException;
 
@@ -16,7 +18,7 @@ public class Application {
 
     public static void main(String[] args) throws Exception {
         Readfile r = new Readfile("sqlset");
-        deps = new DependencyContainer(r.addressSAAJ());
+        deps = new DependencyContainer(r.addressSAAJ(), new SignerXML(new Sign2018(), new Sign2018()));
         sch = new Scheduller(deps);
         deps.gis.SupressConsole=false;
         while (true){

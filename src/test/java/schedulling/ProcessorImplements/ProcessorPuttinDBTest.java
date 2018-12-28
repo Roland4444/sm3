@@ -14,6 +14,7 @@ import schedulling.abstractions.OutDataPerfomImpl.PerfomReceivedData;
 import schedulling.gettingDataImplem.getData;
 import se.roland.Extractor;
 import util.*;
+import util.crypto.Sign2018;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 
 public class ProcessorPuttinDBTest {
-    DependencyContainer deps = new DependencyContainer();
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
     Scheduller sch = new Scheduller(deps);
 
     Extractor ext = new Extractor();

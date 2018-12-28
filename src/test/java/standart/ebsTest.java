@@ -4,30 +4,21 @@ import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
 import schedulling.abstractions.Sign;
 import util.Injector;
 import util.SignatureProcessorException;
+import util.SignerXML;
 import util.crypto.Sign2018;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateException;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
 
 public class ebsTest {
-    DependencyContainer deps = new DependencyContainer();
-    Scheduller sch = new Scheduller(deps);
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));    Scheduller sch = new Scheduller(deps);
     Sign signer = new Sign2018();
     public boolean supress=false;
     Injector inj = new Injector();

@@ -8,6 +8,8 @@ import org.junit.Test;
 import schedulling.abstractions.DependencyContainer;
 import schedulling.abstractions.InputDataBlock;
 import util.SignatureProcessorException;
+import util.SignerXML;
+import util.crypto.Sign2018;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,8 +20,7 @@ import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 
 public class SchedullerTest {
-    DependencyContainer deps = new DependencyContainer();
-    Scheduller sch = new Scheduller(deps);
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));    Scheduller sch = new Scheduller(deps);
 
     public SchedullerTest() throws SQLException, ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, IOException {
     }

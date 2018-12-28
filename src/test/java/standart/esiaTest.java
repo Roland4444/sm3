@@ -6,6 +6,8 @@ import org.junit.Test;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
 import util.SignatureProcessorException;
+import util.SignerXML;
+import util.crypto.Sign2018;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,8 +15,7 @@ import java.sql.SQLException;
 import static org.junit.Assert.*;
 
 public class esiaTest {
-    DependencyContainer deps = new DependencyContainer();
-    Scheduller sch = new Scheduller(deps);
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));    Scheduller sch = new Scheduller(deps);
     public boolean supress=false;
 
     public esiaTest() throws ClassNotFoundException, SQLException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, IOException {

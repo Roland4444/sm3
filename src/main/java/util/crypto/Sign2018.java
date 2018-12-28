@@ -1,4 +1,5 @@
 package util.crypto;
+import ru.CryptoPro.JCPxml.Consts;
 import schedulling.abstractions.Sign;
 import java.io.IOException;
 import java.security.*;
@@ -6,6 +7,10 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 
 public class Sign2018 extends Sign {
+    public Sign2018(){
+        this.DIGEST_LINK= Consts.URI_GOST_DIGEST;
+        this.SIGNATURE_LINK=Consts.URI_GOST_SIGN;
+    }
     public PrivateKey getPrivate() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, NoSuchProviderException, IOException, CertificateException {
         KeyStore keyStore = KeyStore.getInstance("HDImageStore", "JCP");
         keyStore.load(null, null);

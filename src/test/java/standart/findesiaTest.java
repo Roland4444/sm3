@@ -6,14 +6,16 @@ import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
 import schedulling.abstractions.DependencyContainer;
 import util.SignatureProcessorException;
+import util.SignerXML;
+import util.crypto.Sign2018;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 public class findesiaTest {
-    DependencyContainer deps = new DependencyContainer();
-
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
     public findesiaTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
         msg.ID="";
         msg.Ra="1000321282";

@@ -2,7 +2,7 @@
   <S:Body>
     <ns2:SendRequestRequest>
       <ns:SenderProvidedRequestData xmlns:ns="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1" xmlns:ns2="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1" Id="SIGNED_BY_CONSUMER">
-        <ns:MessageID>b70f680e-0a8c-11e9-a8d9-194174176fea</ns:MessageID>
+        <ns:MessageID>732ccea7-0a92-11e9-a94b-fb5727cbc3d9</ns:MessageID>
         <ns2:MessagePrimaryContent>
           <ns1:FNSVipULRequest xmlns:ns1="urn://x-artefacts-fns-vipul-tosmv-ru/311-14/4.0.5" ИдДок="F69BB651-80C9-4007-B3FB-09A20BBE2DA5" НомерДела="F05367CD-EDC6-4E37-A7EE-A422F067F6B5">
             <ns1:ЗапросЮЛ>

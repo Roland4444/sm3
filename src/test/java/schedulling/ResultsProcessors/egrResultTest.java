@@ -6,6 +6,8 @@ import org.junit.Test;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
 import util.SignatureProcessorException;
+import util.SignerXML;
+import util.crypto.Sign2018;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,23 +20,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class egrResultTest {
-    DependencyContainer deps = new DependencyContainer();
-
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
     public egrResultTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
     }
 
   //  @Test
     public void perform() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
-        DependencyContainer deps = new DependencyContainer();
-        PreparedStatement pst = deps.executor.getConn().prepareStatement("EXEC fns_ul_ip_smev3 '3582';");
+        DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));        PreparedStatement pst = deps.executor.getConn().prepareStatement("EXEC fns_ul_ip_smev3 '3582';");
         pst.executeUpdate();
     }
 
 
    // @Test
     public void perform2() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
-        DependencyContainer deps = new DependencyContainer();
-        PreparedStatement pst = deps.executor.getConn().prepareStatement("EXEC fns_ul_ip_smev3 '"+"3582"+"';");
+        DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));        PreparedStatement pst = deps.executor.getConn().prepareStatement("EXEC fns_ul_ip_smev3 '"+"3582"+"';");
         pst.executeUpdate();
     }
 

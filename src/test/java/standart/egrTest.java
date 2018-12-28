@@ -10,6 +10,7 @@ import util.Injector;
 
 import util.SignatureProcessorException;
 
+import util.SignerXML;
 import util.crypto.Sign2018;
 
 import javax.xml.transform.stream.StreamResult;
@@ -25,8 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class egrTest {
-    DependencyContainer deps = new DependencyContainer();
-    Scheduller sch = new Scheduller(deps);
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));    Scheduller sch = new Scheduller(deps);
     Sign signer = new Sign2018();
     public boolean supress=false;
     Injector inj = new Injector();

@@ -21,7 +21,7 @@ public class ReadfileTest {
     @Test
     public void delay() {
         Readfile r = new Readfile("sqlset");
-        assertEquals("4000", r.delay());
+        assertEquals("2000", r.delay());
     }
 
     @Test

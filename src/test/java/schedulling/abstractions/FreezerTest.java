@@ -8,6 +8,8 @@ import schedulling.Scheduller;
 import util.ActivityEvent;
 import util.Event;
 import util.SignatureProcessorException;
+import util.SignerXML;
+import util.crypto.Sign2018;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,8 +25,7 @@ import static org.junit.Assert.*;
 public class FreezerTest {
 
     Freezer fr = new Freezer();
-    DependencyContainer deps = new DependencyContainer();
-    Scheduller sch = new Scheduller(deps);
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));    Scheduller sch = new Scheduller(deps);
     RequestData test= new RequestData();
     String pathtoLog = "logs/binary/";
     String ReqDump="binData/ReqInfoDump.bin";
