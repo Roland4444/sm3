@@ -1,5 +1,6 @@
 package util.crypto;
 
+import ru.CryptoPro.JCPxml.Consts;
 import schedulling.abstractions.Sign;
 
 import java.io.IOException;
@@ -8,6 +9,10 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 
 public class TestSign2019 extends Sign {
+    public TestSign2019(){
+        this.DIGEST_LINK= Consts.URN_GOST_DIGEST_2012_256;
+        this.SIGNATURE_LINK=Consts.URN_GOST_SIGN_2012_256;
+    }
     @Override
     public PrivateKey getPrivate() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, NoSuchProviderException, IOException, CertificateException {
         KeyStore keyStore = KeyStore.getInstance("HDImageStore", "JCP");

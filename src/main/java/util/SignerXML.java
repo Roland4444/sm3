@@ -11,6 +11,7 @@ import org.apache.xml.security.utils.XMLUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import ru.CryptoPro.JCPxml.Consts;
 import schedulling.abstractions.Sign;
@@ -18,6 +19,7 @@ import util.crypto.Sign2018;
 import util.crypto.Sign2019;
 import util.crypto.TestSign2019;
 
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -151,4 +153,41 @@ public class SignerXML {
     public byte[] personalsign(Sign signer, byte[] data) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException, NoSuchAlgorithmException, CertificateException, UnrecoverableEntryException, KeyStoreException, NoSuchProviderException, TransformerException {
         return sign(signer, data, "ns:PersonalSignature", "PERSONAL_SIGNATURE" );
     }
+
+    public boolean check(byte[] input) throws ParserConfigurationException, IOException, SAXException, XMLSecurityException {
+        QName QNAME_SIGNATURE = new QName("http://www.w3.org/2000/09/xmldsig#", "Signature", "ds");
+        String ID = "Id";
+
+        boolean coreValidity = true;
+
+        DocumentBuilderFactory bf = DocumentBuilderFactory.newInstance();
+        bf.setNamespaceAware(true);
+        DocumentBuilder b = bf.newDocumentBuilder();
+        Document doc = b.parse(new InputSource(new ByteArrayInputStream(input)));
+
+        NodeList sigs = doc.getElementsByTagNameNS(QNAME_SIGNATURE.getNamespaceURI(), QNAME_SIGNATURE.getLocalPart());
+        org.apache.xml.security.signature.XMLSignature sig = null;
+        sigSearch: {
+                for (int i = 0; i < sigs.getLength(); i++) {
+                    Element sigElement = (Element) sigs.item(i);
+                    String sigId = sigElement.getAttribute(ID);
+                    if (sigId != null) {
+                        sig = new org.apache.xml.security.signature.XMLSignature(sigElement, "");
+                        break sigSearch;
+                    }
+                }
+            }
+            org.apache.xml.security.keys.KeyInfo ki = (org.apache.xml.security.keys.KeyInfo) sig.getKeyInfo();
+
+            X509Certificate certificate = ki.getX509Certificate();
+
+            if (!sig.checkSignatureValue(certificate.getPublicKey())) {
+                coreValidity = false;
+
+            } else {
+
+            }
+            return coreValidity;
+    }
+
 }

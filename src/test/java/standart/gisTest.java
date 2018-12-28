@@ -22,7 +22,8 @@ import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 
 public class gisTest {
-    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
+   // DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2019(), new TestSign2019()));
 
 
     public gisTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
