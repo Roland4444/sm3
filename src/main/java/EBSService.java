@@ -40,9 +40,9 @@ public class EBSService extends JAktor {
     public static void main(String[] args) throws InterruptedException {
         Readfile r = new Readfile("sqlset");
         try {
-         //   deps = new DependencyContainer(r.addressSAAJ(), new SignerXML(new Sign2018(), new Sign2018()));
+            deps = new DependencyContainer(r.addressSAAJ(), new SignerXML(new Sign2018(), new Sign2018()));
 
-            deps = new DependencyContainer(r.addressSAAJ(), new SignerXML(new TestSign2019(), new TestSign2019()));
+         //   deps = new DependencyContainer(r.addressSAAJ(), new SignerXML(new TestSign2019(), new TestSign2019()));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SignatureProcessorException e) {
