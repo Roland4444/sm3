@@ -10,8 +10,10 @@ import java.security.cert.CertificateException;
 
 public class TestSign2019 extends Sign {
     public TestSign2019(){
-        this.DIGEST_LINK= Consts.URN_GOST_DIGEST_2012_256;
-        this.SIGNATURE_LINK=Consts.URN_GOST_SIGN_2012_256;
+        //this.DIGEST_LINK= Consts.URN_GOST_DIGEST_2012_256;
+        //this.SIGNATURE_LINK=Consts.URN_GOST_SIGN_2012_256;
+        this.DIGEST_LINK= Consts.URI_GOST_DIGEST;
+        this.SIGNATURE_LINK=Consts.URI_GOST_SIGN;
     }
     @Override
     public PrivateKey getPrivate() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, NoSuchProviderException, IOException, CertificateException {

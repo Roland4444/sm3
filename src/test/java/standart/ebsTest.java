@@ -132,6 +132,86 @@ public class ebsTest {
         }
     }
 
+
+    @Test
+    public void sendEBSWithoutFinferprint() throws Exception {
+        String testData = "<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
+                "    <bm:RegistrarMnemonic>TEST01</bm:RegistrarMnemonic>\n" +
+                "    <bm:EmployeeId>123-456-789 00</bm:EmployeeId>\n" +
+                "    <bm:BiometricData>\n" +
+                "        <bm:Id>ID-1</bm:Id>\n" +
+                "        <bm:Date>2017-07-31T16:54:52+03:00</bm:Date>\n" +
+                "        <bm:RaId>0c2c345f-cd7b-4011-9f3b-65095ab4c186</bm:RaId>\n" +
+                "        <bm:PersonId>240631324</bm:PersonId>\n" +
+                "        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic>      \n" +
+                "        <bm:Data>\n" +
+                "            <bm:Modality>SOUND</bm:Modality>\n" +
+                "            <bm:AttachmentRef attachmentId=\"ef37b493-e94f-4f27-9e86-f4cd80f1057f\"/>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_start</bm:Key>\n" +
+                "                <bm:Value>00.000</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_end</bm:Key>\n" +
+                "                <bm:Value>10.002</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_desc</bm:Key>\n" +
+                "                <bm:Value>digits_asc</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_start</bm:Key>\n" +
+                "                <bm:Value>12.601</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_end</bm:Key>\n" +
+                "                <bm:Value>20.199</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_desc</bm:Key>\n" +
+                "                <bm:Value>digits_desc</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_start</bm:Key>\n" +
+                "                <bm:Value>22.001</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_end</bm:Key>\n" +
+                "                <bm:Value>30.102</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_desc</bm:Key>\n" +
+                "                <bm:Value>digits_random</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "        </bm:Data>\n" +
+                "        <bm:Data>\n" +
+                "            <bm:Modality>PHOTO</bm:Modality>\n" +
+                "            <bm:AttachmentRef attachmentId=\"397af8d0-d456-4dc1-9353-1d6822a02200\"/>\n" +
+                "        </bm:Data>\n" +
+                "    </bm:BiometricData>\n" +
+                "    <bm:BiometricData>\n" +
+                "        <bm:Id>ID-2</bm:Id>\n" +
+                "        <bm:Date>2017-07-31T16:50:16+03:00</bm:Date>\n" +
+                "        <bm:RaId>0c2c345f-cd7b-4011-9f3b-65095ab4c186</bm:RaId>\n" +
+                "        <bm:PersonId>215979546</bm:PersonId>\n" +
+                "        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic>\n" +
+                "    </bm:BiometricData>\n" +
+                "</bm:RegisterBiometricDataRequest>";
+        String input = deps.inj.injectTagDirect(deps.ebs.emptySOAP, "MessagePrimaryContent", testData);
+        deps.ebs.setinput(input.getBytes());
+        assertNotEquals(null, input);
+        System.out.println(input);
+
+
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+        if (response.indexOf("fault")>0) {
+            System.out.println("FAULT");
+        }
+    }
+
     @Test
     public void getResponceRequestCompiled() throws Exception {
         deps.ebs.GetResponceRequestCompiled();

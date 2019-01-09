@@ -11,7 +11,6 @@ import schedulling.abstractions.InputDataBlock;
 import util.SignatureProcessorException;
 import util.SignerXML;
 import util.crypto.Sign2018;
-import util.crypto.TestSign2019;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -27,9 +27,22 @@ public class findesiaTest {
         msg.Passnumber="111111";
         msg.MobileNumber="+7(920)4021351";
         msg.SNILS="229-785-346 20";
-        deps.findesia.ProdModeRoutingEnabled=false;
+
+
+        msg2.ID="";
+        msg2.Ra="1000321282";
+        msg2.Surname="Тестовчук";
+        msg2.Name="Тестово";
+        msg2.MiddleName="Тестовиччевич";
+        msg2.OperatorSnils="135-419-238 52";
+        msg2.Passseria="2222";
+        msg2.Passnumber="888888";
+        msg2.MobileNumber="+7(920)7898887";
+        msg2.SNILS="229-785-777 20";
+
     }
     ESIAFindMessageInitial msg = new ESIAFindMessageInitial();
+    ESIAFindMessageInitial msg2 = new ESIAFindMessageInitial();
 
     @Test
     public void generateSOAP() {
@@ -45,6 +58,17 @@ public class findesiaTest {
         deps.findesia.setinput(deps.findesia.generateUnsSOAP(BinaryMessage.savedToBLOB(msg)));
         assertNotEquals(null, deps.findesia.injectdatainXML(msg, deps.findesia.rawxml));
         System.out.println(deps.findesia.injectdatainXML(msg, deps.findesia.rawxml));
+        deps.findesia.SendSoapSigned();
+
+    }
+
+
+    @Test
+    public void sendSimple2() throws Exception {
+
+        deps.findesia.setinput(deps.findesia.generateUnsSOAP(BinaryMessage.savedToBLOB(msg2)));
+        assertNotEquals(null, deps.findesia.injectdatainXML(msg2, deps.findesia.rawxml));
+        System.out.println(deps.findesia.injectdatainXML(msg2, deps.findesia.rawxml));
         deps.findesia.SendSoapSigned();
 
     }
@@ -111,5 +135,13 @@ public class findesiaTest {
         String flushed = deps.inj.flushTagData(result, "ns:MessageID");
         assertEquals(etalon, flushed);
         System.out.println(flushed);
+    }
+
+    @Test
+    public void getSoap() {
+        //String EtalonRAWEmptrySoapwoTestMessageTeag ="<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID></ns:MessageID><ns2:MessagePrimaryContent></ns2:MessagePrimaryContent></ns:SenderProvidedRequestData><ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"></ns4:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>\n";
+        String EtalonRAWEmptrySoapwoTestMessageTeag ="<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID></ns:MessageID><ns2:MessagePrimaryContent></ns2:MessagePrimaryContent><ns:TestMessage/></ns:SenderProvidedRequestData><ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"></ns4:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>\n";
+
+        assertEquals(EtalonRAWEmptrySoapwoTestMessageTeag, deps.findesia.emptySOAP);
     }
 }

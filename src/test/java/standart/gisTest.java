@@ -3,27 +3,18 @@ package standart;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
-import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
-import schedulling.abstractions.TempDataContainer;
-import transport.SAAJ;
 import util.*;
 import util.crypto.Sign2018;
 import util.crypto.TestSign2019;
-
-import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.SQLException;
-
-import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 
 public class gisTest {
-   // DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
-    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2019(), new TestSign2019()));
+   DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
+   //DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2019(), new TestSign2019()));
 
 
     public gisTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
@@ -381,6 +372,37 @@ public class gisTest {
            deps.gis.Ack(id);
            result = getrespreq();
        }
+    }
+
+
+    String getrespreqwoTest() throws Exception {
+        String prepared="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "<ns:GetResponseRequest>\n" +
+                "<ns2:MessageTypeSelector xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" Id=\"SIGNED_BY_CALLER\"><ns2:Timestamp>2014-02-11T17:10:03.616+04:00</ns2:Timestamp></ns2:MessageTypeSelector>\n" +
+                "<!--Optional:-->\n" +
+                "<ns:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CALLER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>iYwGGJIG7q3AuiIBGC8G/Uk50FIIJmC+Vxf24dbh15I=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>7C4yUXubfFseK5eaFQfWsS5eM3+t85lcWqjD3FPGSBcNvYq78t5WMRE/5/5BiLvLww6vq0xM+4sbOH00RTDjYQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHs=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns:CallerInformationSystemSignature>\n" +
+                "</ns:GetResponseRequest>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+        //    String prepared=deps.inj.injectAttribute(data, "Id", "SIGNED_BY_CONSUMER");
+        deps.gis.setinput(prepared.getBytes());
+        assertNotEquals(null, deps.gis.GetSoap());
+        String response = new String(deps.gis.GetResponseRequestwoFilter());
+        return response;
+    };
+    @Test
+    public void flushSMEV3_woTest() throws Exception {
+        String result = getrespreqwoTest();
+        while (result.indexOf(":MessageID")>0){
+            String id=deps.ext.extractTagValue(result, ":MessageID");
+            //   System.out.println("Extract id="+ id);
+            String originalid=deps.ext.extractTagValue(result, ":OriginalMessageId");
+            System.out.println("Original id="+ originalid);
+            deps.gis.Ack(id);
+            result = getrespreq();
+        }
     }
 
     @Test
