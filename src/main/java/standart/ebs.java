@@ -112,7 +112,7 @@ public class ebs extends Standart {
 
     @Override
     public byte[] generateUnsSOAP(byte[] input) throws IOException {
-        return new byte[0];
+        return input;
     }
 
 

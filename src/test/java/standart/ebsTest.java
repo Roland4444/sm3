@@ -11,6 +11,8 @@ import util.Injector;
 import util.SignatureProcessorException;
 import util.SignerXML;
 import util.crypto.Sign2018;
+import util.crypto.TestSign2001;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -18,7 +20,8 @@ import static org.junit.Assert.*;
 
 
 public class ebsTest {
-    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));    Scheduller sch = new Scheduller(deps);
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
+    Scheduller sch = new Scheduller(deps);
     Sign signer = new Sign2018();
     public boolean supress=false;
     Injector inj = new Injector();
@@ -28,6 +31,7 @@ public class ebsTest {
 
     @Test
     public void sendInitialRequestRequestGis() throws Exception {
+
         assertNotEquals(null, deps.ebs.signer);
         assertNotEquals(null, deps.ebs.signer.getmainSign());
         assertNotEquals(null, deps.ebs.signer.getPersonalSign());

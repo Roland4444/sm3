@@ -6,6 +6,7 @@ import org.junit.Test;
 import schedulling.abstractions.DependencyContainer;
 import util.*;
 import util.crypto.Sign2018;
+import util.crypto.TestSign2001;
 import util.crypto.TestSign2019;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import static org.junit.Assert.*;
 public class gisTest {
    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
    //DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2019(), new TestSign2019()));
+  //  DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
 
 
     public gisTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
@@ -109,7 +111,8 @@ public class gisTest {
             if (response.indexOf("fault")>0) {
                 System.out.println("FAULT");
             }
-            deps.gis.Ack(messageId);
+            if (originalid!=null)
+                deps.gis.Ack(messageId);
 
 
 
@@ -405,6 +408,23 @@ public class gisTest {
         }
     }
 
+
+
+    @Test
+    public void flushSMEV3_always() throws Exception {
+        String result = getrespreq();
+        while (true){
+            String id=deps.ext.extractTagValue(result, ":MessageID");
+            //   System.out.println("Extract id="+ id);
+            String originalid=deps.ext.extractTagValue(result, ":OriginalMessageId");
+            System.out.println("Original id="+ originalid);
+            if (id != null)
+                deps.gis.Ack(id);
+            result = getrespreq();
+            Thread.sleep(1000);
+        }
+    }
+
     @Test
     public void flushSMEV3_() throws Exception {
         String result = getrespreq();
@@ -415,6 +435,7 @@ public class gisTest {
             System.out.println("Original id="+ originalid);
             deps.gis.Ack(id);
             result = getrespreq();
+
         }
     }
 
