@@ -130,6 +130,7 @@ public abstract class Standart implements Serializable {
         String dwithId = inj.flushTagData(dwithId0, "CallerInformationSystemSignature");
         String dwithId2 = inj.flushTagData(dwithId, "ns:PersonalSignature");
         String withTimeStamp=inj.injectAttribute(dwithId2, "timestamp", inj.generateTimeStamp());
-        this.InfoToRequest = withTimeStamp.getBytes();
+        String withtimeStampinTag = inj.injectTagDirect(withTimeStamp, "Timestamp",  inj.generateTimeStamp());
+        this.InfoToRequest = withtimeStampinTag.getBytes();
     }
 }
