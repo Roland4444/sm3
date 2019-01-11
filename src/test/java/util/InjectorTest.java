@@ -271,4 +271,12 @@ public class InjectorTest {
     }
 
 
+    @Test
+    public void getTimeStamp() {
+        Injector inj = new Injector();
+        inj.timeZone="+04:00";
+        assertNotEquals(null, inj.generateTimeStamp());
+        System.out.println(inj.generateTimeStamp());
+        System.out.println("2019-01-01T08:46:57.7225950+04:00");
+    }
 }

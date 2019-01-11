@@ -52,6 +52,11 @@ public class upgradesiaTest {
     }
 
     @Test
+    public void raxxmlnotnull(){
+        assertNotEquals(null, deps.findesia.rawxml);
+    };
+
+    @Test
     public void generateUnsSOAP() throws IOException {
         String Etalon = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID></ns:MessageID><ns2:MessagePrimaryContent><tns:ESIARegisterBySimplifiedRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/register_by_simplified/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
                 "    <tns:RoutingCode>DEV</tns:RoutingCode>\n" +
@@ -90,9 +95,10 @@ public class upgradesiaTest {
                 "    <tns:mobile>+7(920)4021351</tns:mobile>\n" +
                 "    <tns:mode>mobile</tns:mode>\n" +
                 "</tns:ESIARegisterBySimplifiedRequest></ns2:MessagePrimaryContent><ns:TestMessage/></ns:SenderProvidedRequestData><ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"></ns4:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>\n";
-        System.out.println(deps.findesia.emptySOAP);
-        System.out.println(deps.findesia.root);
-        System.out.println(deps.findesia.rawxml);
+        System.out.println("EMPTY=>"+deps.upgradesia.emptySOAP);
+        System.out.println("ROOT=>"+deps.upgradesia.root);
+        System.out.println("RAW=>"+deps.upgradesia.rawxml);
+        assertNotEquals(null, deps.upgradesia.inj);
         String result = new String(deps.upgradesia.generateUnsSOAP(BinaryMessage.savedToBLOB(msg)));
         String flushed = deps.inj.flushTagData(result, "ns:MessageID");
         assertEquals(Etalon, flushed);

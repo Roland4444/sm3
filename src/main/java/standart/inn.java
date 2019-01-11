@@ -4,6 +4,8 @@ import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
 import schedulling.abstractions.Sign;
 import schedulling.abstractions.TempDataContainer;
+import transport.Transport;
+import util.Injector;
 import util.SignatureProcessorException;
 import util.SignerXML;
 
@@ -21,13 +23,9 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public class inn  extends Standart{
-    public inn(StreamResult sr, SignerXML sihner){
-        this.out = sr;
-        this.signer =sihner;
+    public inn(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp){
+        super(sr, sihner, inj, transport, temp);
 
-    }
-    public void setLink(TempDataContainer temp){
-        this.temp=temp;
     }
     public  byte[] GetSoap(){
         System.out.println("GET SOAP===>");

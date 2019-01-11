@@ -12,6 +12,10 @@ import schedulling.gettingDataImplem.DataSource;
 import schedulling.gettingDataImplem.getData;
 import se.roland.Extractor;
 import standart.*;
+import standart.ESIA.createsia;
+import standart.ESIA.esia;
+import standart.ESIA.findesia;
+import standart.ESIA.upgradesia;
 import transport.SAAJ;
 import transport.Transport;
 import util.*;
@@ -24,14 +28,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import schedulling.ResultsProcessors.*;
-import util.crypto.Sign2018;
-import util.crypto.Sign2019;
 
 public class DependencyContainer implements Serializable {
     public Client HttpClient;
     public Readfile r;
     public String pathtoLog="";
-    public boolean UseGOST2012=false;
     public HashMap<String, String> ignored ;
     public TempDataContainer temp;
     public String IdBuffer="";
@@ -52,11 +53,11 @@ public class DependencyContainer implements Serializable {
     public egr egr;
     public pass pass;
     public inn inn;
-    public esia esia;
+    public standart.ESIA.esia esia;
     public ebs ebs;
-    public findesia findesia;
-    public upgradesia upgradesia;
-    public createsia createsia;
+    public standart.ESIA.findesia findesia;
+    public standart.ESIA.upgradesia upgradesia;
+    public standart.ESIA.createsia createsia;
 
     public InfoAllRequests dbReqs;
     public InputDataContainer inputDataFlow;
@@ -152,42 +153,15 @@ public class DependencyContainer implements Serializable {
         this.uuidgen=new timeBasedUUID();
         this.inj = new Injector();
 
-        this.gis = new gis(this.sr, this.xmlsign);
-        this.gis.setLink(this.temp);
-
-        this.egr = new egr(this.sr, this.xmlsign);
-        this.egr.setLink(this.temp);
-
-        this.pass = new pass(this.sr, this.xmlsign);
-        this.pass.setLink(this.temp);
-
-        this.inn =  new inn(this.sr, this.xmlsign);
-        this.inn.setLink(this.temp);
-
-        this.esia = new esia(this.sr, this.xmlsign);
-        this.esia.setLink(this.temp);
-
-        this.ebs = new ebs(this.sr, this.xmlsign);
-        this.ebs.setLink(this.temp);
-
-        this.findesia = new findesia(this.sr, this.xmlsign);
-        this.findesia.setLink(this.temp);
-
-        this.upgradesia = new upgradesia(this.sr, this.xmlsign);
-        this.upgradesia.setLink(this.temp);
-
-        this.createsia = new createsia(this.sr, this.xmlsign);
-        this.createsia.setLink(this.temp);
-
-        inn.setTransport(this.transport);
-        gis.setTransport(this.transport);
-        pass.setTransport(this.transport);
-        egr.setTransport(this.transport);
-        esia.setTransport(this.transport);
-        ebs.setTransport(this.transport);
-        findesia.setTransport(this.transport);
-        upgradesia.setTransport(this.transport);
-        createsia.setTransport(this.transport);
+        this.gis = new gis(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
+        this.egr = new egr(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
+        this.pass = new pass(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
+        this.inn =  new inn(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
+        this.esia = new esia(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
+        this.ebs = new ebs(this.sr, this.xmlsign, this.inj,this.transport, this.temp);
+        this.findesia = new findesia(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
+        this.upgradesia = new upgradesia(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
+        this.createsia = new createsia(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
 
         initTableProcesor();
 

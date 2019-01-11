@@ -78,6 +78,7 @@ public class findesiaTest {
     @Test
     public void sendSimple() throws Exception {
 
+        System.out.println("RAW=>"+deps.findesia.rawxml);
         deps.findesia.setinput(deps.findesia.generateUnsSOAP(BinaryMessage.savedToBLOB(msg)));
         assertNotEquals(null, deps.findesia.injectdatainXML(msg, deps.findesia.rawxml));
         System.out.println(deps.findesia.injectdatainXML(msg, deps.findesia.rawxml));

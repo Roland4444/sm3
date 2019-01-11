@@ -25,18 +25,16 @@ public class StandartTest {
     OutputStream os = new ByteArrayOutputStream();
     StreamResult sr = new StreamResult(os);
     boolean supress= false;
-    gis gis = new gis(sr,x);
-    egr inn = new egr(sr,x);
+    gis gis = new gis(sr,x, inj, new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl"), new TempDataContainer());
+    egr inn = new egr(sr,x, inj, new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl"), new TempDataContainer());
 
     public StandartTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
     }
 
     @Test
     public void getResReq() throws Exception {
-        TempDataContainer temp = new TempDataContainer();
-        egr egr = new egr(sr,x);
-        egr.setLink(temp);
-        egr.setTransport(new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl"));
+        egr egr = new egr(sr,x, inj, new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl"), new TempDataContainer());
+
         assertNotEquals(null, egr.GetResReq());
 
     }

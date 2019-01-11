@@ -1,8 +1,30 @@
 package util;
 
 import java.io.*;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+import static com.oracle.jrockit.jfr.ContentType.Timestamp;
 
 public class Injector implements Serializable{
+    public String timeZone;
+    public String generateTimeStamp(){
+        java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String suffix = "0000";
+        String res = timestamp.toString();
+        System.out.println(res.length());
+        String firstPart = res.substring(0, 10);
+        String secondPart = res.substring(11,23);
+        String Res = firstPart+'T'+secondPart+suffix+timeZone;
+
+
+        return Res;
+
+    }
+
     public String injectAttribute(String input, String AttributeName, String valueToInject){
         String result="";
         int pStart=input.indexOf(AttributeName);

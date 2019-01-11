@@ -25,7 +25,7 @@ public class passTest {
     OutputStream os = new ByteArrayOutputStream();
     StreamResult sr = new StreamResult(os);
     boolean supress = false;
-    pass pass = new pass(sr,x);
+    pass pass = new pass(sr,x, inj, null, temp);
 
     public passTest() throws SignatureProcessorException, InvalidTransformException, ClassNotFoundException {
     }
