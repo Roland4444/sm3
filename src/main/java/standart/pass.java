@@ -146,21 +146,5 @@ public class pass extends Standart {
     public String getName() {
         return "PASS";
     }
-    public void setinput(byte[] input) throws IOException {
-        String textInput = new String(input);
-        System.out.println("INTO SETTING INPUT!!!!");
-        String genned = gen.generate();
-        this.temp.StringContainer = genned;
-        System.out.println("generated" + this.temp.StringContainer);
-        System.out.println(genned);
-        String dwithId0 = inj.injectTag(textInput, ":MessageID>", genned);
-        if (this.bypassID) {
-            this.temp.StringContainer = ext.extractTagValue(input, ":MessageID");
-            dwithId0 = textInput;
-        }
-        String dwithId = inj.flushTagData(dwithId0, "CallerInformationSystemSignature");
-        String dwithId2 = inj.flushTagData(dwithId, "ns:PersonalSignature");
-        //String wiNumberDeal = inj.injectAttribute(dwithId,"ИдДок", injectdatainXML);
-        this.InfoToRequest = dwithId2.getBytes();
-    }
+
 }
