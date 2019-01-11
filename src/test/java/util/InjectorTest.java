@@ -274,9 +274,20 @@ public class InjectorTest {
     @Test
     public void getTimeStamp() {
         Injector inj = new Injector();
-        inj.timeZone="+04:00";
         assertNotEquals(null, inj.generateTimeStamp());
         System.out.println(inj.generateTimeStamp());
-        System.out.println("2019-01-01T08:46:57.7225950+04:00");
+        System.out.println("2019-01-01T08:46:57.7225950+04:00\n2019-01-11T14:40:57.2960000+04:00");
+
+    }
+
+
+    @Test
+    public void generateTimeStamp2() throws InterruptedException {
+        Injector inj = new Injector();
+        for (int i=0; i<100; i++){
+            assertEquals(33, inj.generateTimeStamp().length());
+            Thread.sleep(100);
+            System.out.println(inj.generateTimeStamp());
+        }
     }
 }

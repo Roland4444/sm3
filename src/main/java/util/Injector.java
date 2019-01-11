@@ -2,23 +2,27 @@ package util;
 
 import java.io.*;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
-import static com.oracle.jrockit.jfr.ContentType.Timestamp;
+import java.time.Instant;
+import java.time.ZoneOffset;
 
 public class Injector implements Serializable{
-    public String timeZone;
+
     public String generateTimeStamp(){
         java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String suffix = "0000";
         String res = timestamp.toString();
         System.out.println(res.length());
         String firstPart = res.substring(0, 10);
+        System.out.println(res);
+        for (int i=0; i<23-res.length(); i++)
+            res+='0';
         String secondPart = res.substring(11,23);
-        String Res = firstPart+'T'+secondPart+suffix+timeZone;
+
+
+        ZoneOffset offset = ZoneOffset.systemDefault().getRules().getOffset(Instant.now());//tz.getOffset(new Date().getTime()) / 1000 / 60/60;
+
+        String Res = firstPart+'T'+secondPart+suffix+offset;
+        System.out.println(">>>>>"+ offset);
 
 
         return Res;
