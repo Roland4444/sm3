@@ -14,7 +14,7 @@ public class Injector implements Serializable{
         System.out.println(res.length());
         String firstPart = res.substring(0, 10);
         System.out.println(res);
-        for (int i=0; i<23-res.length(); i++)
+        for (int i=0; i<=23-res.length(); i++)
             res+='0';
         String secondPart = res.substring(11,23);
 

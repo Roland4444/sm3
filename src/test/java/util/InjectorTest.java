@@ -286,7 +286,6 @@ public class InjectorTest {
         Injector inj = new Injector();
         for (int i=0; i<100; i++){
             assertEquals(33, inj.generateTimeStamp().length());
-            Thread.sleep(100);
             System.out.println(inj.generateTimeStamp());
         }
     }
