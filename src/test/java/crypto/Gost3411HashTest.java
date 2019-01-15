@@ -3,11 +3,17 @@ package crypto;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Test;
 import org.apache.xml.security.utils.Base64;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.security.cert.CertificateException;
@@ -16,6 +22,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class Gost3411HashTest  {
+    Gost3411Hash hash = new Gost3411Hash();
+
     @Test
     public void h() throws NoSuchAlgorithmException {
         Gost3411Hash hash = new Gost3411Hash();
@@ -1087,5 +1095,49 @@ public class Gost3411HashTest  {
         Gost3411Hash hash = new Gost3411Hash();
         assertNotEquals(null, hash.getSerial(cert));
         System.out.println(hash.getSerial(cert));
+    }
+
+    @Test
+    public void decryptKey() throws Exception {
+        String key = "C5lFpi1os7YcysKlql079It8HKO+xICIk43b6WMIcOw/LVvK78encioulWhZnNtSE205kLhoiX9ghuZcrWy4J/RJGPvnsxzCA/Fqpy6ACL3Nm350ZRMfDHgyx+0FhGqPbPblPUxaAhW3rUUeSTVMKg==";
+        String pass = "488782f9d54533801391e0496e288623";
+        String decrypted ="4C9D3202ADB1DA08EEB48FE61598208E5DE8B85940CDE5A86EC9E6D95B14E4DB29BF0D191D853822651343F73799D9D699EED27BB874D472BB480D96BE28A51F";
+        byte[] decrypted_arr = new byte[64];
+        byte[] full = hash.decryptKey(key, pass);
+        for (int i=0;i<=63;i++)
+            decrypted_arr[i]=full[i];
+
+        assertEquals(decrypted, hash.ByteArrayToHexString(decrypted_arr));
+    }
+
+    @Test
+    public void decryptKey2() throws Exception {
+        String key = "pA3sX+DiSipAduTKwCHzswXvh0B3Q5oUq+QX2eRzuIf96COSNigaVpplv74GmEFauWdYEA1l7tio3sgqAEby1gXK6cjAosNuDU+rmJ3Ah7NTZC1EW5K+EeSmUh8vvFL8auA3OrCivUsJbyEOnAieFg==";
+        String pass = "297fa800702a4a5ab98a36e10c5a34f2";
+        String decrypted =hash.ByteArrayToHexString(hash.decryptKey(key, pass));
+        byte[] decrypted_arr = new byte[64];
+        byte[] full = hash.decryptKey(key, pass);
+        for (int i=0;i<=63;i++)
+            decrypted_arr[i]=full[i];
+
+        assertNotEquals(null, hash.ByteArrayToHexString(decrypted_arr));
+        System.out.println(hash.ByteArrayToHexString(decrypted_arr));
+    }
+
+    @Test
+    public void onlyKey() throws BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, InvalidAlgorithmParameterException {
+        String key = "C5lFpi1os7YcysKlql079It8HKO+xICIk43b6WMIcOw/LVvK78encioulWhZnNtSE205kLhoiX9ghuZcrWy4J/RJGPvnsxzCA/Fqpy6ACL3Nm350ZRMfDHgyx+0FhGqPbPblPUxaAhW3rUUeSTVMKg==";
+        String pass = "488782f9d54533801391e0496e288623";
+        String decrypted ="4C9D3202ADB1DA08EEB48FE61598208E5DE8B85940CDE5A86EC9E6D95B14E4DB29BF0D191D853822651343F73799D9D699EED27BB874D472BB480D96BE28A51F";
+        assertEquals(decrypted, hash.onlyKey(key, pass));
+    }
+
+    @Test
+    public void onlyKeygenned() throws BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, InvalidAlgorithmParameterException {
+        String key = "pA3sX+DiSipAduTKwCHzswXvh0B3Q5oUq+QX2eRzuIf96COSNigaVpplv74GmEFauWdYEA1l7tio3sgqAEby1gXK6cjAosNuDU+rmJ3Ah7NTZC1EW5K+EeSmUh8vvFL8auA3OrCivUsJbyEOnAieFg==";
+        String pass = "297fa800702a4a5ab98a36e10c5a34f2";
+        String decrypted =hash.onlyKey(key, pass);
+        assertNotEquals(decrypted, null);
+        System.out.println(decrypted);
     }
 }

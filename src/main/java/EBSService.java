@@ -70,7 +70,7 @@ public class EBSService extends JAktor {
         }
         deps.gis.SupressConsole=false;
         EBSService  ebss=new EBSService(deps);
-        ebss.setAddress("http://127.0.0.1:20000/");
+        ebss.setAddress("http://127.0.0.1:20005/");
         ebss.spawn();
 
         Integer delay = Integer.valueOf(r.delay());

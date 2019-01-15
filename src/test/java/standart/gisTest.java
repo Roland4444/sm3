@@ -439,7 +439,7 @@ public class gisTest {
         }
     }
 
-    //@Test
+    @Test
     public void flushSMEV3_tofirstanswer() throws Exception {
         String result = getrespreq();
         while (true){
@@ -458,7 +458,7 @@ public class gisTest {
 
 
 
-   // @Test
+   @Test
     public void flushSMEV3_always() throws Exception {
         String result = getrespreq();
         while (true){

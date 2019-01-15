@@ -1,6 +1,9 @@
 package crypto;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +16,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 
@@ -153,6 +157,87 @@ public class Gost3411Hash {
         System.out.println(last.getNotBefore());
         System.out.println(last.getNotAfter());
     }
+
+    public byte[] decryptKey(String encryptedBase64Key, String secretString) throws Exception{
+        byte[] secretBytes = HexStringToByteArray(secretString);
+        SecretKey secret = new SecretKeySpec(secretBytes, 0, secretBytes.length, "AES");
+        IvParameterSpec ivspec = new IvParameterSpec(HexStringToByteArray("00000000000000000000000000000000"));
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, secret, ivspec);
+        return cipher.doFinal(Base64.getDecoder().decode(encryptedBase64Key));
+    }
+
+    public String onlyKey(String encryptedBase64Key, String secretString) throws InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException {
+        byte[] secretBytes = HexStringToByteArray(secretString);
+        SecretKey secret = new SecretKeySpec(secretBytes, 0, secretBytes.length, "AES");
+        IvParameterSpec ivspec = new IvParameterSpec(HexStringToByteArray("00000000000000000000000000000000"));
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, secret, ivspec);
+        byte[] full = cipher.doFinal(Base64.getDecoder().decode(encryptedBase64Key));
+        byte[] decrypted_arr = new byte[64];
+        for (int i=0;i<=63;i++)
+            decrypted_arr[i]=full[i];
+        return ByteArrayToHexString(decrypted_arr);
+    }
+
+
+
+
+    public String ByteArrayToHexString(byte[] bytes) {
+        final char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+        char[] hexChars = new char[bytes.length * 2]; // Each byte has two hex characters (nibbles)
+        int v;
+        for (int j = 0; j < bytes.length; j++) {
+            v = bytes[j] & 0xFF; // Cast bytes[j] to int, treating as unsigned value
+            hexChars[j * 2] = hexArray[v >>> 4]; // Select hex character from upper nibble
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F]; // Select hex character from lower nibble
+        }
+        return new String(hexChars);
+    }
+    /**
+     * Utility method to convert a hexadecimal string to a byte string.
+     *
+     * <p>Behavior with input strings containing non-hexadecimal characters is undefined.
+     *
+     * @param s String containing hexadecimal characters to convert
+     * @return Byte array generated from input
+     * @throws java.lang.IllegalArgumentException if input length is incorrect
+     */
+    public byte[] HexStringToByteArray(String s) throws IllegalArgumentException {
+        int len = s.length();
+        if (len % 2 == 1) {
+            throw new IllegalArgumentException("Hex string must have even number of characters");
+        }
+        byte[] data = new byte[len / 2]; // Allocate 1 byte per 2 hex characters
+        for (int i = 0; i < len; i += 2) {
+            // Convert each character into a integer (base-16), then bit-shift into place
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+    /**
+     * Utility method to concatenate two byte arrays.
+     * @param first First array
+     * @param rest Any remaining arrays
+     * @return Concatenated copy of input arrays
+     */
+    public byte[] ConcatArrays(byte[] first, byte[]... rest) {
+        int totalLength = first.length;
+        for (byte[] array : rest) {
+            totalLength += array.length;
+        }
+        byte[] result = Arrays.copyOf(first, totalLength);
+        int offset = first.length;
+        for (byte[] array : rest) {
+            System.arraycopy(array, 0, result, offset, array.length);
+            offset += array.length;
+        }
+        return result;
+    }
+
+
+
 }
 
 
