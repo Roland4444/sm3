@@ -1140,4 +1140,13 @@ public class Gost3411HashTest  {
         assertNotEquals(decrypted, null);
         System.out.println(decrypted);
     }
+
+    @Test
+    public void newdecrypted() throws BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, InvalidAlgorithmParameterException {
+        String key ="HFEmkYqgSu9qZ1fpMgg0AaUhlXHzPEB59QK/6VUq+WHIG+Ume+6ug2Q61fnbSpllw6FHM9hY3f9Igt0DEWODv6vpHbW2CLMXicK+tqkPJYn9/C1SufHJc7RIqwlJM8rSigbazPTm3QJHUwYuXgStHA==";
+        String pass = "aa2d5720e0711d8bdc8f9558287b50ef";
+        String decrypted =hash.onlyKey(key, pass);
+        assertNotEquals(decrypted, null);
+        System.out.println(decrypted);
+    }
 }

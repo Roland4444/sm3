@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 
 public class Test6f1Test {
     Test6f1 test = new Test6f1();
+
     @Test
     public void getPrivate() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, UnrecoverableEntryException, IOException {
         assertNotEquals(null, test.getCert());
