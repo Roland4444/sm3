@@ -220,4 +220,240 @@ public class ebsTest {
     public void getResponceRequestCompiled() throws Exception {
         deps.ebs.GetResponceRequestCompiled();
     }
+
+    @Test
+    public void printEtalon(){
+        String testData = "<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
+                "    <bm:RegistrarMnemonic>TEST01</bm:RegistrarMnemonic>\n" +
+                "    <bm:EmployeeId>123-456-789 00</bm:EmployeeId>\n" +
+                "    <bm:BiometricData>\n" +
+                "        <bm:Id>ID-1</bm:Id>\n" +
+                "        <bm:Date>2017-07-31T16:54:52+03:00</bm:Date>\n" +
+                "        <bm:RaId>0c2c345f-cd7b-4011-9f3b-65095ab4c186</bm:RaId>\n" +
+                "        <bm:PersonId>240631324</bm:PersonId>\n" +
+                "        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic>      \n" +
+                "        <bm:Data>\n" +
+                "            <bm:Modality>SOUND</bm:Modality>\n" +
+                "            <bm:AttachmentRef attachmentId=\"ef37b493-e94f-4f27-9e86-f4cd80f1057f\"/>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_start</bm:Key>\n" +
+                "                <bm:Value>00.000</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_end</bm:Key>\n" +
+                "                <bm:Value>10.002</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_desc</bm:Key>\n" +
+                "                <bm:Value>digits_asc</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_start</bm:Key>\n" +
+                "                <bm:Value>12.601</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_end</bm:Key>\n" +
+                "                <bm:Value>20.199</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_desc</bm:Key>\n" +
+                "                <bm:Value>digits_desc</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_start</bm:Key>\n" +
+                "                <bm:Value>22.001</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_end</bm:Key>\n" +
+                "                <bm:Value>30.102</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_desc</bm:Key>\n" +
+                "                <bm:Value>digits_random</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "        </bm:Data>\n" +
+                "        <bm:Data>\n" +
+                "            <bm:Modality>PHOTO</bm:Modality>\n" +
+                "            <bm:AttachmentRef attachmentId=\"397af8d0-d456-4dc1-9353-1d6822a02200\"/>\n" +
+                "        </bm:Data>\n" +
+                "    </bm:BiometricData>\n" +
+                "    <bm:BiometricData>\n" +
+                "        <bm:Id>ID-2</bm:Id>\n" +
+                "        <bm:Date>2017-07-31T16:50:16+03:00</bm:Date>\n" +
+                "        <bm:RaId>0c2c345f-cd7b-4011-9f3b-65095ab4c186</bm:RaId>\n" +
+                "        <bm:PersonId>215979546</bm:PersonId>\n" +
+                "        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic>\n" +
+                "    </bm:BiometricData>\n" +
+                "</bm:RegisterBiometricDataRequest>";
+        System.out.println(testData);
+
+        String blob ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID>d8161c55-1ecc-11e9-90eb-1dec74fcc959</ns:MessageID><ns2:MessagePrimaryContent><tns:ESIAFindAccountRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/find_account/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
+                "   \t<tns:RoutingCode>TESIA</tns:RoutingCode>\n" +
+                "  \t<tns:SnilsOperator>000-000-600 06</tns:SnilsOperator>\n" +
+                "    <tns:ra>1000300890</tns:ra>\n" +
+                "    <tns:lastName>Исмаилов</tns:lastName>\n" +
+                "    <tns:firstName>Тест</tns:firstName>\n" +
+                "    <tns:middleName>Банкович</tns:middleName>\n" +
+                "    <tns:doc>\n" +
+                "        <ns2:type>RF_PASSPORT</ns2:type>\n" +
+                "        <ns2:series>0009</ns2:series>\n" +
+                "        <ns2:number>123123</ns2:number>\n" +
+                "    </tns:doc>\n" +
+                "<tns:mobile>+7(988)0693468</tns:mobile>\n" +
+                "<tns:snils>000-303-303 61</tns:snils>\n" +
+                "</tns:ESIAFindAccountRequest>\n" +
+                "</ns2:MessagePrimaryContent></ns:SenderProvidedRequestData><ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:Signature Id=\"sigID\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>HUVEqoOE3Rkngx6/ic6xBFtRm1C4YxRBIroEBr0+D6o=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>skAUTOLg7zoPMX/04w35xbCEFF2rok+Cs5mbnzj0075Ouy4oQ3jriElEod4n6opc/1vqgkK3CGEnbEL9ROCP/g==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns4:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>\n";
+        System.out.println(blob);
+
+
+    }
+
+
+    @Test
+    public void sendEBSSAFAR() throws Exception {
+        String blob ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID>d8161c55-1ecc-11e9-90eb-1dec74fcc959</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
+                "    <bm:RegistrarMnemonic>TEST01</bm:RegistrarMnemonic>\n" +
+                "    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>\n" +
+                "    <bm:BiometricData>\n" +
+                "        <bm:Id>ID-1</bm:Id>\n" +
+                "        <bm:Date>2019-01-23T13:14:52+03:00</bm:Date>\n" +
+                "        <bm:RaId>1000300890</bm:RaId>\n" +
+                "        <bm:PersonId>1000368305</bm:PersonId>\n" +
+                "        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      \n" +
+                "        <bm:Data>\n" +
+                "            <bm:Modality>SOUND</bm:Modality>\n" +
+                "            <bm:AttachmentRef attachmentId=\"dc110df4-1ee5-11e9-821f-e76e1e942cd4\"/>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_start</bm:Key>\n" +
+                "                <bm:Value>00.000</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_end</bm:Key>\n" +
+                "                <bm:Value>1.002</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_1_desc</bm:Key>\n" +
+                "                <bm:Value>digits_asc</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_start</bm:Key>\n" +
+                "                <bm:Value>2.601</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_end</bm:Key>\n" +
+                "                <bm:Value>3.199</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_2_desc</bm:Key>\n" +
+                "                <bm:Value>digits_desc</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_start</bm:Key>\n" +
+                "                <bm:Value>4.001</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_end</bm:Key>\n" +
+                "                <bm:Value>5.102</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "            <bm:BioMetadata>\n" +
+                "                <bm:Key>voice_3_desc</bm:Key>\n" +
+                "                <bm:Value>digits_random</bm:Value>\n" +
+                "            </bm:BioMetadata>\n" +
+                "        </bm:Data>\n" +
+                "        <bm:Data>\n" +
+                "            <bm:Modality>PHOTO</bm:Modality>\n" +
+                "            <bm:AttachmentRef attachmentId=\"f7f8270c-1ee5-11e9-9bb4-730a70a5e482\"/>\n" +
+                "        </bm:Data>\n" +
+                "    </bm:BiometricData>\n" +
+                "</bm:RegisterBiometricDataRequest>\n" +
+                "</ns2:MessagePrimaryContent></ns:SenderProvidedRequestData><ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:Signature Id=\"sigID\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>HUVEqoOE3Rkngx6/ic6xBFtRm1C4YxRBIroEBr0+D6o=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>skAUTOLg7zoPMX/04w35xbCEFF2rok+Cs5mbnzj0075Ouy4oQ3jriElEod4n6opc/1vqgkK3CGEnbEL9ROCP/g==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns4:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>";
+
+
+        deps.ebs.setinput(blob.getBytes());
+        assertNotEquals(null, blob);
+        System.out.println(blob);
+
+
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+        if (response.indexOf("fault")>0) {
+            System.out.println("FAULT");
+        }
+
+
+    }
+
+    @Test
+    public void GetresponcerequestwoFilter() throws Exception {//2014-02-11T17:10:03.616+04:00
+        String prepared="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "<ns:GetResponseRequest>\n" +
+                "<ns2:MessageTypeSelector xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" Id=\"SIGNED_BY_CALLER\"><ns2:Timestamp>2018-07-18T09:10:03.616+04:00</ns2:Timestamp></ns2:MessageTypeSelector>\n" +
+                "<!--Optional:-->\n" +
+                "<ns:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CALLER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>iYwGGJIG7q3AuiIBGC8G/Uk50FIIJmC+Vxf24dbh15I=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>7C4yUXubfFseK5eaFQfWsS5eM3+t85lcWqjD3FPGSBcNvYq78t5WMRE/5/5BiLvLww6vq0xM+4sbOH00RTDjYQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHs=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns:CallerInformationSystemSignature>\n" +
+                "</ns:GetResponseRequest>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+        //    String prepared=inj.injectAttribute(data, "Id", "SIGNED_BY_CONSUMER");
+        deps.gis.setinput(prepared.getBytes());
+        assertNotEquals(null, deps.gis.GetSoap());
+        String response = new String(deps.gis.GetResponseRequestwoFilter());
+        String originalid = deps.ext.extractTagValue(response,":OriginalMessageId");
+        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        System.out.println("\n@\n"+ originalid);
+        System.out.println(response);
+        if (response.indexOf("fault")>0) {
+            System.out.println("FAULT");
+        }
+        if (originalid!=null)
+            deps.gis.Ack(messageId);
+
+
+
+    }
+
+
+    @Test
+    public void findMessageID() throws Exception {
+
+            String result = getrespreq();
+            while (true){
+                String id=deps.ext.extractTagValue(result, ":MessageID");
+                //   System.out.println("Extract id="+ id);
+                String originalid=deps.ext.extractTagValue(result, ":OriginalMessageId");
+                System.out.println("Original id="+ originalid);
+                if (id != null) {
+                    deps.gis.Ack(id);
+
+                }
+                if (originalid.equals("ec906aa8-1efc-11e9-8bda-5f747f7aed61"))
+                    return;
+                result = getrespreq();
+                //   Thread.sleep(0);
+            }
+
+    }
+
+
+    String getrespreq() throws Exception {
+        String prepared="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "<ns:GetResponseRequest>\n" +
+                "<ns2:MessageTypeSelector xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" Id=\"SIGNED_BY_CALLER\"><ns2:Timestamp>2014-02-11T17:10:03.616+04:00</ns2:Timestamp></ns2:MessageTypeSelector>\n" +
+                "<!--Optional:-->\n" +
+                "<ns:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CALLER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>iYwGGJIG7q3AuiIBGC8G/Uk50FIIJmC+Vxf24dbh15I=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>7C4yUXubfFseK5eaFQfWsS5eM3+t85lcWqjD3FPGSBcNvYq78t5WMRE/5/5BiLvLww6vq0xM+4sbOH00RTDjYQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHs=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns:CallerInformationSystemSignature>\n" +
+                "</ns:GetResponseRequest>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+        //    String prepared=deps.inj.injectAttribute(data, "Id", "SIGNED_BY_CONSUMER");
+        deps.gis.setinput(prepared.getBytes());
+        assertNotEquals(null, deps.gis.GetSoap());
+        String response = new String(deps.gis.GetResponseRequestwoFilter());
+        return response;
+    };
+
 }
