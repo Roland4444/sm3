@@ -503,5 +503,6 @@ public class ebsTest {
     public void soundBioMethadata() throws IOException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         assertNotEquals(null, deps.ebs.SoundBioMethadata(msg) );
+        System.out.println(deps.ebs.SoundBioMethadata(msg));
     }
 }

@@ -24,13 +24,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
+import java.util.ArrayList;
+import java.util.Map;
 
 
 public class ebs extends Standart {
-    public String Matrix = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>";
-    public String[] AudioDict = {"voice_1_start" , "",  "voice_1_end","", "voice_1_desc", "digits_asc",
-            "voice_2_start" , "",  "voice_2_end","", "voice_2_desc", "digits_desc",
-            "voice_3_start" , "",  "voice_3_end","", "voice_3_desc", "digits_random"};
+    public String Matrix = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>\n";
+    public ArrayList<String> AudioDict = new ArrayList();
     public String Soundguuid, Photoguuid;
     public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp){
         super(sr, sihner, inj, transport, temp);
@@ -213,7 +213,53 @@ public class ebs extends Standart {
 
 
     public String SoundBioMethadata(EBSMessage msg){
-        return null;
+        StringBuffer sb = new StringBuffer();
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
+        printMsg(msg);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
+
+        AudioDict.clear();
+
+        AudioDict.add("voice_1_start");
+        AudioDict.add( String.valueOf(msg.SoundBLOB.begin09));
+
+        AudioDict.add("voice_1_end");
+        AudioDict.add( String.valueOf(msg.SoundBLOB.end09));
+
+        AudioDict.add("voice_1_desc");
+        AudioDict.add( String.valueOf("digits_asc"));
+
+
+
+        AudioDict.add("voice_2_start");
+        AudioDict.add( String.valueOf(msg.SoundBLOB.begin90));
+
+        AudioDict.add("voice_2_end");
+        AudioDict.add( String.valueOf(msg.SoundBLOB.end90));
+
+        AudioDict.add("voice_2_desc");
+        AudioDict.add( String.valueOf("digits_desc"));
+
+
+
+        AudioDict.add("voice_3_start");
+        AudioDict.add( String.valueOf(msg.SoundBLOB.begin090));
+
+        AudioDict.add("voice_3_end");
+        AudioDict.add( String.valueOf(msg.SoundBLOB.end090));
+
+        AudioDict.add("voice_3_desc");
+        AudioDict.add( String.valueOf("digits_random"));
+
+
+        for (int i = 0; i < AudioDict.size(); i++){
+            String stage1 =inj.injectTag(Matrix, "bm:Key>", AudioDict.get(i));
+            String stage2 =inj.injectTag(stage1, "bm:Value>", AudioDict.get(++i));
+            sb.append(stage2);
+        }
+        AudioDict.clear();
+        return sb.toString();
     }
 
 
@@ -221,10 +267,12 @@ public class ebs extends Standart {
 
     public void printMsg(EBSMessage msg){
         System.out.println(msg.SoundBLOB.begin09);
-        System.out.println(msg.SoundBLOB.begin90);
-        System.out.println(msg.SoundBLOB.begin090);
         System.out.println(msg.SoundBLOB.end09);
+
+        System.out.println(msg.SoundBLOB.begin90);
         System.out.println(msg.SoundBLOB.end90);
+
+        System.out.println(msg.SoundBLOB.begin090);
         System.out.println(msg.SoundBLOB.end090);
 
     }
