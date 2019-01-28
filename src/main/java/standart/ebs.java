@@ -1,10 +1,8 @@
 package standart;
 import Message.abstractions.FileInBinary;
 import Message.toSMEV.EBS.EBSMessage;
-import Message.toSMEV.ESIAFind.ESIAFindMessageInitial;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
-import schedulling.abstractions.Sign;
 import schedulling.abstractions.TempDataContainer;
 import transport.Transport;
 import util.Injector;
@@ -25,7 +23,6 @@ import java.security.NoSuchProviderException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class ebs extends Standart {
@@ -215,10 +212,6 @@ public class ebs extends Standart {
     public String SoundBioMethadata(EBSMessage msg){
         StringBuffer sb = new StringBuffer();
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
-        printMsg(msg);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
-
         AudioDict.clear();
 
         AudioDict.add("voice_1_start");
@@ -231,7 +224,6 @@ public class ebs extends Standart {
         AudioDict.add( String.valueOf("digits_asc"));
 
 
-
         AudioDict.add("voice_2_start");
         AudioDict.add( String.valueOf(msg.SoundBLOB.begin90));
 
@@ -242,7 +234,6 @@ public class ebs extends Standart {
         AudioDict.add( String.valueOf("digits_desc"));
 
 
-
         AudioDict.add("voice_3_start");
         AudioDict.add( String.valueOf(msg.SoundBLOB.begin090));
 
@@ -251,7 +242,6 @@ public class ebs extends Standart {
 
         AudioDict.add("voice_3_desc");
         AudioDict.add( String.valueOf("digits_random"));
-
 
         for (int i = 0; i < AudioDict.size(); i++){
             String stage1 =inj.injectTag(Matrix, "bm:Key>", AudioDict.get(i));

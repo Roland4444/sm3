@@ -25,9 +25,6 @@ public class gis extends Standart {
         super(sr, sihner, inj, transport, temp);
     }
 
-
-
-
     public  byte[] GetSoap(){
         return InfoToRequest;
     };
