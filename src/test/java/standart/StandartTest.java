@@ -38,4 +38,9 @@ public class StandartTest {
         assertNotEquals(null, egr.GetResReq());
 
     }
+
+    @Test
+    public void attachFilesViaFTP() {
+
+    }
 }

@@ -1,5 +1,6 @@
 package standart;
 
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
@@ -24,7 +25,6 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
 public abstract class Standart implements Serializable {
-
     public boolean ProdModeRoutingEnabled;
     public String emptySOAP ="<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID></ns:MessageID><ns2:MessagePrimaryContent></ns2:MessagePrimaryContent><ns:TestMessage/></ns:SenderProvidedRequestData><ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"></ns4:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>\n";
     public String rawxml;
@@ -51,7 +51,6 @@ public abstract class Standart implements Serializable {
     protected Extractor ext = new Extractor();
     protected timeBasedUUID gen = new timeBasedUUID();
     public byte[] InfoToRequest;
-
 
     public abstract boolean check(byte[] input) throws IOException;
 

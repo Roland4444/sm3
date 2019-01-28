@@ -3,6 +3,7 @@ import DB.Executor;
 import essent.Client;
 import essent.J8Client;
 import logging.MyLogger;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import readfile.Readfile;
@@ -32,6 +33,7 @@ import schedulling.ResultsProcessors.*;
 public class DependencyContainer implements Serializable {
     public Client HttpClient;
     public Readfile r;
+    public String ftpAddr;
     public String pathtoLog="";
     public HashMap<String, String> ignored ;
     public TempDataContainer temp;
@@ -47,7 +49,6 @@ public class DependencyContainer implements Serializable {
     public Injector inj;
     public Transport transport;
     public timeBasedUUID uuidgen;
-
 
     public gis gis;
     public egr egr;
@@ -182,6 +183,8 @@ public class DependencyContainer implements Serializable {
         this.findesiaResult.setExtractor(this.ext);
 
 
+
+
         generateOutputResultProcessors();
         this.performReceiveddata = new PerfomReceivedData(this.tableResultProcessors, this.dbReqs, this.inputDataFlow);
     }
@@ -197,6 +200,7 @@ public class DependencyContainer implements Serializable {
     public DependencyContainer(String addres, SignerXML signer ) throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
         this.transport = new SAAJ(addres);
         this.xmlsign = signer;
+        this.ftpAddr="smev3-n0.test.gosuslugi.ru";
         init();
     }
 

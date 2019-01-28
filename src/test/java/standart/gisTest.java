@@ -15,6 +15,8 @@ import util.crypto.TestSign2019;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class gisTest {
@@ -471,7 +473,7 @@ public class gisTest {
 
 
 
-    @Test
+ //   @Test
     public void flushSMEV3_tofirstanswer() throws Exception {
         String result = getrespreq();
         while (true){
@@ -490,7 +492,7 @@ public class gisTest {
 
 
 
-   @Test
+   //@Test
     public void flushSMEV3_always() throws Exception {
         String result = getrespreq();
         while (true){
@@ -625,6 +627,10 @@ public class gisTest {
         assertEquals(false, deps.gis.check(notfine.getBytes()));
     }
 
+
+
+
+
     @Test
     public void testExternalFlag(){
     }
@@ -633,7 +639,7 @@ public class gisTest {
 
 
 
-    @Test
+   // @Test
     public void test10() throws Exception {
         for (int i = 0; i< 20; i++){
             ThreadL thread = new ThreadL();

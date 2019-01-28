@@ -1,5 +1,7 @@
 package standart;
 
+import Message.abstractions.BinaryMessage;
+import Message.toSMEV.EBS.EBSMessage;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
@@ -13,8 +15,11 @@ import util.SignerXML;
 import util.crypto.Sign2018;
 import util.crypto.TestSign2001;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +30,9 @@ public class ebsTest {
     Sign signer = new Sign2018();
     public boolean supress=false;
     Injector inj = new Injector();
-
+    String photofile = "biophoto.jpg";
+    String soundfile = "biosound.wav";
+    public String filename__ = "EBSMessageFUll.bin";
     public ebsTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
     }
 
@@ -134,6 +141,11 @@ public class ebsTest {
         if (response.indexOf("fault")>0) {
             System.out.println("FAULT");
         }
+    }
+
+    @Test
+    public void notNull(){
+
     }
 
 
@@ -312,7 +324,7 @@ public class ebsTest {
     @Test
     public void sendEBSSAFAR() throws Exception {
         String blob ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID>d8161c55-1ecc-11e9-90eb-1dec74fcc959</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
-                "    <bm:RegistrarMnemonic>TEST01</bm:RegistrarMnemonic>\n" +
+                "    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>\n" +
                 "    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>\n" +
                 "    <bm:BiometricData>\n" +
                 "        <bm:Id>ID-1</bm:Id>\n" +
@@ -322,7 +334,7 @@ public class ebsTest {
                 "        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      \n" +
                 "        <bm:Data>\n" +
                 "            <bm:Modality>SOUND</bm:Modality>\n" +
-                "            <bm:AttachmentRef attachmentId=\"dc110df4-1ee5-11e9-821f-e76e1e942cd4\"/>\n" +
+                "            <bm:AttachmentRef attachmentId=\"e59a11cc-1f13-11e9-a54a-af41724ba888\"/>\n" +
                 "            <bm:BioMetadata>\n" +
                 "                <bm:Key>voice_1_start</bm:Key>\n" +
                 "                <bm:Value>00.000</bm:Value>\n" +
@@ -362,7 +374,7 @@ public class ebsTest {
                 "        </bm:Data>\n" +
                 "        <bm:Data>\n" +
                 "            <bm:Modality>PHOTO</bm:Modality>\n" +
-                "            <bm:AttachmentRef attachmentId=\"f7f8270c-1ee5-11e9-9bb4-730a70a5e482\"/>\n" +
+                "            <bm:AttachmentRef attachmentId=\"f5cb6cae-1f13-11e9-8bb3-5706b6ad71d3\"/>\n" +
                 "        </bm:Data>\n" +
                 "    </bm:BiometricData>\n" +
                 "</bm:RegisterBiometricDataRequest>\n" +
@@ -417,6 +429,13 @@ public class ebsTest {
 
 
     @Test
+    public void attachment(){
+        ArrayList<String> attaches = new ArrayList();
+        attaches.add("biophoto");
+    }
+
+
+  //  @Test
     public void findMessageID() throws Exception {
 
             String result = getrespreq();
@@ -429,7 +448,7 @@ public class ebsTest {
                     deps.gis.Ack(id);
 
                 }
-                if (originalid.equals("ec906aa8-1efc-11e9-8bda-5f747f7aed61"))
+                if (originalid.equals("22c78a30-1f14-11e9-af36-4b2d56ff4191"))
                     return;
                 result = getrespreq();
                 //   Thread.sleep(0);
@@ -456,4 +475,33 @@ public class ebsTest {
         return response;
     };
 
+
+    @Test
+    public void uploadtest() throws IOException {
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        assertEquals(0, deps.ebs.uploadWav(msg));
+    }
+
+    @Test
+    public void restoreMsg() throws IOException {
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        byte[] rawmsg = Files.readAllBytes(new File(filename__).toPath());
+        assertNotEquals(null, msg.otherinfo);
+        assertNotEquals(null, msg.PhotoBLOB);
+        assertNotEquals(null, msg.SoundBLOB);
+        byte[] BinaryXML=deps.tableProcessor.OperatorMap.get("ebs").generateUnsSOAP(rawmsg);
+        assertNotEquals(null, BinaryXML);
+    }
+
+    @Test
+    public void generateSoundBlob() throws IOException {
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        assertNotEquals(null, deps.ebs.generateSoundBlob(msg) );
+    }
+
+    @Test
+    public void soundBioMethadata() throws IOException {
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        assertNotEquals(null, deps.ebs.SoundBioMethadata(msg) );
+    }
 }

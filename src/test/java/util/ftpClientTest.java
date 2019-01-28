@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
 public class ftpClientTest {
     String photofile = "biophoto.jpg";
     String soundfile = "biosound.wav";
-    public final String photodir = "f7f8270c-1ee5-11e9-9bb4-730a70a5e482";
-    public final String sounddir = "dc110df4-1ee5-11e9-821f-e76e1e942cd4";
+    public final String photodir = "f5cb6cae-1f13-11e9-8bb3-5706b6ad71d3";
+    public final String sounddir = "e59a11cc-1f13-11e9-a54a-af41724ba888";
 
     String smev3addr = "smev3-n0.test.gosuslugi.ru";
     timeBasedUUID gen = new timeBasedUUID();
@@ -135,7 +135,7 @@ public class ftpClientTest {
     public void uploadphoto() throws IOException {
 
             String filetoUpload=photofile;
-            String dirtoupload = "/"+photodir+"/";//+filetoUpload;//+"/"+filetoUpload;
+            String dirtoupload = "/"+photodir+"/"+filetoUpload;//+filetoUpload;//+"/"+filetoUpload;
             ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
             ftpcl.port = 21;
 
@@ -154,7 +154,7 @@ public class ftpClientTest {
     public void uploadsound() throws IOException {
 
         String filetoUpload=soundfile;
-        String dirtoupload = "/"+sounddir+"/";//+filetoUpload;//+"/"+filetoUpload;
+        String dirtoupload = "/"+sounddir+"/"+filetoUpload;//+filetoUpload;//+"/"+filetoUpload;
         ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
         ftpcl.port = 21;
 
