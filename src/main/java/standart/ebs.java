@@ -28,8 +28,19 @@ import java.util.ArrayList;
 public class ebs extends Standart {
     public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>\n";
     public String MatrixPhoto = "<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data>";
-
+    public String emptySOAP = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
+            "   <S:Body>\n" +
+            "      <ns2:SendRequestRequest xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
+            "         <ns:SenderProvidedRequestData Id=\"SIGNED_BY_CONSUMER\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\t<ns:MessageID>868a694d-5e80-11e4-a9ff-d4c9eff07b77</ns:MessageID><ns2:MessagePrimaryContent></ns2:MessagePrimaryContent>\t<ns2:RefAttachmentHeaderList>\t</ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>\n" +
+            "         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>CFoY+9RvxHtLKwSWR7+D6sgYQ3tqtG9RpK6+rNp3/+4=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>9nhnHlNuBUwEZw+Gi/AtAFpmy/LUy0iAYkF2HdOFRIZNbmGbZmTSNRV8cPnsfu2Wg+b0POJwKK/pUINNpey+Yg==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHs=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>\n" +
+            "      </ns2:SendRequestRequest>\n" +
+            "   </S:Body>\n" +
+            "</S:Envelope>";
     public ArrayList<String> AudioDict = new ArrayList();
+    public String currentHashSound  =   null;
+    public String currentHashPhoto  =   null;
+    public String currentPKSC7Sound =   null;
+    public String currentPKSC7Photo =   null;
     public String Soundguuid, Photoguuid;
     public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp){
         super(sr, sihner, inj, transport, temp);
@@ -95,6 +106,11 @@ public class ebs extends Standart {
         System.out.println(new String(InfoToRequest));
         return InfoToRequest;
     }
+
+
+    public void processCryptoGraphy(EBSMessage msg){
+
+    };
 
 
     public byte[] SignedSoap() throws ClassNotFoundException, SignatureProcessorException, XMLSecurityException,
@@ -168,6 +184,29 @@ public class ebs extends Standart {
         return this.transport.send(input, SupressConsole);
     }
 
+    public String uploadfiletoftp(String filename) throws IOException {
+        String uuid=gen.generate();
+        String smev3addr = "smev3-n0.test.gosuslugi.ru";
+        util.ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
+        ftpcl.port = 21;
+        System.out.println("port=>>"+ftpcl.port);
+        if (ftpcl.open()!=0)
+            System.out.println("error opening connection ");
+        if ( ftpcl.mkdir(uuid)!=0)
+            System.out.println("error creatimg folder");
+        String dirtoupload = "/"+uuid+"/"+filename;
+        int res = ftpcl.uploadfile(filename, dirtoupload);
+        if (res!=0){
+            System.out.println("error uploading file folder");
+            return "";
+        }
+        return uuid;
+    }
+
+
+
+
+
     @Override
     public byte[] generateUnsSOAP(byte[] input) throws IOException {
         return null;
@@ -200,24 +239,7 @@ public class ebs extends Standart {
 
 
 
-    public String uploadfiletoftp(String filename) throws IOException {
-        String uuid=gen.generate();
-        String smev3addr = "smev3-n0.test.gosuslugi.ru";
-        util.ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
-        ftpcl.port = 21;
-        System.out.println("port=>>"+ftpcl.port);
-        if (ftpcl.open()!=0)
-            System.out.println("error opening connection ");
-        if ( ftpcl.mkdir(uuid)!=0)
-            System.out.println("error creatimg folder");
-        String dirtoupload = "/"+uuid+"/"+filename;
-        int res = ftpcl.uploadfile(filename, dirtoupload);
-        if (res!=0){
-            System.out.println("error uploading file folder");
-            return "";
-        }
-        return uuid;
-    }
+
 
 
 

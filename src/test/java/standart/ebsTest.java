@@ -515,4 +515,14 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.PhotoBlock(msg));
         System.out.println(deps.ebs.PhotoBlock(msg));
     }
+
+    @Test
+    public void processCryptoGraphy() throws IOException {
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        deps.ebs.processCryptoGraphy(msg);
+        assertNotEquals(null, deps.ebs.currentHashPhoto);
+        assertNotEquals(null, deps.ebs.currentHashSound);
+        assertNotEquals(null, deps.ebs.currentPKSC7Photo);
+        assertNotEquals(null, deps.ebs.currentPKSC7Sound);
+    }
 }
