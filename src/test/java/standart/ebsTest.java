@@ -3,7 +3,6 @@ package standart;
 import Message.abstractions.BinaryMessage;
 import Message.toSMEV.EBS.EBSMessage;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
-import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
 import schedulling.Scheduller;
@@ -422,9 +421,6 @@ public class ebsTest {
         }
         if (originalid!=null)
             deps.gis.Ack(messageId);
-
-
-
     }
 
 
@@ -479,7 +475,7 @@ public class ebsTest {
     @Test
     public void uploadtest() throws IOException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertEquals(0, deps.ebs.uploadWav(msg));
+        assertEquals(0, deps.ebs.uploadfiletoftp(msg.SoundBLOB.filename));
     }
 
     @Test
@@ -496,7 +492,7 @@ public class ebsTest {
     @Test
     public void generateSoundBlob() throws IOException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.generateSoundBlob(msg) );
+        assertNotEquals(null, deps.ebs.generateSoundBlock(msg) );
     }
 
     @Test
@@ -504,5 +500,19 @@ public class ebsTest {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         assertNotEquals(null, deps.ebs.SoundBioMethadata(msg) );
         System.out.println(deps.ebs.SoundBioMethadata(msg));
+    }
+
+    @Test
+    public void generateSoundHeader() throws IOException {
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        assertNotEquals(null, deps.ebs.generateSoundHeader("7878778"));
+        System.out.println(deps.ebs.generateSoundHeader("7878778"));
+    }
+
+    @Test
+    public void photoBlock() throws IOException {
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        assertNotEquals(null, deps.ebs.PhotoBlock(msg));
+        System.out.println(deps.ebs.PhotoBlock(msg));
     }
 }

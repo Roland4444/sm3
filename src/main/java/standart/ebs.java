@@ -26,7 +26,9 @@ import java.util.ArrayList;
 
 
 public class ebs extends Standart {
-    public String Matrix = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>\n";
+    public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>\n";
+    public String MatrixPhoto = "<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data>";
+
     public ArrayList<String> AudioDict = new ArrayList();
     public String Soundguuid, Photoguuid;
     public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp){
@@ -172,44 +174,58 @@ public class ebs extends Standart {
     }
 
 
-    public int uploadWav(EBSMessage msg) throws IOException {
+
+    public String generateSoundBlock(EBSMessage msg) throws IOException {
+        StringBuffer sb = new StringBuffer();
+        FileInBinary.suspendToDisk(msg.SoundBLOB);
+        String result =uploadfiletoftp(msg.SoundBLOB.filename);
+        if (result.equals(""))
+            return null;
+        Soundguuid = result;
+        sb.append(generateSoundHeader(result));
+        sb.append(SoundBioMethadata(msg));
+        return sb.toString();
+    }
+
+    public String generateSoundHeader(String guuid){
+        StringBuffer sb = new StringBuffer();
+        sb.append("<bm:Data>\n<bm:Modality>SOUND</bm:Modality>\n" +
+                "            <bm:AttachmentRef attachmentId=\"");
+        sb.append(guuid);
+        sb.append("\"/>");
+        return sb.toString();
+    }
+
+
+
+
+
+    public String uploadfiletoftp(String filename) throws IOException {
         String uuid=gen.generate();
         String smev3addr = "smev3-n0.test.gosuslugi.ru";
         util.ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
         ftpcl.port = 21;
-
         System.out.println("port=>>"+ftpcl.port);
-
-        if (ftpcl.open()!=0) {
+        if (ftpcl.open()!=0)
             System.out.println("error opening connection ");
-        }
-        if ( ftpcl.mkdir(uuid)!=0){
+        if ( ftpcl.mkdir(uuid)!=0)
             System.out.println("error creatimg folder");
-
-        }
-
-        FileInBinary.suspendToDisk(msg.SoundBLOB);
-        String dirtoupload = "/"+uuid+"/"+msg.SoundBLOB.filename;
-        int res = ftpcl.uploadfile(msg.SoundBLOB.filename, dirtoupload);
+        String dirtoupload = "/"+uuid+"/"+filename;
+        int res = ftpcl.uploadfile(filename, dirtoupload);
         if (res!=0){
             System.out.println("error uploading file folder");
-
+            return "";
         }
-        Soundguuid=uuid;
-        return res;
-    };
-
-    public String generateSoundBlob(EBSMessage msg) throws IOException {
-        StringBuffer sb = new StringBuffer();
-        if (uploadWav(msg)!=0)
-            return null;
-        printMsg(msg);
-        return null;
-
+        return uuid;
     }
 
 
+
+
+
+
     public String SoundBioMethadata(EBSMessage msg){
+        String finisher = "</bm:Data>";
         StringBuffer sb = new StringBuffer();
 
         AudioDict.clear();
@@ -244,14 +260,28 @@ public class ebs extends Standart {
         AudioDict.add( String.valueOf("digits_random"));
 
         for (int i = 0; i < AudioDict.size(); i++){
-            String stage1 =inj.injectTag(Matrix, "bm:Key>", AudioDict.get(i));
+            String stage1 =inj.injectTag(MatrixAudio, "bm:Key>", AudioDict.get(i));
             String stage2 =inj.injectTag(stage1, "bm:Value>", AudioDict.get(++i));
             sb.append(stage2);
         }
         AudioDict.clear();
+        sb.append(finisher);
         return sb.toString();
     }
 
+
+    public String PhotoBlock(EBSMessage msg) throws IOException {
+        StringBuffer sb = new StringBuffer();
+
+        FileInBinary.suspendToDisk(msg.PhotoBLOB);
+        String result =uploadfiletoftp(msg.PhotoBLOB.filename);
+        System.out.println("RESULT=>"+result);
+        if (result.equals(""))
+            return null;
+        Photoguuid = result;
+        sb.append(inj.injectAttribute(MatrixPhoto, "attachmentId", result));
+        return sb.toString();
+    }
 
 
 
