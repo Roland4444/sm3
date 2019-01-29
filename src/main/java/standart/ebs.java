@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 public class ebs extends Standart {
     public Gost3411Hash Hasher;
+    public String MatrixAttach = "<ns2:RefAttachmentHeader>\t\t<ns2:uuid></ns2:uuid>\t\t<ns2:Hash></ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7></ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>";
     public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>\n";
     public String MatrixPhoto = "<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data>";
     public String emptySOAP = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
@@ -44,6 +45,7 @@ public class ebs extends Standart {
     public String currentPKSC7Sound =   null;
     public String currentPKSC7Photo =   null;
     public String Soundguuid, Photoguuid;
+    public String AttachesHeaderList;
     public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp){
         super(sr, sihner, inj, transport, temp);
         Hasher = new Gost3411Hash();
@@ -208,18 +210,40 @@ public class ebs extends Standart {
         return uuid;
     }
 
+    public String AttachSoundBlock(){
+        String stage1 = inj.injectTag(MatrixAttach,"ns2:uuid>", Soundguuid );
+        String stage2 = inj.injectTag(stage1,"ns2:Hash>", currentHashSound );
+        String stage3 = inj.injectTag(stage2, "ns2:SignaturePKCS7>", currentPKSC7Sound);
+        String stage4 = inj.injectTag(stage3, "ns2:MimeType>", "audio/x-wav");
+        return stage4;
+    };
 
 
+
+    public String AttachPhotoBlock(){
+        String stage1 = inj.injectTag(MatrixAttach,"ns2:uuid>", Photoguuid );
+        String stage2 = inj.injectTag(stage1,"ns2:Hash>", currentHashPhoto );
+        String stage3 = inj.injectTag(stage2, "ns2:SignaturePKCS7>", currentPKSC7Photo);
+        String stage4 = inj.injectTag(stage3, "ns2:MimeType>", "image/png");
+        return stage4;
+    };
+
+
+    public void generateAttachTag(){
+        AttachesHeaderList = "<ns2:RefAttachmentHeaderList>"+AttachPhotoBlock()+AttachSoundBlock()+
+               " </ns2:RefAttachmentHeaderList>";
+    };
 
 
     @Override
     public byte[] generateUnsSOAP(byte[] input) throws IOException {
+
         return null;
     }
 
 
 
-    public String generateSoundBlock(EBSMessage msg) throws IOException {
+    public String generateSoundBlock(EBSMessage msg) throws Exception {
         StringBuffer sb = new StringBuffer();
         FileInBinary.suspendToDisk(msg.SoundBLOB);
         String result =uploadfiletoftp(msg.SoundBLOB.filename);
@@ -228,6 +252,7 @@ public class ebs extends Standart {
         Soundguuid = result;
         sb.append(generateSoundHeader(result));
         sb.append(SoundBioMethadata(msg));
+        processCryptoGraphy(msg);
         return sb.toString();
     }
 
@@ -289,7 +314,7 @@ public class ebs extends Standart {
     }
 
 
-    public String PhotoBlock(EBSMessage msg) throws IOException {
+    public String generatePhotoBlock(EBSMessage msg) throws IOException {
         StringBuffer sb = new StringBuffer();
 
         FileInBinary.suspendToDisk(msg.PhotoBLOB);

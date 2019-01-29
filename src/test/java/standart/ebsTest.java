@@ -17,7 +17,6 @@ import util.crypto.TestSign2001;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,6 +24,8 @@ import static org.junit.Assert.*;
 
 
 public class ebsTest {
+    EBSMessage msg;
+
     DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
     Scheduller sch = new Scheduller(deps);
     Sign signer = new Sign2018();
@@ -34,6 +35,8 @@ public class ebsTest {
     String soundfile = "biosound.wav";
     public String filename__ = "EBSMessageFUll.bin";
     public ebsTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
+        msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+
     }
 
     @Test
@@ -491,7 +494,7 @@ public class ebsTest {
     }
 
     @Test
-    public void generateSoundBlob() throws IOException {
+    public void generateSoundBlob() throws Exception {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         assertNotEquals(null, deps.ebs.generateSoundBlock(msg) );
     }
@@ -513,13 +516,12 @@ public class ebsTest {
     @Test
     public void photoBlock() throws IOException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.PhotoBlock(msg));
-        System.out.println(deps.ebs.PhotoBlock(msg));
+        assertNotEquals(null, deps.ebs.generatePhotoBlock(msg));
+        System.out.println(deps.ebs.generatePhotoBlock(msg));
     }
 
     @Test
     public void processCryptoGraphy() throws Exception {
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         deps.ebs.processCryptoGraphy(msg);
         assertNotEquals(null, deps.ebs.currentHashPhoto);
         assertNotEquals(null, deps.ebs.currentHashSound);
@@ -528,5 +530,17 @@ public class ebsTest {
 
         assertNotEquals(null, deps.ebs.currentPKSC7Photo);
         assertNotEquals(null, deps.ebs.currentPKSC7Sound);
+    }
+
+    @Test
+    public void attachSoundBlock() throws Exception {
+        deps.ebs.generateSoundBlock(msg);
+        deps.ebs.generatePhotoBlock(msg);
+
+        assertNotEquals(null, deps.ebs.AttachPhotoBlock());
+        assertNotEquals(null, deps.ebs.AttachSoundBlock());
+        System.out.println( deps.ebs.AttachPhotoBlock());
+        System.out.println( deps.ebs.AttachSoundBlock());
+
     }
 }
