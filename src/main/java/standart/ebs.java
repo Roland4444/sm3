@@ -111,9 +111,11 @@ public class ebs extends Standart {
     }
 
 
-    public void processCryptoGraphy(EBSMessage msg) throws NoSuchAlgorithmException {
+    public void processCryptoGraphy(EBSMessage msg) throws Exception {
         currentHashPhoto = Hasher.h_Base64rfc2045(msg.PhotoBLOB.fileContent);
         currentHashSound = Hasher.h_Base64rfc2045(msg.SoundBLOB.fileContent);
+        currentPKSC7Photo = Hasher.base64(this.signer.getmainSign().CMSSign(msg.PhotoBLOB.fileContent, true));
+        currentPKSC7Sound = Hasher.base64(this.signer.getmainSign().CMSSign(msg.SoundBLOB.fileContent, true));
 
     };
 

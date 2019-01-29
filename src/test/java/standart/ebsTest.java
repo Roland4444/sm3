@@ -476,7 +476,7 @@ public class ebsTest {
     @Test
     public void uploadtest() throws IOException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertEquals(0, deps.ebs.uploadfiletoftp(msg.SoundBLOB.filename));
+        assertNotEquals(null, deps.ebs.uploadfiletoftp(msg.SoundBLOB.filename));
     }
 
     @Test
@@ -518,11 +518,14 @@ public class ebsTest {
     }
 
     @Test
-    public void processCryptoGraphy() throws IOException, NoSuchAlgorithmException {
+    public void processCryptoGraphy() throws Exception {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         deps.ebs.processCryptoGraphy(msg);
         assertNotEquals(null, deps.ebs.currentHashPhoto);
         assertNotEquals(null, deps.ebs.currentHashSound);
+        System.out.println(deps.ebs.currentHashPhoto);
+        System.out.println(deps.ebs.currentHashSound);
+
         assertNotEquals(null, deps.ebs.currentPKSC7Photo);
         assertNotEquals(null, deps.ebs.currentPKSC7Sound);
     }
