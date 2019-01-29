@@ -1,6 +1,7 @@
 package standart;
 import Message.abstractions.FileInBinary;
 import Message.toSMEV.EBS.EBSMessage;
+import crypto.Gost3411Hash;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
 import schedulling.abstractions.TempDataContainer;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 
 public class ebs extends Standart {
+    public Gost3411Hash Hasher;
     public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>\n";
     public String MatrixPhoto = "<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data>";
     public String emptySOAP = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
@@ -44,7 +46,8 @@ public class ebs extends Standart {
     public String Soundguuid, Photoguuid;
     public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp){
         super(sr, sihner, inj, transport, temp);
-        rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
+        Hasher = new Gost3411Hash();
+    //    rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
     }
     public final String root ="<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
             "    <bm:RegistrarMnemonic></bm:RegistrarMnemonic>\n" +
@@ -108,7 +111,9 @@ public class ebs extends Standart {
     }
 
 
-    public void processCryptoGraphy(EBSMessage msg){
+    public void processCryptoGraphy(EBSMessage msg) throws NoSuchAlgorithmException {
+        currentHashPhoto = Hasher.h_Base64rfc2045(msg.PhotoBLOB.fileContent);
+        currentHashSound = Hasher.h_Base64rfc2045(msg.SoundBLOB.fileContent);
 
     };
 
@@ -118,9 +123,7 @@ public class ebs extends Standart {
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
         return signer.signconsumerns4(signer.getmainSign(), GetSoap());
-    }
-
-    ;
+    };
 
     public byte[] GetResponseRequest() throws Exception {
         InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(signer.getmainSign(), GetSoap()));
@@ -234,14 +237,6 @@ public class ebs extends Standart {
         sb.append("\"/>");
         return sb.toString();
     }
-
-
-
-
-
-
-
-
 
 
 

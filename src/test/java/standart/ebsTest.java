@@ -17,6 +17,7 @@ import util.crypto.TestSign2001;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -517,7 +518,7 @@ public class ebsTest {
     }
 
     @Test
-    public void processCryptoGraphy() throws IOException {
+    public void processCryptoGraphy() throws IOException, NoSuchAlgorithmException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         deps.ebs.processCryptoGraphy(msg);
         assertNotEquals(null, deps.ebs.currentHashPhoto);
