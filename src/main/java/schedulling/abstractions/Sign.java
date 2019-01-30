@@ -1,18 +1,29 @@
 package schedulling.abstractions;
+
 import com.objsys.asn1j.runtime.*;
+import org.bouncycastle.cert.jcajce.JcaCertStore;
+import org.bouncycastle.cms.*;
+import org.bouncycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.util.Store;
 import ru.CryptoPro.JCP.ASN.CryptographicMessageSyntax.*;
 import ru.CryptoPro.JCP.ASN.PKIX1Explicit88.CertificateSerialNumber;
 import ru.CryptoPro.JCP.ASN.PKIX1Explicit88.Name;
 import ru.CryptoPro.JCP.JCP;
 import ru.CryptoPro.JCP.params.OID;
 
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.security.*;
 import java.security.Signature;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 
 public abstract class Sign implements Serializable {
     public final String STR_CMS_OID_SIGNED = "1.2.840.113549.1.7.2";
@@ -123,6 +134,44 @@ public abstract class Sign implements Serializable {
         final Asn1BerEncodeBuffer asnBuf = new Asn1BerEncodeBuffer();
         all.encode(asnBuf, true);
         return asnBuf.getMsgCopy();
+    }
+
+
+    public byte[] sign2(byte[] input) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, UnrecoverableEntryException, IOException, CMSException {
+        if (Security.getProvider("BC") == null) {
+            Security.addProvider(new BouncyCastleProvider());
+        }
+
+        // Переопределяем алгоритмы на Крипто-Про.
+        org.bouncycastle.cms.CMSConfig.setSigningDigestAlgorithmMapping(JCP.GOST_DIGEST_OID, JCP.GOST_DIGEST_NAME);
+        org.bouncycastle.cms.CMSConfig.setSigningEncryptionAlgorithmMapping(JCP.GOST_EL_DH_OID, JCP.GOST_EL_DH_NAME);
+        org.bouncycastle.cms.CMSConfig.setSigningEncryptionAlgorithmMapping(JCP.GOST_EL_KEY_OID, JCP.GOST_EL_DEGREE_NAME);
+
+        // Грузим ключ и сертификат.
+        KeyStore keyStore = KeyStore.getInstance(JCP.HD_STORE_NAME);
+        keyStore.load(null, null);
+
+        // Первый в списке сертификатов - сертификат ключа подписи.
+        PrivateKey privKey = getPrivate();
+
+        // II. Создание подписи.
+
+        InputStream inStream = new FileInputStream("1_public.pem");
+        BufferedInputStream bis = new BufferedInputStream( inStream );
+
+        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+
+        List<Certificate> certList = new ArrayList<Certificate>();
+        Certificate certificate = cf.generateCertificate(bis);
+        certList.add(certificate);
+        Store certs = new JcaCertStore(certList);
+
+        CMSSignedDataGenerator gen = new CMSSignedDataGenerator();
+        gen.addCertificates( certs );
+        CMSProcessableInputStream msg = new CMSProcessableInputStream( new ByteArrayInputStream( "signedhash".getBytes() ) );
+
+        CMSSignedData signedData = gen.generate(msg, false);
+        byte[] pkcs7 = signedData.getEncoded() ) );
     }
 
 }

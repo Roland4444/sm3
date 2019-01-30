@@ -112,7 +112,7 @@ public abstract class Standart implements Serializable {
         StreamSource input = new StreamSource(in);
         return this.transport.send(input, SupressConsole);
     }
-    public  abstract byte[] generateUnsSOAP(byte[] input) throws IOException;
+    public  abstract byte[] generateUnsSOAP(byte[] input) throws Exception;
 
     public void setinput(byte[] input) throws IOException {
         String textInput = new String(input);

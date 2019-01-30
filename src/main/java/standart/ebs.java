@@ -1,4 +1,5 @@
 package standart;
+import Message.abstractions.BinaryMessage;
 import Message.abstractions.FileInBinary;
 import Message.toSMEV.EBS.EBSMessage;
 import crypto.Gost3411Hash;
@@ -16,8 +17,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -27,6 +30,7 @@ import java.util.ArrayList;
 
 
 public class ebs extends Standart {
+    public byte[] hooked=null;
     public Gost3411Hash Hasher;
     public String MatrixAttach = "<ns2:RefAttachmentHeader>\t\t<ns2:uuid></ns2:uuid>\t\t<ns2:Hash></ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7></ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>";
     public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>\n";
@@ -46,12 +50,13 @@ public class ebs extends Standart {
     public String currentPKSC7Photo =   null;
     public String Soundguuid, Photoguuid;
     public String AttachesHeaderList;
-    public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp){
+    public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp) throws IOException {
         super(sr, sihner, inj, transport, temp);
         Hasher = new Gost3411Hash();
     //    rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
+        hooked=Files.readAllBytes(new File("openjdk-11.0.1_linux-x64_bin.tar.gz").toPath());
     }
-    public final String root ="<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
+    public final String startroot ="<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
             "    <bm:RegistrarMnemonic></bm:RegistrarMnemonic>\n" +
             "    <bm:EmployeeId></bm:EmployeeId>\n" +
             "    <bm:BiometricData>\n" +
@@ -59,51 +64,8 @@ public class ebs extends Standart {
             "        <bm:Date></bm:Date>\n" +
             "        <bm:RaId></bm:RaId>\n" +
             "        <bm:PersonId></bm:PersonId>\n" +
-            "        <bm:IdpMnemonic></bm:IdpMnemonic>      \n" +
-            "        <bm:Data>\n" +
-            "            <bm:Modality>SOUND</bm:Modality>\n" +
-            "            <bm:AttachmentRef attachmentId=\"\"/>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_1_start</bm:Key>\n" +
-            "                <bm:Value></bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_1_end</bm:Key>\n" +
-            "                <bm:Value></bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_1_desc</bm:Key>\n" +
-            "                <bm:Value>digits_asc</bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_2_start</bm:Key>\n" +
-            "                <bm:Value></bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_2_end</bm:Key>\n" +
-            "                <bm:Value></bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_2_desc</bm:Key>\n" +
-            "                <bm:Value>digits_desc</bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_3_start</bm:Key>\n" +
-            "                <bm:Value></bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_3_end</bm:Key>\n" +
-            "                <bm:Value></bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "            <bm:BioMetadata>\n" +
-            "                <bm:Key>voice_3_desc</bm:Key>\n" +
-            "                <bm:Value>digits_random</bm:Value>\n" +
-            "            </bm:BioMetadata>\n" +
-            "        </bm:Data>\n" +
-            "        <bm:Data>\n" +
-            "            <bm:Modality>PHOTO</bm:Modality>\n" +
-            "            <bm:AttachmentRef attachmentId=\"\"/>\n" +
-            "        </bm:Data>\n" +
+            "        <bm:IdpMnemonic></bm:IdpMnemonic>      \n" ;
+    public final String endroot =
             "    </bm:BiometricData>\n" +
             "</bm:RegisterBiometricDataRequest>";
     public byte[] GetSoap() {
@@ -126,7 +88,7 @@ public class ebs extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-        return signer.signconsumerns4(signer.getmainSign(), GetSoap());
+        return signer.signcallerns2(signer.getmainSign(), GetSoap());
     };
 
     public byte[] GetResponseRequest() throws Exception {
@@ -229,16 +191,34 @@ public class ebs extends Standart {
     };
 
 
-    public void generateAttachTag(){
-        AttachesHeaderList = "<ns2:RefAttachmentHeaderList>"+AttachPhotoBlock()+AttachSoundBlock()+
-               " </ns2:RefAttachmentHeaderList>";
+    public String genMessagePrimaryContent(EBSMessage msg) throws Exception {
+        String[] block = new String[10];
+        int i = 0;
+        block[i]=inj.injectTag(startroot, "bm:RegistrarMnemonic>", msg.otherinfo.RegMnemonic);
+        block[++i]=inj.injectTag(block[i-1], "bm:EmployeeId>", msg.otherinfo.OperSNILS);
+        block[++i]=inj.injectTag(block[i-1], "bm:Date>", inj.generateTimeStamp());
+        block[++i]=inj.injectTag(block[i-1], "bm:RegistrarMnemonic>", msg.otherinfo.RegMnemonic);
+        block[++i]=inj.injectTag(block[i-1], "bm:RaId>", msg.otherinfo.RA);
+        block[++i]=inj.injectTag(block[i-1], "bm:PersonId>", msg.otherinfo.OID);
+        block[++i]=inj.injectTag(block[i-1], "bm:IdpMnemonic>", msg.otherinfo.Mnemonic);
+
+        block[++i]=block[i-1]+generateSoundBlock(msg)+generatePhotoBlock(msg)+endroot;
+        return block[i];
+    }
+
+    public String  generateAttachTag(){
+        return AttachPhotoBlock()+AttachSoundBlock();
     };
 
 
     @Override
-    public byte[] generateUnsSOAP(byte[] input) throws IOException {
-
-        return null;
+    public byte[] generateUnsSOAP(byte[] input) throws Exception {
+        String[] block = new String[10];
+        int i = 0;
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(input);
+        block[i]=inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", genMessagePrimaryContent(msg));
+        block[++i]=inj.injectTagDirect(block[i-1], "RefAttachmentHeaderList",generateAttachTag());
+        return block[i].getBytes();
     }
 
 

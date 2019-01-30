@@ -30,7 +30,12 @@ public class EBSService extends JAktor {
         System.out.println(restoring.pseudo);
         System.out.println(restoring.addressToReply);
         System.out.println("Base 64 => "+hash.base64(restoring.DataToWork));
-        byte[] BinaryXML=deps.tableProcessor.OperatorMap.get(restoring.pseudo).generateUnsSOAP(restoring.DataToWork);
+        byte[] BinaryXML= null;
+        try {
+            BinaryXML = deps.tableProcessor.OperatorMap.get(restoring.pseudo).generateUnsSOAP(restoring.DataToWork);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         InputDataBlock InputBlock = new InputDataBlock(restoring.ID, restoring.pseudo, BinaryXML, restoring.addressToReply);
         deps_c.inputDataFlow.put(InputBlock);

@@ -49,13 +49,12 @@ Whats done:
 
     TEST short soap package without mobile number; =>failed;
     Must ALL info in FIND ESIA;!!!!!!!!
+        FINISH TODAY FIND ESIA acc;
+        CREATE ESIA ACC;
 TODO TASKS:
-    FINISH TODAY FIND ESIA acc;
-    CREATE ESIA ACC;
-
-
-
-
+    BouncyCastle detached PKSC7;
+    =>>
+        https://stackoverflow.com/questions/16662408/correct-way-to-sign-and-verify-signature-using-bouncycastle
 
 
 

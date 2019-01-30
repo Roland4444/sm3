@@ -3,8 +3,10 @@ package standart;
 import Message.abstractions.BinaryMessage;
 import Message.toSMEV.EBS.EBSMessage;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
+import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 import schedulling.Scheduller;
 import schedulling.abstractions.DependencyContainer;
 import schedulling.abstractions.Sign;
@@ -14,9 +16,16 @@ import util.SignerXML;
 import util.crypto.Sign2018;
 import util.crypto.TestSign2001;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,6 +34,122 @@ import static org.junit.Assert.*;
 
 public class ebsTest {
     EBSMessage msg;
+    byte[] buff;
+    String dumped = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
+            "   <S:Body>\n" +
+            "      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">\n" +
+            "         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\t<ns:MessageID>24df9c9c-2462-11e9-9fa1-af0411f79ff8</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
+            "    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>\n" +
+            "    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>\n" +
+            "    <bm:BiometricData>\n" +
+            "        <bm:Id>ID-1</bm:Id>\n" +
+            "        <bm:Date>2019-01-30T11:39:12.2000000+04:00</bm:Date>\n" +
+            "        <bm:RaId>1000300890</bm:RaId>\n" +
+            "        <bm:PersonId>1000368305</bm:PersonId>\n" +
+            "        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      \n" +
+            "<bm:Data>\n" +
+            "<bm:Modality>SOUND</bm:Modality>\n" +
+            "            <bm:AttachmentRef attachmentId=\"22e2bb2a-2462-11e9-9fa1-67a6cbfa98e1\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.0</bm:Value></bm:BioMetadata>\n" +
+            "<bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>1.0</bm:Value></bm:BioMetadata>\n" +
+            "<bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata>\n" +
+            "<bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>2.0</bm:Value></bm:BioMetadata>\n" +
+            "<bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>3.0</bm:Value></bm:BioMetadata>\n" +
+            "<bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata>\n" +
+            "<bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>4.0</bm:Value></bm:BioMetadata>\n" +
+            "<bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>5.0</bm:Value></bm:BioMetadata>\n" +
+            "<bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata>\n" +
+            "</bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"245054eb-2462-11e9-9fa1-05e9c07bdd87\"/></bm:Data>    </bm:BiometricData>\n" +
+            "</bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent>\t<ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader>\t\t<ns2:uuid>245054eb-2462-11e9-9fa1-05e9c07bdd87</ns2:uuid>\t\t<ns2:Hash>6k9/NWk/nX1nyyCsJQ8vcoO229ZDysnpFqgJxI1dYzA=</ns2:Hash>\t\t<ns2:MimeType>image/png</ns2:MimeType>\t<ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
+            "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB\n" +
+            "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR\n" +
+            "g9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQsw\n" +
+            "CQYDVQQGEwJSVTEYMBYGA1UECAwPNzcg0JzQvtGB0LrQstCwMRUwEwYDVQQHDAzQnNC+0YHQutCy\n" +
+            "0LAxJDAiBgNVBAoMG9Ce0JDQniDQoNC+0YHRgtC10LvQtdC60L7QvDEwMC4GA1UECwwn0KPQtNC+\n" +
+            "0YHRgtC+0LLQtdGA0Y/RjtGJ0LjQuSDRhtC10L3RgtGAMTQwMgYDVQQDDCvQotC10YHRgtC+0LLR\n" +
+            "i9C5INCj0KYg0KDQotCaICjQoNCi0JvQsNCx0YEpMB4XDTE4MDcyMDEzMDE0MVoXDTE5MDcyMDEz\n" +
+            "MTE0MVowgfAxHTAbBgkqhkiG9w0BCQIMDtCS0JrQkNCR0JDQndCaMRowGAYIKoUDA4EDAQESDDAw\n" +
+            "MzAxNTAxMTc1NTEYMBYGBSqFA2QBEg0xMDIzMDAwMDAwMjEwMRwwGgYDVQQKDBPQkNCeINCS0JrQ\n" +
+            "kNCR0JDQndCaMRswGQYDVQQHDBLQkNGB0YLRgNCw0YXQsNC90YwxMzAxBgNVBAgMKjMwINCQ0YHR\n" +
+            "gtGA0LDRhdCw0L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjDELMAkGA1UEBhMCUlUxHDAaBgNVBAMM\n" +
+            "E9CQ0J4g0JLQmtCQ0JHQkNCd0JowYzAcBgYqhQMCAhMwEgYHKoUDAgIkAAYHKoUDAgIeAQNDAARA\n" +
+            "qjtC1dM6zvtwmhJbUMVVOiC+8kbOOgufkJJFKHy5rMaFG6jWxUiGKvI8AAcEE7rP93ui2TMVzaDe\n" +
+            "cGOrspIW6KOCBIMwggR/MA4GA1UdDwEB/wQEAwIE8DAdBgNVHQ4EFgQU541ASZ2wBv/db7s8wxlc\n" +
+            "nshsQxAwggGIBgNVHSMEggF/MIIBe4AUPu8ZPw+5ebDx5ikho+S5lbml7pChggFOpIIBSjCCAUYx\n" +
+            "GDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1Njc4OTAxKTAn\n" +
+            "BgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZIhvcNAQkBFghj\n" +
+            "YUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEVMBMGA1UEBwwM\n" +
+            "0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+0LwxMDAuBgNV\n" +
+            "BAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIGA1UEAwwr0KLQ\n" +
+            "tdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKYIRAXILAVZQALmz5xHPOr40\n" +
+            "d6AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYB\n" +
+            "BQUHAwIwCgYIKwYBBQUHAwQwHQYDVR0gBBYwFDAIBgYqhQNkcQEwCAYGKoUDZHECMCsGA1UdEAQk\n" +
+            "MCKADzIwMTgwNzIwMTMwMTQxWoEPMjAxOTA3MjAxMzAxNDFaMIIBNAYFKoUDZHAEggEpMIIBJQwr\n" +
+            "ItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiICjQstC10YDRgdC40Y8gMy45KQwsItCa0YDQuNC/0YLQ\n" +
+            "vtCf0YDQviDQo9CmIiAo0LLQtdGA0YHQuNC4IDIuMCkMY9Ch0LXRgNGC0LjRhNC40LrQsNGCINGB\n" +
+            "0L7QvtGC0LLQtdGC0YHRgtCy0LjRjyDQpNCh0JEg0KDQvtGB0YHQuNC4IOKEliDQodCkLzEyNC0y\n" +
+            "NTM5INC+0YIgMTUuMDEuMjAxNQxj0KHQtdGA0YLQuNGE0LjQutCw0YIg0YHQvtC+0YLQstC10YLR\n" +
+            "gdGC0LLQuNGPINCk0KHQkSDQoNC+0YHRgdC40Lgg4oSWINCh0KQvMTI4LTI4ODEg0L7RgiAxMi4w\n" +
+            "NC4yMDE2MDYGBSqFA2RvBC0MKyLQmtGA0LjQv9GC0L7Qn9GA0L4gQ1NQIiAo0LLQtdGA0YHQuNGP\n" +
+            "IDMuOSkwZQYDVR0fBF4wXDBaoFigVoZUaHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2ku\n" +
+            "cnUvY2RwLzNlZWYxOTNmMGZiOTc5YjBmMWU2MjkyMWEzZTRiOTk1YjlhNWVlOTAuY3JsMFcGCCsG\n" +
+            "AQUFBwEBBEswSTBHBggrBgEFBQcwAoY7aHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2ku\n" +
+            "cnUvY2RwL3Rlc3RfY2FfcnRsYWJzMi5jZXIwCAYGKoUDAgIDA0EAWIKbobPiDap0i63WV/XyVw9I\n" +
+            "eSeOGvQAgsverXl1IdpLqXAvHX1prvCUumTiu+aYvhGJIvcxjDyLuGhb3OQjGjGCAcIwggG+AgEB\n" +
+            "MIIBXTCCAUYxGDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1\n" +
+            "Njc4OTAxKTAnBgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZI\n" +
+            "hvcNAQkBFghjYUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEV\n" +
+            "MBMGA1UEBwwM0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+\n" +
+            "0LwxMDAuBgNVBAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIG\n" +
+            "A1UEAwwr0KLQtdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKQIRAXILAVZQ\n" +
+            "ABCz6BEejDlOj3AwCgYGKoUDAgIJBQAwCgYGKoUDAgITBQAEQIGYFUkImAwTkfALWbt4D6lt+KAO\n" +
+            "StGlaZHAtB9b423UTgzH0bFdE5Lf+EcUtnt6bMlxzwQC0EOWS2WnbghXl1Q=</ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader><ns2:RefAttachmentHeader>\t\t<ns2:uuid>22e2bb2a-2462-11e9-9fa1-67a6cbfa98e1</ns2:uuid>\t\t<ns2:Hash>LwX76ZiKWn7FXljFxxL09Q1J+lCj9aXoWNFZDkuTZZU=</ns2:Hash>\t\t<ns2:MimeType>audio/x-wav</ns2:MimeType>\t<ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
+            "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB\n" +
+            "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR\n" +
+            "g9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQsw\n" +
+            "CQYDVQQGEwJSVTEYMBYGA1UECAwPNzcg0JzQvtGB0LrQstCwMRUwEwYDVQQHDAzQnNC+0YHQutCy\n" +
+            "0LAxJDAiBgNVBAoMG9Ce0JDQniDQoNC+0YHRgtC10LvQtdC60L7QvDEwMC4GA1UECwwn0KPQtNC+\n" +
+            "0YHRgtC+0LLQtdGA0Y/RjtGJ0LjQuSDRhtC10L3RgtGAMTQwMgYDVQQDDCvQotC10YHRgtC+0LLR\n" +
+            "i9C5INCj0KYg0KDQotCaICjQoNCi0JvQsNCx0YEpMB4XDTE4MDcyMDEzMDE0MVoXDTE5MDcyMDEz\n" +
+            "MTE0MVowgfAxHTAbBgkqhkiG9w0BCQIMDtCS0JrQkNCR0JDQndCaMRowGAYIKoUDA4EDAQESDDAw\n" +
+            "MzAxNTAxMTc1NTEYMBYGBSqFA2QBEg0xMDIzMDAwMDAwMjEwMRwwGgYDVQQKDBPQkNCeINCS0JrQ\n" +
+            "kNCR0JDQndCaMRswGQYDVQQHDBLQkNGB0YLRgNCw0YXQsNC90YwxMzAxBgNVBAgMKjMwINCQ0YHR\n" +
+            "gtGA0LDRhdCw0L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjDELMAkGA1UEBhMCUlUxHDAaBgNVBAMM\n" +
+            "E9CQ0J4g0JLQmtCQ0JHQkNCd0JowYzAcBgYqhQMCAhMwEgYHKoUDAgIkAAYHKoUDAgIeAQNDAARA\n" +
+            "qjtC1dM6zvtwmhJbUMVVOiC+8kbOOgufkJJFKHy5rMaFG6jWxUiGKvI8AAcEE7rP93ui2TMVzaDe\n" +
+            "cGOrspIW6KOCBIMwggR/MA4GA1UdDwEB/wQEAwIE8DAdBgNVHQ4EFgQU541ASZ2wBv/db7s8wxlc\n" +
+            "nshsQxAwggGIBgNVHSMEggF/MIIBe4AUPu8ZPw+5ebDx5ikho+S5lbml7pChggFOpIIBSjCCAUYx\n" +
+            "GDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1Njc4OTAxKTAn\n" +
+            "BgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZIhvcNAQkBFghj\n" +
+            "YUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEVMBMGA1UEBwwM\n" +
+            "0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+0LwxMDAuBgNV\n" +
+            "BAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIGA1UEAwwr0KLQ\n" +
+            "tdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKYIRAXILAVZQALmz5xHPOr40\n" +
+            "d6AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYB\n" +
+            "BQUHAwIwCgYIKwYBBQUHAwQwHQYDVR0gBBYwFDAIBgYqhQNkcQEwCAYGKoUDZHECMCsGA1UdEAQk\n" +
+            "MCKADzIwMTgwNzIwMTMwMTQxWoEPMjAxOTA3MjAxMzAxNDFaMIIBNAYFKoUDZHAEggEpMIIBJQwr\n" +
+            "ItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiICjQstC10YDRgdC40Y8gMy45KQwsItCa0YDQuNC/0YLQ\n" +
+            "vtCf0YDQviDQo9CmIiAo0LLQtdGA0YHQuNC4IDIuMCkMY9Ch0LXRgNGC0LjRhNC40LrQsNGCINGB\n" +
+            "0L7QvtGC0LLQtdGC0YHRgtCy0LjRjyDQpNCh0JEg0KDQvtGB0YHQuNC4IOKEliDQodCkLzEyNC0y\n" +
+            "NTM5INC+0YIgMTUuMDEuMjAxNQxj0KHQtdGA0YLQuNGE0LjQutCw0YIg0YHQvtC+0YLQstC10YLR\n" +
+            "gdGC0LLQuNGPINCk0KHQkSDQoNC+0YHRgdC40Lgg4oSWINCh0KQvMTI4LTI4ODEg0L7RgiAxMi4w\n" +
+            "NC4yMDE2MDYGBSqFA2RvBC0MKyLQmtGA0LjQv9GC0L7Qn9GA0L4gQ1NQIiAo0LLQtdGA0YHQuNGP\n" +
+            "IDMuOSkwZQYDVR0fBF4wXDBaoFigVoZUaHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2ku\n" +
+            "cnUvY2RwLzNlZWYxOTNmMGZiOTc5YjBmMWU2MjkyMWEzZTRiOTk1YjlhNWVlOTAuY3JsMFcGCCsG\n" +
+            "AQUFBwEBBEswSTBHBggrBgEFBQcwAoY7aHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2ku\n" +
+            "cnUvY2RwL3Rlc3RfY2FfcnRsYWJzMi5jZXIwCAYGKoUDAgIDA0EAWIKbobPiDap0i63WV/XyVw9I\n" +
+            "eSeOGvQAgsverXl1IdpLqXAvHX1prvCUumTiu+aYvhGJIvcxjDyLuGhb3OQjGjGCAcIwggG+AgEB\n" +
+            "MIIBXTCCAUYxGDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1\n" +
+            "Njc4OTAxKTAnBgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZI\n" +
+            "hvcNAQkBFghjYUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEV\n" +
+            "MBMGA1UEBwwM0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+\n" +
+            "0LwxMDAuBgNVBAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIG\n" +
+            "A1UEAwwr0KLQtdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKQIRAXILAVZQ\n" +
+            "ABCz6BEejDlOj3AwCgYGKoUDAgIJBQAwCgYGKoUDAgITBQAEQOVmz3Z+xdoA5pjbT2787KFKYDnn\n" +
+            "DeUB3/741v8XYm2+ia78pbs1wB5wjWjd9YwOfvKLT6oJxynkOwVLGtGNFKE=</ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>\n" +
+            "         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>GLMXyutrkQH2dH6XUoBwwAyecSR0bht7sEYNNvYRQRk=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>EoSEVGhyKFCePDWecXIZEjmp3VDOkE6xkVCDL6/z9bZsJawMNdlvN9VukGav5ObkLOITVz4UwwWOHJJMwdyiIg==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>\n" +
+            "      </ns2:SendRequestRequest>\n" +
+            "   </S:Body>\n" +
+            "</S:Envelope>";
 
     DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
     Scheduller sch = new Scheduller(deps);
@@ -36,6 +161,7 @@ public class ebsTest {
     public String filename__ = "EBSMessageFUll.bin";
     public ebsTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
         msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        buff = Files.readAllBytes(new File(filename__).toPath());
 
     }
 
@@ -483,7 +609,7 @@ public class ebsTest {
     }
 
     @Test
-    public void restoreMsg() throws IOException {
+    public void restoreMsg() throws Exception {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         byte[] rawmsg = Files.readAllBytes(new File(filename__).toPath());
         assertNotEquals(null, msg.otherinfo);
@@ -491,6 +617,7 @@ public class ebsTest {
         assertNotEquals(null, msg.SoundBLOB);
         byte[] BinaryXML=deps.tableProcessor.OperatorMap.get("ebs").generateUnsSOAP(rawmsg);
         assertNotEquals(null, BinaryXML);
+        System.out.println(new String(BinaryXML));
     }
 
     @Test
@@ -543,4 +670,141 @@ public class ebsTest {
         System.out.println( deps.ebs.AttachSoundBlock());
 
     }
+
+    @Test
+    public void genMessagePrimaryContent() throws Exception {
+        String block = deps.ebs.genMessagePrimaryContent(msg);
+        assertNotEquals(null, block);
+        System.out.println(block);
+    }
+
+
+    @Test
+    public void generateUnsSOAP() throws Exception {
+        String usnigned =new String(deps.ebs.generateUnsSOAP(buff));
+        assertNotEquals(null, usnigned);
+        System.out.println(usnigned);
+    }
+
+    @Test
+    public void restoredSignandsend() throws Exception {
+
+        String usnigned =new String(deps.ebs.generateUnsSOAP(buff));
+
+        deps.ebs.setinput(usnigned.getBytes());
+        assertNotEquals(null, usnigned);
+        System.out.println(usnigned);
+
+
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+        if (response.indexOf("fault")>0) {
+           System.out.println("FAULT");
+        }
+    }
+
+    @Test
+    public void printAll(){
+        System.out.println(deps.gis.emptySOAP);
+
+        System.out.println("\n\n");
+
+        System.out.println(deps.ebs.emptySOAP);
+
+    }
+
+    @Test
+    public void sendSA() throws Exception {
+        String usn = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
+                "   <S:Body>\n" +
+                "      <ns2:SendRequestRequest xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
+                "         <ns:SenderProvidedRequestData Id=\"SIGNED_BY_CONSUMER\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\t<ns:MessageID>868a694d-5e80-11e4-a9ff-d4c9eff07b77</ns:MessageID><ns2:MessagePrimaryContent><ns1:BreachRequest xmlns:ns1=\"urn://x-artefacts-gibdd-gov-ru/breach/root/1.0\"  xmlns:ns2=\"urn://x-artefacts-gibdd-gov-ru/breach/commons/1.0\"  xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1\" Id=\"PERSONAL_SIGNATURE\"> <ns1:RequestedInformation> <ns2:RegPointNum>Т785ЕС57</ns2:RegPointNum> </ns1:RequestedInformation> <ns1:Governance> <ns2:Name>ГИБДД РФ</ns2:Name> <ns2:Code>GIBDD</ns2:Code> <ns2:OfficialPerson> <ns3:FamilyName>Загурский</ns3:FamilyName> <ns3:FirstName>Андрей</ns3:FirstName> <ns3:Patronymic>Петрович</ns3:Patronymic> </ns2:OfficialPerson></ns1:Governance> </ns1:BreachRequest> </ns2:MessagePrimaryContent>\t<ns2:RefAttachmentHeaderList>\t<ns2:RefAttachmentHeader>\t\t<ns2:uuid>e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77</ns2:uuid>\t\t<ns2:Hash>VpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJA=</ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7>MIICyAYJKoZIhvcNAQcCoIICuTCCArUCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggGLMIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHsxggEEMIIBAAIBATA2MC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUCBQDBXZBUMAoGBiqFAwICCQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTQxMDI4MDg1ODAzWjAvBgkqhkiG9w0BCQQxIgQgVpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJAwCgYGKoUDAgITBQAEQIXxbWJSNu/oGOxFOKcDO5wE1riXWDqyffOPZnIfoUk3QNI/qvRas+0V+713qvOL9iGQ3QrKFD1PkeJVditDDP4=</ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>\t</ns2:RefAttachmentHeaderList>\t<ns:TestMessage/></ns:SenderProvidedRequestData>\n" +
+                "         <ns2:CallerInformationSystemSignature></ns2:CallerInformationSystemSignature>\n" +
+                "      </ns2:SendRequestRequest>\n" +
+                "   </S:Body>\n" +
+                "</S:Envelope>";
+        deps.ebs.setinput(usn.getBytes());
+        assertNotEquals(null, usn);
+        System.out.println(usn);
+
+
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+        if (response.indexOf("fault")>0) {
+            System.out.println("FAULT");
+        }
+    }
+
+    @Test
+    public void sendhoocked1() throws Exception {
+        String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
+        deps.ebs.setinput(hook.getBytes());
+        System.out.println(hook);
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+    }
+
+    @Test
+    public void sendhoocked12() throws Exception {
+        System.out.println(dumped);
+        String injected = "<ns2:RefAttachmentHeader>\t\t<ns2:uuid>e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77</ns2:uuid>\t\t<ns2:Hash>VpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJA=</ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7>MIICyAYJKoZIhvcNAQcCoIICuTCCArUCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggGLMIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHsxggEEMIIBAAIBATA2MC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUCBQDBXZBUMAoGBiqFAwICCQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTQxMDI4MDg1ODAzWjAvBgkqhkiG9w0BCQQxIgQgVpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJAwCgYGKoUDAgITBQAEQIXxbWJSNu/oGOxFOKcDO5wE1riXWDqyffOPZnIfoUk3QNI/qvRas+0V+713qvOL9iGQ3QrKFD1PkeJVditDDP4=</ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>";
+        String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
+        String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
+        System.out.println(hook2);
+        String written = deps.inj.injectTagDirect(hook2, "ns2:RefAttachmentHeaderList", injected);
+        System.out.println(written);
+
+        deps.ebs.setinput(written.getBytes());
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+    }
+
+    @Test
+    public void sendhoocked124() throws Exception {
+        System.out.println(dumped);
+        String injected = "<ns2:RefAttachmentHeader>\t\t<ns2:uuid>e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77</ns2:uuid>\t\t<ns2:Hash>VpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJA=</ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7>MIICyAYJKoZIhvcNAQcCoIICuTCCArUCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggGLMIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHsxggEEMIIBAAIBATA2MC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUCBQDBXZBUMAoGBiqFAwICCQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTQxMDI4MDg1ODAzWjAvBgkqhkiG9w0BCQQxIgQgVpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJAwCgYGKoUDAgITBQAEQIXxbWJSNu/oGOxFOKcDO5wE1riXWDqyffOPZnIfoUk3QNI/qvRas+0V+713qvOL9iGQ3QrKFD1PkeJVditDDP4=</ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>";
+       // String injected2 = inj.injectTag(injected, "ns2:uuid", e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77)
+        String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
+        String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
+        System.out.println(hook2);
+        String hook3 = deps.inj.injectTagDirect(hook2,"ns2:RefAttachmentHeaderList", injected );
+        System.out.println("\n\n"+hook3);
+
+        deps.ebs.setinput(hook3.getBytes());
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+
+    }
+
+
+    @Test
+    public void doubleinjected() throws Exception {
+        System.out.println(dumped);
+        String injected = "<ns2:RefAttachmentHeader>\t\t<ns2:uuid>e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77</ns2:uuid>\t\t<ns2:Hash>VpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJA=</ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7>MIICyAYJKoZIhvcNAQcCoIICuTCCArUCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggGLMIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHsxggEEMIIBAAIBATA2MC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUCBQDBXZBUMAoGBiqFAwICCQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTQxMDI4MDg1ODAzWjAvBgkqhkiG9w0BCQQxIgQgVpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJAwCgYGKoUDAgITBQAEQIXxbWJSNu/oGOxFOKcDO5wE1riXWDqyffOPZnIfoUk3QNI/qvRas+0V+713qvOL9iGQ3QrKFD1PkeJVditDDP4=</ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>";
+        String injected2 = injected+injected;
+        String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
+        String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
+        System.out.println(hook2);
+        String hook3 = deps.inj.injectTagDirect(hook2,"ns2:RefAttachmentHeaderList", injected2 );
+        System.out.println("\n\n"+hook3);
+
+        deps.ebs.setinput(hook3.getBytes());
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+
+    }
+
+
 }
