@@ -137,4 +137,12 @@ public class TransXMLTest {
         TransXML trans = new TransXML();
         assertEquals("<iop></iop>", trans.removeBackSlash("<iop/>"));
     }
+    @Test
+    public void burnTabsAndNs() {
+        TransXML trans = new TransXML();
+        String initial = "\n\n\n<>\t";
+        String etalon = "<>";
+        assertEquals(etalon,new String(trans.burnTabsAndNs(initial.getBytes())));
+    }
+
 }

@@ -32,8 +32,8 @@ import java.util.ArrayList;
 public class ebs extends Standart {
     public byte[] hooked=null;
     public Gost3411Hash Hasher;
-    public String MatrixAttach = "<ns2:RefAttachmentHeader>\t\t<ns2:uuid></ns2:uuid>\t\t<ns2:Hash></ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7></ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>";
-    public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>\n";
+    public String MatrixAttach = "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>image/jpeg</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>";
+    public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>";
     public String MatrixPhoto = "<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data>";
     public String emptySOAP = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
             "   <S:Body>\n" +

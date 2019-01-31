@@ -120,5 +120,15 @@ public class TransXML {
         return process;
     }
 
-
+    public byte[] burnTabsAndNs(byte[] input){
+        String input__ = new String(input);
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i<input__.length(); i++){
+            char current = input__.charAt(i);
+            if ((current == '\n') || (current == '\t'))
+                continue;
+            sb.append(current);
+        }
+        return sb.toString().getBytes();
+    };
 }

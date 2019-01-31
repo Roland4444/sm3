@@ -13,6 +13,7 @@ import schedulling.abstractions.Sign;
 import util.Injector;
 import util.SignatureProcessorException;
 import util.SignerXML;
+import util.TransXML;
 import util.crypto.Sign2018;
 import util.crypto.TestSign2001;
 
@@ -33,8 +34,100 @@ import static org.junit.Assert.*;
 
 
 public class ebsTest {
+    TransXML trans = new TransXML();
     EBSMessage msg;
     byte[] buff;
+    String prepared2Tag ="<ns2:RefAttachmentHeader><ns2:uuid>872b8bb6-2550-11e9-9666-6f90870395fd</ns2:uuid><ns2:Hash>LwX76ZiKWn7FXljFxxL09Q1J+lCj9aXoWNFZDkuTZZU=</ns2:Hash><ns2:MimeType>audio/x-wav</ns2:MimeType><ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
+            "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB\n" +
+            "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR\n" +
+            "g9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQsw\n" +
+            "CQYDVQQGEwJSVTEYMBYGA1UECAwPNzcg0JzQvtGB0LrQstCwMRUwEwYDVQQHDAzQnNC+0YHQutCy\n" +
+            "0LAxJDAiBgNVBAoMG9Ce0JDQniDQoNC+0YHRgtC10LvQtdC60L7QvDEwMC4GA1UECwwn0KPQtNC+\n" +
+            "0YHRgtC+0LLQtdGA0Y/RjtGJ0LjQuSDRhtC10L3RgtGAMTQwMgYDVQQDDCvQotC10YHRgtC+0LLR\n" +
+            "i9C5INCj0KYg0KDQotCaICjQoNCi0JvQsNCx0YEpMB4XDTE4MDcyMDEzMDE0MVoXDTE5MDcyMDEz\n" +
+            "MTE0MVowgfAxHTAbBgkqhkiG9w0BCQIMDtCS0JrQkNCR0JDQndCaMRowGAYIKoUDA4EDAQESDDAw\n" +
+            "MzAxNTAxMTc1NTEYMBYGBSqFA2QBEg0xMDIzMDAwMDAwMjEwMRwwGgYDVQQKDBPQkNCeINCS0JrQ\n" +
+            "kNCR0JDQndCaMRswGQYDVQQHDBLQkNGB0YLRgNCw0YXQsNC90YwxMzAxBgNVBAgMKjMwINCQ0YHR\n" +
+            "gtGA0LDRhdCw0L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjDELMAkGA1UEBhMCUlUxHDAaBgNVBAMM\n" +
+            "E9CQ0J4g0JLQmtCQ0JHQkNCd0JowYzAcBgYqhQMCAhMwEgYHKoUDAgIkAAYHKoUDAgIeAQNDAARA\n" +
+            "qjtC1dM6zvtwmhJbUMVVOiC+8kbOOgufkJJFKHy5rMaFG6jWxUiGKvI8AAcEE7rP93ui2TMVzaDe\n" +
+            "cGOrspIW6KOCBIMwggR/MA4GA1UdDwEB/wQEAwIE8DAdBgNVHQ4EFgQU541ASZ2wBv/db7s8wxlc\n" +
+            "nshsQxAwggGIBgNVHSMEggF/MIIBe4AUPu8ZPw+5ebDx5ikho+S5lbml7pChggFOpIIBSjCCAUYx\n" +
+            "GDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1Njc4OTAxKTAn\n" +
+            "BgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZIhvcNAQkBFghj\n" +
+            "YUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEVMBMGA1UEBwwM\n" +
+            "0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+0LwxMDAuBgNV\n" +
+            "BAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIGA1UEAwwr0KLQ\n" +
+            "tdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKYIRAXILAVZQALmz5xHPOr40\n" +
+            "d6AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYB\n" +
+            "BQUHAwIwCgYIKwYBBQUHAwQwHQYDVR0gBBYwFDAIBgYqhQNkcQEwCAYGKoUDZHECMCsGA1UdEAQk\n" +
+            "MCKADzIwMTgwNzIwMTMwMTQxWoEPMjAxOTA3MjAxMzAxNDFaMIIBNAYFKoUDZHAEggEpMIIBJQwr\n" +
+            "ItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiICjQstC10YDRgdC40Y8gMy45KQwsItCa0YDQuNC/0YLQ\n" +
+            "vtCf0YDQviDQo9CmIiAo0LLQtdGA0YHQuNC4IDIuMCkMY9Ch0LXRgNGC0LjRhNC40LrQsNGCINGB\n" +
+            "0L7QvtGC0LLQtdGC0YHRgtCy0LjRjyDQpNCh0JEg0KDQvtGB0YHQuNC4IOKEliDQodCkLzEyNC0y\n" +
+            "NTM5INC+0YIgMTUuMDEuMjAxNQxj0KHQtdGA0YLQuNGE0LjQutCw0YIg0YHQvtC+0YLQstC10YLR\n" +
+            "gdGC0LLQuNGPINCk0KHQkSDQoNC+0YHRgdC40Lgg4oSWINCh0KQvMTI4LTI4ODEg0L7RgiAxMi4w\n" +
+            "NC4yMDE2MDYGBSqFA2RvBC0MKyLQmtGA0LjQv9GC0L7Qn9GA0L4gQ1NQIiAo0LLQtdGA0YHQuNGP\n" +
+            "IDMuOSkwZQYDVR0fBF4wXDBaoFigVoZUaHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2ku\n" +
+            "cnUvY2RwLzNlZWYxOTNmMGZiOTc5YjBmMWU2MjkyMWEzZTRiOTk1YjlhNWVlOTAuY3JsMFcGCCsG\n" +
+            "AQUFBwEBBEswSTBHBggrBgEFBQcwAoY7aHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2ku\n" +
+            "cnUvY2RwL3Rlc3RfY2FfcnRsYWJzMi5jZXIwCAYGKoUDAgIDA0EAWIKbobPiDap0i63WV/XyVw9I\n" +
+            "eSeOGvQAgsverXl1IdpLqXAvHX1prvCUumTiu+aYvhGJIvcxjDyLuGhb3OQjGjGCAcIwggG+AgEB\n" +
+            "MIIBXTCCAUYxGDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1\n" +
+            "Njc4OTAxKTAnBgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZI\n" +
+            "hvcNAQkBFghjYUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEV\n" +
+            "MBMGA1UEBwwM0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+\n" +
+            "0LwxMDAuBgNVBAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIG\n" +
+            "A1UEAwwr0KLQtdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKQIRAXILAVZQ\n" +
+            "ABCz6BEejDlOj3AwCgYGKoUDAgIJBQAwCgYGKoUDAgITBQAEQPJ5GfornCHIxDyaLFkWf6gkFBAy\n" +
+            "Q7NHWuRZJ8fbB71ScxeUiFa9MN02RvszloYvoajxeOdiobR1aqDK5ALl+T4=</ns2:SignaturePKCS7></ns2:RefAttachmentHeader>";
+
+    String preparedAudioTag ="<ns2:RefAttachmentHeader><ns2:uuid>872b8bb6-2550-11e9-9666-6f90870395fd</ns2:uuid><ns2:Hash>LwX76ZiKWn7FXljFxxL09Q1J+lCj9aXoWNFZDkuTZZU=</ns2:Hash><ns2:MimeType>audio/x-wav</ns2:MimeType><ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA" +
+            "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB" +
+            "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR" +
+            "g9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQsw" +
+            "CQYDVQQGEwJSVTEYMBYGA1UECAwPNzcg0JzQvtGB0LrQstCwMRUwEwYDVQQHDAzQnNC+0YHQutCy" +
+            "0LAxJDAiBgNVBAoMG9Ce0JDQniDQoNC+0YHRgtC10LvQtdC60L7QvDEwMC4GA1UECwwn0KPQtNC+" +
+            "0YHRgtC+0LLQtdGA0Y/RjtGJ0LjQuSDRhtC10L3RgtGAMTQwMgYDVQQDDCvQotC10YHRgtC+0LLR" +
+            "i9C5INCj0KYg0KDQotCaICjQoNCi0JvQsNCx0YEpMB4XDTE4MDcyMDEzMDE0MVoXDTE5MDcyMDEz" +
+            "MTE0MVowgfAxHTAbBgkqhkiG9w0BCQIMDtCS0JrQkNCR0JDQndCaMRowGAYIKoUDA4EDAQESDDAw" +
+            "MzAxNTAxMTc1NTEYMBYGBSqFA2QBEg0xMDIzMDAwMDAwMjEwMRwwGgYDVQQKDBPQkNCeINCS0JrQ" +
+            "kNCR0JDQndCaMRswGQYDVQQHDBLQkNGB0YLRgNCw0YXQsNC90YwxMzAxBgNVBAgMKjMwINCQ0YHR" +
+            "gtGA0LDRhdCw0L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjDELMAkGA1UEBhMCUlUxHDAaBgNVBAMM" +
+            "E9CQ0J4g0JLQmtCQ0JHQkNCd0JowYzAcBgYqhQMCAhMwEgYHKoUDAgIkAAYHKoUDAgIeAQNDAARA" +
+            "qjtC1dM6zvtwmhJbUMVVOiC+8kbOOgufkJJFKHy5rMaFG6jWxUiGKvI8AAcEE7rP93ui2TMVzaDe" +
+            "cGOrspIW6KOCBIMwggR/MA4GA1UdDwEB/wQEAwIE8DAdBgNVHQ4EFgQU541ASZ2wBv/db7s8wxlc" +
+            "nshsQxAwggGIBgNVHSMEggF/MIIBe4AUPu8ZPw+5ebDx5ikho+S5lbml7pChggFOpIIBSjCCAUYx" +
+            "GDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1Njc4OTAxKTAn" +
+            "BgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZIhvcNAQkBFghj" +
+            "YUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEVMBMGA1UEBwwM" +
+            "0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+0LwxMDAuBgNV" +
+            "BAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIGA1UEAwwr0KLQ" +
+            "tdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKYIRAXILAVZQALmz5xHPOr40" +
+            "d6AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYB" +
+            "BQUHAwIwCgYIKwYBBQUHAwQwHQYDVR0gBBYwFDAIBgYqhQNkcQEwCAYGKoUDZHECMCsGA1UdEAQk" +
+            "MCKADzIwMTgwNzIwMTMwMTQxWoEPMjAxOTA3MjAxMzAxNDFaMIIBNAYFKoUDZHAEggEpMIIBJQwr" +
+            "ItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiICjQstC10YDRgdC40Y8gMy45KQwsItCa0YDQuNC/0YLQ" +
+            "vtCf0YDQviDQo9CmIiAo0LLQtdGA0YHQuNC4IDIuMCkMY9Ch0LXRgNGC0LjRhNC40LrQsNGCINGB" +
+            "0L7QvtGC0LLQtdGC0YHRgtCy0LjRjyDQpNCh0JEg0KDQvtGB0YHQuNC4IOKEliDQodCkLzEyNC0y" +
+            "NTM5INC+0YIgMTUuMDEuMjAxNQxj0KHQtdGA0YLQuNGE0LjQutCw0YIg0YHQvtC+0YLQstC10YLR" +
+            "gdGC0LLQuNGPINCk0KHQkSDQoNC+0YHRgdC40Lgg4oSWINCh0KQvMTI4LTI4ODEg0L7RgiAxMi4w" +
+            "NC4yMDE2MDYGBSqFA2RvBC0MKyLQmtGA0LjQv9GC0L7Qn9GA0L4gQ1NQIiAo0LLQtdGA0YHQuNGP" +
+            "IDMuOSkwZQYDVR0fBF4wXDBaoFigVoZUaHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2ku" +
+            "cnUvY2RwLzNlZWYxOTNmMGZiOTc5YjBmMWU2MjkyMWEzZTRiOTk1YjlhNWVlOTAuY3JsMFcGCCsG" +
+            "AQUFBwEBBEswSTBHBggrBgEFBQcwAoY7aHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2ku" +
+            "cnUvY2RwL3Rlc3RfY2FfcnRsYWJzMi5jZXIwCAYGKoUDAgIDA0EAWIKbobPiDap0i63WV/XyVw9I" +
+            "eSeOGvQAgsverXl1IdpLqXAvHX1prvCUumTiu+aYvhGJIvcxjDyLuGhb3OQjGjGCAcIwggG+AgEB" +
+            "MIIBXTCCAUYxGDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1" +
+            "Njc4OTAxKTAnBgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZI" +
+            "hvcNAQkBFghjYUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEV" +
+            "MBMGA1UEBwwM0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+" +
+            "0LwxMDAuBgNVBAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIG" +
+            "A1UEAwwr0KLQtdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKQIRAXILAVZQ" +
+            "ABCz6BEejDlOj3AwCgYGKoUDAgIJBQAwCgYGKoUDAgITBQAEQChOJKleasE20eVYcChObO3Via+v" +
+            "WPTOjIL+BbP1xGpkekA3OP8Dtljmqvpxr0OpwEaPoFguUW645ay17r2lgMI=</ns2:SignaturePKCS7></ns2:RefAttachmentHeader>";
+
+
     String dumped = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
             "   <S:Body>\n" +
             "      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">\n" +
@@ -615,6 +708,8 @@ public class ebsTest {
         assertNotEquals(null, msg.otherinfo);
         assertNotEquals(null, msg.PhotoBLOB);
         assertNotEquals(null, msg.SoundBLOB);
+
+        System.out.println(msg.SoundBLOB.filename);
         byte[] BinaryXML=deps.tableProcessor.OperatorMap.get("ebs").generateUnsSOAP(rawmsg);
         assertNotEquals(null, BinaryXML);
         System.out.println(new String(BinaryXML));
@@ -766,6 +861,47 @@ public class ebsTest {
         String response = new String(deps.ebs.SendSoapSigned());
         System.out.println(response);
     }
+
+
+    @Test
+    public void sendhoocked__() throws Exception {
+        System.out.println(dumped);
+        String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
+        String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
+        System.out.println(hook2);
+        String written = deps.inj.injectTagDirect(hook2, "ns2:RefAttachmentHeaderList", preparedAudioTag);
+        System.out.println(written);
+
+        deps.ebs.setinput(written.getBytes());
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+    }
+
+
+    @Test
+    public void sendhoocked__2() throws Exception {
+        String flushedprepared  = new String(trans.burnTabsAndNs(prepared2Tag.getBytes()));
+
+        System.out.println("######>>>>\n"+ flushedprepared);
+
+        String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
+        String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
+
+        System.out.println(hook2);
+
+
+        String written = deps.inj.injectTagDirect(hook2, "ns2:RefAttachmentHeaderList", flushedprepared);
+        System.out.println(written);
+
+        deps.ebs.setinput(written.getBytes());
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+    }
+
 
     @Test
     public void sendhoocked124() throws Exception {

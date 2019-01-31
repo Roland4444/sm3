@@ -1,6 +1,8 @@
 package util.crypto;
 
 import crypto.Gost3411Hash;
+import org.bouncycastle.cms.CMSException;
+import org.bouncycastle.operator.OperatorCreationException;
 import org.junit.Test;
 
 import java.io.*;
@@ -41,4 +43,6 @@ public class TestSign2001Test {
         Gost3411Hash hash = new Gost3411Hash();
         System.out.println(hash.base64(ts.CMSSign(arr, true)));
     }
+
+
 }
