@@ -19,6 +19,9 @@ import static org.junit.Assert.*;
 public class TestSign2001Test {
     TestSign2001 ts = new TestSign2001();
 
+    public TestSign2001Test() throws NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException, IOException {
+    }
+
 
     @Test
     public void getPrivate() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, UnrecoverableEntryException, IOException {

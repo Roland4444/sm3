@@ -14,6 +14,10 @@ import util.crypto.TestSign2019;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -26,7 +30,7 @@ public class gisTest {
   //DependencyContainer deps = new DependencyContainer(new SignerXML(new Test6f1(), new Test6f1()));
 
 
-    public gisTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
+    public gisTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
 
     }
 

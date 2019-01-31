@@ -4,28 +4,27 @@ import com.objsys.asn1j.runtime.*;
 import org.bouncycastle.cert.jcajce.JcaCertStore;
 import org.bouncycastle.cms.*;
 import org.bouncycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
+import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoGeneratorBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.util.Store;
 import ru.CryptoPro.JCP.ASN.CryptographicMessageSyntax.*;
 import ru.CryptoPro.JCP.ASN.PKIX1Explicit88.CertificateSerialNumber;
 import ru.CryptoPro.JCP.ASN.PKIX1Explicit88.Name;
 import ru.CryptoPro.JCP.JCP;
 import ru.CryptoPro.JCP.params.OID;
+import sun.misc.BASE64Encoder;
 
 import java.io.*;
 import java.security.*;
 import java.security.Signature;
+import java.security.cert.*;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public abstract class Sign implements Serializable {
+    public KeyStore keyStore;
     public final String STR_CMS_OID_SIGNED = "1.2.840.113549.1.7.2";
     public final String STR_CMS_OID_DATA = "1.2.840.113549.1.7.1";
 
@@ -137,7 +136,7 @@ public abstract class Sign implements Serializable {
     }
 
 
-    public byte[] sign2(byte[] input) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, UnrecoverableEntryException, IOException, CMSException {
+    public byte[] sign2(byte[] input) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, UnrecoverableEntryException, IOException, CMSException, InvalidKeyException, SignatureException {
         if (Security.getProvider("BC") == null) {
             Security.addProvider(new BouncyCastleProvider());
         }
@@ -147,32 +146,61 @@ public abstract class Sign implements Serializable {
         org.bouncycastle.cms.CMSConfig.setSigningEncryptionAlgorithmMapping(JCP.GOST_EL_DH_OID, JCP.GOST_EL_DH_NAME);
         org.bouncycastle.cms.CMSConfig.setSigningEncryptionAlgorithmMapping(JCP.GOST_EL_KEY_OID, JCP.GOST_EL_DEGREE_NAME);
 
-        // Грузим ключ и сертификат.
-        KeyStore keyStore = KeyStore.getInstance(JCP.HD_STORE_NAME);
-        keyStore.load(null, null);
 
-        // Первый в списке сертификатов - сертификат ключа подписи.
+
+
+
+        //Sign
         PrivateKey privKey = getPrivate();
+        Signature signature = Signature.getInstance(JCP.GOST_EL_DH_OID, "BC");
+        signature.initSign(privKey);
+        signature.update(input);
+        return signature.sign();
 
-        // II. Создание подписи.
-
-        InputStream inStream = new FileInputStream("1_public.pem");
-        BufferedInputStream bis = new BufferedInputStream( inStream );
-
-        CertificateFactory cf = CertificateFactory.getInstance("X.509");
-
-        List<Certificate> certList = new ArrayList<Certificate>();
-        Certificate certificate = cf.generateCertificate(bis);
-        certList.add(certificate);
-        Store certs = new JcaCertStore(certList);
-
-        CMSSignedDataGenerator gen = new CMSSignedDataGenerator();
-        gen.addCertificates( certs );
-        CMSProcessableInputStream msg = new CMSProcessableInputStream( new ByteArrayInputStream( "signedhash".getBytes() ) );
-
-        CMSSignedData signedData = gen.generate(msg, false);
-        byte[] pkcs7 = signedData.getEncoded() ) );
     }
+
+    public byte[] sign(byte[] data) throws GeneralSecurityException, CMSException, IOException {
+        Security.addProvider(new BouncyCastleProvider());
+        CMSSignedDataGenerator generator = new CMSSignedDataGenerator();
+
+        CMSProcessable content = new CMSProcessableByteArray(data);
+
+      //  CMSSignedData signedData = (CMSSignedData) generator.generate(content, true, "BC");
+        return null;//signedData.getEncoded();
+    }
+
+    public byte[] PKSC7Bouncy(byte[] input) throws CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException, NoSuchProviderException, UnrecoverableKeyException, CMSException, OperatorCreationException {
+        String XML="Test String";
+        KeyStore hd1;
+        hd1 = KeyStore.getInstance("HDImageStore");
+        hd1.load(new FileInputStream("C:\\Eclipse workspace\\trust17"), "123".toCharArray());
+        PrivateKey key1;
+
+        key1 = (PrivateKey)hd1.getKey("PK17", "123".toCharArray());
+        java.security.cert.Certificate chainbog1[];
+
+
+
+        chainbog1=hd1.getCertificateChain("PK17");
+        X509Certificate cert1 = (X509Certificate)chainbog1[0];
+        JcaCertStore certs1 = new JcaCertStore(Arrays.asList(chainbog1));
+
+        CMSSignedDataGenerator    gen1 = new CMSSignedDataGenerator();
+
+        String algname1= JCP.GOST_DIGEST_NAME;
+        JcaSimpleSignerInfoGeneratorBuilder q = new JcaSimpleSignerInfoGeneratorBuilder().setProvider("JCP");
+        SignerInfoGenerator qq = q.build(algname1, key1, cert1);
+        gen1.addSignerInfoGenerator(qq);
+
+        //gen1.addSignerInfoGenerator(new JcaSimpleSignerInfoGeneratorBuilder().setProvider("JCP").build(algname1, key1, cert1));
+        gen1.addCertificates(certs1);
+        CMSTypedData typeddata1 = new CMSProcessableByteArray(XML.getBytes());
+        CMSSignedData signeddata1 = gen1.generate(typeddata1);
+        BASE64Encoder b64encoder = new BASE64Encoder();
+        String signedxml1 = b64encoder.encode(signeddata1.getEncoded());
+        return null;
+    }
+
 
 }
 

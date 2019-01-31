@@ -14,6 +14,10 @@ import util.crypto.Sign2018;
 import util.crypto.TestSign2001;
 
 import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 import java.sql.SQLException;
 
 public class EBSService extends JAktor {
@@ -48,7 +52,7 @@ public class EBSService extends JAktor {
         //  deps = new DependencyContainer(r.addressSAAJ(), new SignerXML(new Sign2018(), new Sign2018()));
 
             deps = new DependencyContainer(r.addressSAAJ(), new SignerXML(new TestSign2001(), new TestSign2001()));
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | NoSuchProviderException | KeyStoreException | CertificateException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (SignatureProcessorException e) {
             e.printStackTrace();

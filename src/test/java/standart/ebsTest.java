@@ -159,7 +159,7 @@ public class ebsTest {
     String photofile = "biophoto.jpg";
     String soundfile = "biosound.wav";
     public String filename__ = "EBSMessageFUll.bin";
-    public ebsTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
+    public ebsTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
         msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         buff = Files.readAllBytes(new File(filename__).toPath());
 
