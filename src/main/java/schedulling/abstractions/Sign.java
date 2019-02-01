@@ -1,8 +1,13 @@
 package schedulling.abstractions;
 
+import Message.abstractions.BinaryMessage;
 import com.objsys.asn1j.runtime.*;
 
 
+import crypto.CMS_samples.CMS;
+import crypto.CMS_samples.CMSSign;
+import crypto.CMS_samples.CMStools;
+import crypto.Gost3411Hash;
 import ru.CryptoPro.JCP.ASN.CryptographicMessageSyntax.*;
 import ru.CryptoPro.JCP.ASN.PKIX1Explicit88.CertificateSerialNumber;
 import ru.CryptoPro.JCP.ASN.PKIX1Explicit88.Name;
@@ -10,10 +15,12 @@ import ru.CryptoPro.JCP.JCP;
 import ru.CryptoPro.JCP.params.AlgIdSpec;
 import ru.CryptoPro.JCP.params.OID;
 import ru.CryptoPro.JCP.params.ParamsInterface;
+import ru.CryptoPro.JCP.tools.Array;
 import scala.Enumeration;
 import sun.misc.BASE64Encoder;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.security.*;
 import java.security.Signature;
 import java.security.cert.*;
@@ -131,14 +138,134 @@ public abstract class Sign implements Serializable {
     }
 
 
+    public byte[] AdvancedPKSC7(String filename) throws Exception {
+        Signature signature = Signature.getInstance(JCP.GOST_DHEL_SIGN_NAME);
+        signature.initSign(getPrivate());
+        readAndHash(signature, filename);
 
+        byte[] cms = CMS.createCMS(null, signature.sign(), getCert(), true);
 
+        BinaryMessage.write(cms, filename+".pk7");  //for <==test
 
-
-
-
+        return cms;
 
 }
 
-/*char[] keyPassword = "vca2018".toCharArray();
-        PrivateKey key = (PrivateKey)keyStore.getKey("VCAJ2018", keyPassword);;*/
+
+    public Signature readAndHash(Signature signature, String fileName) throws Exception {
+
+        File file = new File(fileName);
+        FileInputStream fData = new FileInputStream(file);
+
+        // Не очень удобный способ чтения, но ведь это пример.
+        int read;
+        while ( (read = fData.read()) != -1) {
+            signature.update((byte)read);
+        }
+
+        fData.close();
+
+        return signature;
+    }
+
+    public void verify(byte[] buffer, X509Certificate cert, Signature signature)
+            throws Exception {
+
+        int i;
+        final Asn1BerDecodeBuffer asnBuf = new Asn1BerDecodeBuffer(buffer);
+        final ContentInfo all = new ContentInfo();
+
+        all.decode(asnBuf);
+
+        if (!new OID(CMStools.STR_CMS_OID_SIGNED).eq(all.contentType.value)) {
+            throw new Exception("Not supported");
+        }
+
+        final SignedData cms = (SignedData) all.content;
+
+        if (cms.version.value != 1) {
+            throw new Exception("Incorrect version");
+        }
+
+        if (!new OID(CMStools.STR_CMS_OID_DATA).eq(cms.encapContentInfo.eContentType.value)) {
+            throw new Exception("Nested not supported");
+        }
+
+        OID digestOid = null;
+
+        DigestAlgorithmIdentifier a = new DigestAlgorithmIdentifier(new OID(CMStools.DIGEST_OID).value);
+
+        for (i = 0; i < cms.digestAlgorithms.elements.length; i++) {
+            if (cms.digestAlgorithms.elements[i].algorithm.equals(a.algorithm)) {
+                digestOid =
+                        new OID(cms.digestAlgorithms.elements[i].algorithm.value);
+                break;
+            }
+        }
+
+        if (digestOid == null) {
+            throw new Exception("Unknown digest");
+        }
+
+        int pos = -1;
+
+        for (i = 0; i < cms.certificates.elements.length; i++) {
+
+            final Asn1BerEncodeBuffer encBuf = new Asn1BerEncodeBuffer();
+            cms.certificates.elements[i].encode(encBuf);
+
+            final byte[] in = encBuf.getMsgCopy();
+
+            X509Certificate tmp = (X509Certificate) CertificateFactory.getInstance("X.509")
+                    .generateCertificate(new ByteArrayInputStream(in));
+
+            System.out.println(tmp.getSubjectDN());
+            System.out.println(cert.getSubjectDN());
+
+            if (Arrays.equals(in, cert.getEncoded())) {
+                pos = i;
+                break;
+            }
+        }
+
+        if (pos == -1) {
+            throw new Exception("Not signed on certificate.");
+        }
+
+        final SignerInfo info = cms.signerInfos.elements[pos];
+
+        if (info.version.value != 1) {
+            throw new Exception("Incorrect version");
+        }
+
+        if (!digestOid.equals(new OID(info.digestAlgorithm.algorithm.value))) {
+            throw new Exception("Not signed on certificate.");
+        }
+
+        final byte[] sign = info.signature.value;
+
+        // check
+        final boolean checkResult = signature.verify(sign);
+
+        if (checkResult) {
+            if (CMStools.logger != null) {
+                CMStools.logger.info("Valid signature");
+            }
+        }
+        else {
+            throw new Exception("Invalid signature.");
+        }
+    }
+
+    public byte[] anotherwayPKSC7(byte[] input) throws Exception {
+        return (byte[]) CMSSign.createHashCMS(input, new PrivateKey[]{getPrivate()},
+                new Certificate[]{getCert()}, null , true);
+    }
+
+}
+
+
+
+
+
+

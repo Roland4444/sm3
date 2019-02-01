@@ -37,6 +37,7 @@ public class ebsTest {
     TransXML trans = new TransXML();
     EBSMessage msg;
     byte[] buff;
+    public String withData;
     String prepared2Tag ="<ns2:RefAttachmentHeader><ns2:uuid>872b8bb6-2550-11e9-9666-6f90870395fd</ns2:uuid><ns2:Hash>LwX76ZiKWn7FXljFxxL09Q1J+lCj9aXoWNFZDkuTZZU=</ns2:Hash><ns2:MimeType>audio/x-wav</ns2:MimeType><ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
             "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB\n" +
             "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR\n" +
@@ -255,6 +256,14 @@ public class ebsTest {
     public ebsTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
         msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         buff = Files.readAllBytes(new File(filename__).toPath());
+
+        String flushedprepared  = new String(trans.burnTabsAndNs(prepared2Tag.getBytes()));
+
+        String cleared = inj.flushTagData(flushedprepared,"ns2:SignaturePKCS7");
+
+        String embed = new String(Files.readAllBytes(new File("pksc.bin").toPath()));
+
+        withData = inj.injectTagDirect(cleared, "ns2:SignaturePKCS7", embed);
 
     }
 
@@ -654,7 +663,7 @@ public class ebsTest {
     }
 
 
-  //  @Test
+    @Test
     public void findMessageID() throws Exception {
 
             String result = getrespreq();
@@ -667,7 +676,7 @@ public class ebsTest {
                     deps.gis.Ack(id);
 
                 }
-                if (originalid.equals("22c78a30-1f14-11e9-af36-4b2d56ff4191"))
+                if ((originalid!=null) && originalid.equals("2403a9b4-2611-11e9-aff6-a9bc789940fc"))
                     return;
                 result = getrespreq();
                 //   Thread.sleep(0);
@@ -941,6 +950,26 @@ public class ebsTest {
         System.out.println(response);
 
     }
+
+    @Test
+    public void sendhoocked__2wD() throws Exception {
+
+        String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
+        String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
+
+        System.out.println(hook2);
+
+
+        String written = deps.inj.injectTagDirect(hook2, "ns2:RefAttachmentHeaderList", withData);
+        System.out.println(written);
+
+        deps.ebs.setinput(written.getBytes());
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        System.out.println(response);
+    }
+
 
 
 }

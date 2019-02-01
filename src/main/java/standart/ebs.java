@@ -7,10 +7,7 @@ import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
 import schedulling.abstractions.TempDataContainer;
 import transport.Transport;
-import util.Injector;
-import util.SignatureProcessorException;
-import util.SignerXML;
-import util.ftpClient;
+import util.*;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -30,6 +27,7 @@ import java.util.ArrayList;
 
 
 public class ebs extends Standart {
+    private TransXML transer;
     public byte[] hooked=null;
     public Gost3411Hash Hasher;
     public String MatrixAttach = "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>image/jpeg</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>";
@@ -49,12 +47,12 @@ public class ebs extends Standart {
     public String currentPKSC7Sound =   null;
     public String currentPKSC7Photo =   null;
     public String Soundguuid, Photoguuid;
-    public String AttachesHeaderList;
     public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp) throws IOException {
         super(sr, sihner, inj, transport, temp);
         Hasher = new Gost3411Hash();
     //    rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
         hooked=Files.readAllBytes(new File("openjdk-11.0.1_linux-x64_bin.tar.gz").toPath());
+        transer = new TransXML();
     }
     public final String startroot ="<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
             "    <bm:RegistrarMnemonic></bm:RegistrarMnemonic>\n" +
@@ -78,8 +76,8 @@ public class ebs extends Standart {
     public void processCryptoGraphy(EBSMessage msg) throws Exception {
         currentHashPhoto = Hasher.h_Base64rfc2045(msg.PhotoBLOB.fileContent);
         currentHashSound = Hasher.h_Base64rfc2045(msg.SoundBLOB.fileContent);
-        currentPKSC7Photo = Hasher.base64(this.signer.getmainSign().CMSSign(msg.PhotoBLOB.fileContent, true));
-        currentPKSC7Sound = Hasher.base64(this.signer.getmainSign().CMSSign(msg.SoundBLOB.fileContent, true));
+        currentPKSC7Photo = Hasher.base64(this.signer.getmainSign().anotherwayPKSC7(msg.PhotoBLOB.fileContent));////////old>>>this.signer.getmainSign().AdvancedPKSC7(msg.PhotoBLOB.filename));
+        currentPKSC7Sound = Hasher.base64(this.signer.getmainSign().anotherwayPKSC7(msg.SoundBLOB.fileContent));////////this.signer.getmainSign().AdvancedPKSC7(msg.SoundBLOB.filename));
 
     };
 
@@ -207,7 +205,7 @@ public class ebs extends Standart {
     }
 
     public String  generateAttachTag(){
-        return AttachPhotoBlock()+AttachSoundBlock();
+        return new String(transer.burnTabsAndNs((AttachPhotoBlock()+AttachSoundBlock()).getBytes()));
     };
 
 
@@ -218,6 +216,7 @@ public class ebs extends Standart {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(input);
         block[i]=inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", genMessagePrimaryContent(msg));
         block[++i]=inj.injectTagDirect(block[i-1], "RefAttachmentHeaderList",generateAttachTag());
+    //    block[++i]=inj.injectTagDirect(block[i-1], "RefAttachmentHeaderList",generateAttachTag());
         return block[i].getBytes();
     }
 

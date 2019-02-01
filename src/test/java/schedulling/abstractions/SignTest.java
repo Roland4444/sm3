@@ -22,4 +22,10 @@ public class SignTest {
         byte[] data = new byte[]{0x00};
         assertNotEquals(null,null);
     }
+
+    @Test
+    public void anotherwayPKSC7() throws Exception {
+        byte[] input = new byte[]{0x00, 0x01};
+        assertNotEquals(null, ts.anotherwayPKSC7(input));
+    }
 }
