@@ -30,188 +30,36 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Calendar;
 
-/**
- * CMSSign n sign параллельные подписи с укладкой сертификатов
- * <br>
- * проверяется:
- * <br>
- * CMS_samples.CMSVerify
- * <br>
- * csptest -sfsign -my key -verify -in data.sgn (без указания сертификата (-my)
- * csptest выдает ошибку приложения)
- * <br>
- * csptest -lowsign -in data.sgn -verify (не проверяет //недостаточно
- * криптографических параметров//...-my не влияет)
- *
- * @author Copyright 2004-2009 Crypto-Pro. All rights reserved.
- * @version 2.5
- */
+
 public class CMSSign {
 
-/**
- * создать cms сообщение с подписью на хэш данных
- */
+
 private static final boolean LOW_SIGN = true;
 private static final String CMS_FILE_LOW = "cms_data_low_sgn";
 private static final String CMS_FILE_LOW_PATH =
     CMStools.TEST_PATH + CMStools.SEPAR + CMS_FILE_LOW + CMStools.CMS_EXT;
 
-/**
- * создать cms сообщение с подписью на хэш signedAttibutes
- */
+
 private static final boolean SF_SIGN = true;
 private static final String CMS_FILE_SF = "cms_data_sf_sgn";
 private static final String CMS_FILE_SF_PATH =
     CMStools.TEST_PATH + CMStools.SEPAR + CMS_FILE_SF + CMStools.CMS_EXT;
 
-/**
- * создать cms сообщение формата CAdES-BES с подписью на хэш signedAttibutes
- */
+
 private static final boolean CAdES_BES_SIGN = true;
 private static final String CMS_FILE_CAdES_BES = "cms_data_cades_bes_sgn";
 private static final String CMS_FILE_CAdES_BES_PATH =
     CMStools.TEST_PATH + CMStools.SEPAR + CMS_FILE_CAdES_BES + CMStools.CMS_EXT;
 
- /**/
 private CMSSign() {
     ;
 }
 
-/**
- * main Sign (+Verify)
- *
- * @throws Exception e
- */
-public static void main(String[] args) throws Exception {
-
-    //подготовка данных для запуска примера
-    //CMStools.main(args);
-
-    //read data or CMS
-    final byte[] data = Array.readFile(CMStools.DATA_FILE_PATH);
-    //    final byte[] data = Array.readFile(CMStools.CMS_FILE_LOW_PATH);
-    //    final byte[] data = Array.readFile(CMStools.CMS_FILE_SF_PATH);
-
-    //load keys for sign
-    final PrivateKey[] keys = new PrivateKey[1];
-    keys[0] = CMStools.loadKey(CMStools.SIGN_KEY_NAME,
-            CMStools.SIGN_KEY_PASSWORD);
-    //    keys[1] = CMStools.loadKey(CMStools.RECIP_KEY_NAME,
-    //            CMStools.RECIP_KEY_PASSWORD);
-
-    //load certificates
-    final Certificate[] certs = new Certificate[1];
-    certs[0] = CMStools.loadCertificate(CMStools.SIGN_KEY_NAME);
-    //certs[1] = CMStools.loadCertificate(CMStools.RECIP_KEY_NAME);
-    //        certs[0] = CMStools.readCertificate(CMStools.SIGN_KEY_NAME);
-    //        //certs[1] = CMStools.readCertificate(CMStools.RECIP_KEY_NAME);
-
-    //Sign (create CMS or sign CMS)
-    boolean isCMS = true;
-    final Asn1BerDecodeBuffer asnBuf = new Asn1BerDecodeBuffer(data);
-    final ContentInfo all = new ContentInfo();
-
-    try {
-        all.decode(asnBuf);
-    } catch (Exception e) {
-
-        //создаем новое cms сообщение
-        if (LOW_SIGN) {
-            if (CMStools.logger != null) {
-                CMStools.logger.info("Create CMS (low)");
-            }
-            createCMS(data, keys, certs, CMS_FILE_LOW_PATH, false);
-        }
-
-        if (SF_SIGN) {
-            if (CMStools.logger != null) {
-                CMStools.logger.info("Create CMS (sf)");
-            }
-            createHashCMS(data, keys, certs, CMS_FILE_SF_PATH, false);
-        }
-
-        // Создаем CAdES-BES подпись, имея хеш сообщения.
-        if (CAdES_BES_SIGN) {
-            if (CMStools.logger != null) {
-                CMStools.logger.info("Create CAdES-BES CMS with digest of the data");
-            }
-            createHashCMSEx(CMStools.digestm(data, CMStools.DIGEST_ALG_NAME), true,
-                keys, certs, CMS_FILE_CAdES_BES_PATH, true, true);
-        } // if
-
-        isCMS = false;
-    }
-
-    if (isCMS) {
-
-        //подписываем уже созданное cms сообщение
-        if (LOW_SIGN) {
-            if (CMStools.logger != null) {
-                CMStools.logger.info("Sign CMS (low)");
-            }
-            signCMS(data, keys, certs, CMS_FILE_LOW_PATH, null);
-        }
-
-        if (SF_SIGN) {
-            if (CMStools.logger != null) {
-                CMStools.logger.info("Sign CMS (sf)");
-            }
-            hashSignCMS(data, keys, certs, CMS_FILE_SF_PATH, null);
-        }
-
-    }
-
-    //    //создание cms сообщения
-    //    createCMS(data, keys, certs, CMS_FILE_LOW_PATH, false);
-    //    createhashCMS(data, keys, certs, CMS_FILE_SF_PATH, false);
-    //    //вторая подпись
-    //    byte[] cmsdata = Array.readFile(CMS_FILE_LOW_PATH);
-    //    signCMS(cmsdata, keys, certs, CMS_FILE_LOW_PATH, null);
-    //    cmsdata = Array.readFile(CMS_FILE_SF_PATH);
-    //    hashsignCMS(cmsdata, keys, certs, CMS_FILE_SF_PATH, null);
-    //    //третья подпись
-    //    cmsdata = Array.readFile(CMS_FILE_LOW_PATH);
-    //    signCMS(cmsdata, keys, certs, CMS_FILE_LOW_PATH, null);
-    //    cmsdata = Array.readFile(CMS_FILE_SF_PATH);
-    //    hashsignCMS(cmsdata, keys, certs, CMS_FILE_SF_PATH, null);
-    //    ...
-
-    //Verify
-
-}
-
-/**
- * Создание сообщения с подписью на хэш signedAttibutes
- *
- * @param data data
- * @param keys keys
- * @param certs certs
- * @param path path to write CMS
- * @param detached true if detached
- * @return byte[]
- * @throws Exception e
- */
 public static byte[] createHashCMS(byte[] data, PrivateKey[] keys,
     Certificate[] certs, String path, boolean detached) throws Exception {
     return createHashCMSEx(data, false, keys, certs, path, detached, false);
 }
 
-/**
- * Создание сообщения с подписью на хэш signedAttibutes. Можно создать
- * подпись формата CAdES-BES (addSignCertV2=true) и по хешу сообщения, без
- * самого исходного сообщения (data - хеш сообщения, isExternalDigest=true
- * и detached=true).
- *
- * @param data data or digest
- * @param isExternalDigest True if data is a digest of the data
- * @param keys keys
- * @param certs certs
- * @param path path to write CMS
- * @param detached true if detached
- * @param addSignCertV2 add signingCertificateV2 (CAdES-BES)
- * @return byte[]
- * @throws Exception e
- */
 public static byte[] createHashCMSEx(byte[] data, boolean isExternalDigest,
     PrivateKey[] keys, Certificate[] certs, String path, boolean detached,
     boolean addSignCertV2) throws Exception {
