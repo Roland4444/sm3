@@ -7,20 +7,14 @@ import com.objsys.asn1j.runtime.*;
 import crypto.CMS_samples.CMS;
 import crypto.CMS_samples.CMSSign;
 import crypto.CMS_samples.CMStools;
-import crypto.Gost3411Hash;
 import ru.CryptoPro.JCP.ASN.CryptographicMessageSyntax.*;
 import ru.CryptoPro.JCP.ASN.PKIX1Explicit88.CertificateSerialNumber;
 import ru.CryptoPro.JCP.ASN.PKIX1Explicit88.Name;
 import ru.CryptoPro.JCP.JCP;
-import ru.CryptoPro.JCP.params.AlgIdSpec;
 import ru.CryptoPro.JCP.params.OID;
-import ru.CryptoPro.JCP.params.ParamsInterface;
-import ru.CryptoPro.JCP.tools.Array;
-import scala.Enumeration;
-import sun.misc.BASE64Encoder;
+
 
 import java.io.*;
-import java.nio.file.Files;
 import java.security.*;
 import java.security.Signature;
 import java.security.cert.*;

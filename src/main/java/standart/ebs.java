@@ -205,7 +205,7 @@ public class ebs extends Standart {
     }
 
     public String  generateAttachTag(){
-        return new String(transer.burnTabsAndNs((AttachPhotoBlock()+AttachSoundBlock()).getBytes()));
+        return new String(transer.burnTabsAndNs((AttachSoundBlock()+AttachPhotoBlock()).getBytes()));
     };
 
 
