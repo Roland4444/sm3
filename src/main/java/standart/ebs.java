@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class ebs extends Standart {
     private TransXML transer;
-    public byte[] hooked=null;
     public Gost3411Hash Hasher;
     public String MatrixAttach = "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>image/jpeg</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>";
     public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>";
@@ -51,7 +50,6 @@ public class ebs extends Standart {
         super(sr, sihner, inj, transport, temp);
         Hasher = new Gost3411Hash();
     //    rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
-        hooked=Files.readAllBytes(new File("openjdk-11.0.1_linux-x64_bin.tar.gz").toPath());
         transer = new TransXML();
     }
     public final String startroot ="<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
@@ -167,6 +165,7 @@ public class ebs extends Standart {
             System.out.println("error uploading file folder");
             return "";
         }
+        ftpcl.close();
         return uuid;
     }
 
@@ -174,7 +173,7 @@ public class ebs extends Standart {
         String stage1 = inj.injectTag(MatrixAttach,"ns2:uuid>", Soundguuid );
         String stage2 = inj.injectTag(stage1,"ns2:Hash>", currentHashSound );
         String stage3 = inj.injectTag(stage2, "ns2:SignaturePKCS7>", currentPKSC7Sound);
-        String stage4 = inj.injectTag(stage3, "ns2:MimeType>", "audio/x-wav");
+        String stage4 = inj.injectTag(stage3, "ns2:MimeType>", "audio/pcm");
         return stage4;
     };
 
@@ -199,11 +198,11 @@ public class ebs extends Standart {
         block[++i]=inj.injectTag(block[i-1], "bm:RaId>", msg.otherinfo.RA);
         block[++i]=inj.injectTag(block[i-1], "bm:PersonId>", msg.otherinfo.OID);
         block[++i]=inj.injectTag(block[i-1], "bm:IdpMnemonic>", msg.otherinfo.Mnemonic);
-
+//generateSoundBlock(msg)+generatePhotoBlock(msg)+endroot;
         block[++i]=block[i-1]+generateSoundBlock(msg)+generatePhotoBlock(msg)+endroot;
         return block[i];
     }
-
+//+AttachPhotoBlock()               AttachSoundBlock()
     public String  generateAttachTag(){
         return new String(transer.burnTabsAndNs((AttachSoundBlock()+AttachPhotoBlock()).getBytes()));
     };
@@ -293,7 +292,7 @@ public class ebs extends Standart {
     }
 
 
-    public String generatePhotoBlock(EBSMessage msg) throws IOException {
+    public String generatePhotoBlock(EBSMessage msg) throws Exception {
         StringBuffer sb = new StringBuffer();
 
         FileInBinary.suspendToDisk(msg.PhotoBLOB);
@@ -302,6 +301,7 @@ public class ebs extends Standart {
         if (result.equals(""))
             return null;
         Photoguuid = result;
+        processCryptoGraphy(msg);
         sb.append(inj.injectAttribute(MatrixPhoto, "attachmentId", result));
         return sb.toString();
     }

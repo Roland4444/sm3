@@ -180,6 +180,7 @@ public class ftpClientTest {
 
         System.out.println("port=>>"+ftpcl.port);
         assertEquals(0, ftpcl.open());
+
         //  assertEquals(0, ftpcl.mkdir(createDir));
         assertEquals(1, ftpcl.mkdir(createDir));
         assertEquals(0, ftpcl.uploadfile(photofile, targetname));

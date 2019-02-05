@@ -1,5 +1,6 @@
 package util;
 import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
@@ -32,7 +33,7 @@ public class ftpClient {
         return 1;
     }
 
-    void close() throws IOException {
+    public void close() throws IOException {
         ftp.disconnect();
     }
 
@@ -44,6 +45,8 @@ public class ftpClient {
 
     public int uploadfile(String source, String targetName) throws IOException {
         ftp.enterLocalPassiveMode();
+
+        ftp.setFileType(FTP.BINARY_FILE_TYPE);
         File localFile = new File(source);
         InputStream inputStream = new FileInputStream(localFile);
         System.out.println("Start uploading first file");
