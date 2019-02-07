@@ -35,22 +35,7 @@ public class TestSign2001Test {
         assertNotEquals(null, ts.getCert());
     }
 
-    @Test
-    public void calculatePKSC7() throws Exception {
-        byte[] arr = new byte[]{0x00, 0x00};
-
-        assertNotEquals(null, ts.CMSSign(arr, true));
-        Gost3411Hash hash = new Gost3411Hash();
-        System.out.println(hash.base64(ts.CMSSign(arr, true)));
-    }
-
-    @Test
-    public void calculatePKSC7Advanced() throws Exception {
-        assertNotEquals(null, ts.AdvancedPKSC7("temp.wav"));
-        Gost3411Hash hash = new Gost3411Hash();
-        System.out.println(ts.AdvancedPKSC7("temp.wav").length);
-        System.out.println(hash.base64(ts.AdvancedPKSC7("temp.wav")));
-    }
+    
 
 
 }

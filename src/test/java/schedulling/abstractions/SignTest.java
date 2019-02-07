@@ -1,7 +1,5 @@
 package schedulling.abstractions;
 
-import crypto.Gost3411Hash;
-import org.bouncycastle.cms.CMSException;
 import org.junit.Test;
 import util.crypto.TestSign2001;
 
@@ -21,6 +19,6 @@ public class SignTest {
     @Test
     public void anotherwayPKSC7() throws Exception {
         byte[] input = new byte[]{0x00, 0x01};
-        assertNotEquals(null, ts.anotherwayPKSC7(input));
+        assertNotEquals(null, ts.SMEV3PKSC7(input));
     }
 }

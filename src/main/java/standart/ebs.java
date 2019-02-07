@@ -14,10 +14,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -74,8 +72,8 @@ public class ebs extends Standart {
     public void processCryptoGraphy(EBSMessage msg) throws Exception {
         currentHashPhoto = Hasher.h_Base64rfc2045(msg.PhotoBLOB.fileContent);
         currentHashSound = Hasher.h_Base64rfc2045(msg.SoundBLOB.fileContent);
-        currentPKSC7Photo = Hasher.base64(this.signer.getmainSign().anotherwayPKSC7(msg.PhotoBLOB.fileContent));////////old>>>this.signer.getmainSign().AdvancedPKSC7(msg.PhotoBLOB.filename));
-        currentPKSC7Sound = Hasher.base64(this.signer.getmainSign().anotherwayPKSC7(msg.SoundBLOB.fileContent));////////this.signer.getmainSign().AdvancedPKSC7(msg.SoundBLOB.filename));
+        currentPKSC7Photo = Hasher.base64(this.signer.getmainSign().SMEV3PKSC7(msg.PhotoBLOB.fileContent));////////old>>>this.signer.getmainSign().AdvancedPKSC7(msg.PhotoBLOB.filename));
+        currentPKSC7Sound = Hasher.base64(this.signer.getmainSign().SMEV3PKSC7(msg.SoundBLOB.fileContent));////////this.signer.getmainSign().AdvancedPKSC7(msg.SoundBLOB.filename));
 
     };
 
