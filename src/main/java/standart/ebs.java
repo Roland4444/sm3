@@ -14,8 +14,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -44,6 +46,8 @@ public class ebs extends Standart {
     public String currentPKSC7Sound =   null;
     public String currentPKSC7Photo =   null;
     public String Soundguuid, Photoguuid;
+    public String[] SoundCortage = new String[2];
+    public String[] PhotoCortage = new String[2];
     public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp) throws IOException {
         super(sr, sihner, inj, transport, temp);
         Hasher = new Gost3411Hash();
@@ -215,6 +219,23 @@ public class ebs extends Standart {
         block[++i]=inj.injectTagDirect(block[i-1], "RefAttachmentHeaderList",generateAttachTag());
     //    block[++i]=inj.injectTagDirect(block[i-1], "RefAttachmentHeaderList",generateAttachTag());
         return block[i].getBytes();
+    }
+
+
+
+    public byte[] generateUnsSOAPFunc(String soundfile, String photofile) throws Exception {
+return null;
+    };
+
+    public String[] embedUUIDCortage(String[] input, String FileName) throws IOException {
+        String embedUUID = uploadfiletoftp(FileName);
+        return new String[]{inj.injectAttribute(input[0], "attachmentId", embedUUID),
+                inj.injectTag(input[1], "ns2:uuid>", embedUUID)};
+    };
+
+    public String[] embedCrypto(String[] input, String FileName) throws Exception {
+        byte[] Arr = Files.readAllBytes(new File(FileName).toPath());
+        return new String[]{input[0], inj.injectTag(inj.injectTag(input[1],                "Hash>", Hasher.h_Base64rfc2045(Arr)), ":SignaturePKCS7>", Hasher.base64(this.signer.getmainSign().SMEV3PKSC7(Arr)))};
     }
 
 

@@ -74,7 +74,48 @@ public class TestSign2001Test {
 
 
     }
+    @Test
+    public void generatesPhotoAudioCryptosLogitech2() throws Exception {
+
+        String soundfile =  "/home/roland/IdeaProjects/sm3/s1.wav";
+        File f2 = new File(soundfile);
+        assertTrue(f2.exists());
+        byte[] soundData = Files.readAllBytes(f2.toPath());
+        System.out.println("\nSOUND HASH=>\n"+hasher.h_Base64rfc2045(soundData));
+        String PKSC7Sound = hasher.base64(ts.SMEV3PKSC7(soundData));
+        System.out.println("\nPKSC7 sound sig=>\n"+PKSC7Sound);
 
 
+    }
+
+
+
+    @Test
+    public void generatesNewPhotoAudioCryptos() throws Exception {
+        String photofile =  "/home/roland/IdeaProjects/sm3/Russian_passport_photo.jpg";
+        String soundfile =  "/home/roland/IdeaProjects/sm3/s1.wav";
+        File f1 = new File(photofile);
+        File f2 = new File(soundfile);
+        assertTrue(f1.exists());
+        assertTrue(f2.exists());
+        byte[] imageData = Files.readAllBytes(f1.toPath());
+        byte[] soundData = Files.readAllBytes(f2.toPath());
+
+
+
+
+
+        String PKSC7Sound = hasher.base64(ts.SMEV3PKSC7(soundData));
+        String PKSC7Photo = hasher.base64(ts.SMEV3PKSC7(imageData));
+
+
+        System.out.println("\nSOUND HASH=>\n"+hasher.h_Base64rfc2045(soundData));
+
+        System.out.println("\nPKSC7 sound sig=>\n"+PKSC7Sound);
+
+        System.out.println("\nPhoto HASH=>\n"+hasher.h_Base64rfc2045(imageData));
+
+        System.out.println("\nPKSC7 photo sig=>\n"+PKSC7Photo);
+    }
 
 }

@@ -213,7 +213,7 @@ public class ftpClientTest {
     @Test
     public void uploadanddownloadPythonStyle() throws IOException {
         String photofile = "/home/roland/IdeaProjects/sm3/photos/p1.jpg";
-        String soundfile = "/home/roland/IdeaProjects/sm3/tested.wav";
+        String soundfile = "/home/roland/IdeaProjects/sm3/web_logitech_back_37-40-dB.wav";
 
         ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
         ftpcl.port = 21;
@@ -245,6 +245,72 @@ public class ftpClientTest {
     public void print(Object input){
         System.out.println(input);
     }
+
+    @Test
+    public void uploadandcorrect() throws IOException {
+        String photofile = "/home/roland/IdeaProjects/sm3/Picture10.jpg";
+        String soundfile = "/home/roland/IdeaProjects/sm3/s1.wav";
+
+        ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
+        ftpcl.port = 21;
+
+        print("port=>>"+ftpcl.port);
+        assertEquals(0, ftpcl.open());
+
+        String imageuuid = new timeBasedUUID().generate();
+        String sounduuid = new timeBasedUUID().generate();
+
+        assertEquals(0, ftpcl.mkdir(imageuuid));
+        assertEquals(0, ftpcl.mkdir(sounduuid));
+
+        String storesound = sounduuid + "/tested.wav";
+        String storeimage = imageuuid + "/tested.jpg";
+
+        assertEquals(0, ftpcl.uploadfile(soundfile, storesound));
+        assertEquals(0, ftpcl.uploadfile(photofile, storeimage));
+
+        print("\n\n\nEXECUTE >>>>>"+ storesound);
+        print("EXECUTE >>>>>"+ storeimage);
+
+        ftpcl.close();
+
+
+    }
+
+
+    @Test
+    public void uploadandfake() throws IOException {
+        String photofile = "/home/roland/IdeaProjects/sm3/Russian_passport_photo.jpg";
+        String soundfile = "/home/roland/IdeaProjects/sm3/s1.wav";
+
+        ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
+        ftpcl.port = 21;
+
+        print("port=>>"+ftpcl.port);
+        assertEquals(0, ftpcl.open());
+
+        String imageuuid = new timeBasedUUID().generate();
+        String sounduuid = new timeBasedUUID().generate();
+
+        assertEquals(0, ftpcl.mkdir(imageuuid));
+        assertEquals(0, ftpcl.mkdir(sounduuid));
+
+        String storesound = sounduuid + "/tested.wav";
+        String storeimage = imageuuid + "/tested.jpg";
+
+        assertEquals(0, ftpcl.uploadfile(soundfile, storesound));
+        assertEquals(0, ftpcl.uploadfile(photofile, storeimage));
+
+        print("\n\n\nEXECUTE >>>>>"+ storesound);
+        print("EXECUTE >>>>>"+ storeimage);
+
+        ftpcl.close();
+
+
+    }
+
+
+
 
 /*
 
