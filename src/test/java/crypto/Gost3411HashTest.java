@@ -1151,16 +1151,5 @@ public class Gost3411HashTest  {
         System.out.println(decrypted);
     }
 
-    @Test
-    public void h_Base64rfc2045() throws IOException, NoSuchAlgorithmException {
-        String pathS = "ftp/temp.wav";
-        String pathP = "ftp/tested.png";
-        String etalonS = "TT3FKUOuhfkxWkDB3XktXBF6yBWePToLgb9y/HcVF3E=";
-        String etalonP = "JX4EID4hYTtsunZ3RDHABT/5xLcSdkkS2NBI7q6ByRk=";
-        String badHashP= "bYjaC404Cdn9+AJdOjWtrp/dt2hgPEQOo7+hPs47XII=";
 
-        assertEquals(etalonS, hash.h_Base64rfc2045(Files.readAllBytes(new File(pathS).toPath())));
-        assertEquals(badHashP, hash.h_Base64rfc2045(Files.readAllBytes(new File(pathP).toPath())));
-
-    }
 }

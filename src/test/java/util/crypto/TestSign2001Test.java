@@ -61,19 +61,7 @@ public class TestSign2001Test {
         System.out.println("\nPKSC7 photo sig=>\n"+PKSC7Photo);
     }
 
-    @Test
-    public void generatesPhotoAudioCryptos2() throws Exception {
 
-        String soundfile =  "/home/roland/IdeaProjects/sm3/result.wav";
-        File f2 = new File(soundfile);
-        assertTrue(f2.exists());
-        byte[] soundData = Files.readAllBytes(f2.toPath());
-        System.out.println("\nSOUND HASH=>\n"+hasher.h_Base64rfc2045(soundData));
-        String PKSC7Sound = hasher.base64(ts.SMEV3PKSC7(soundData));
-        System.out.println("\nPKSC7 sound sig=>\n"+PKSC7Sound);
-
-
-    }
     @Test
     public void generatesPhotoAudioCryptosLogitech2() throws Exception {
 
