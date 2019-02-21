@@ -1,8 +1,11 @@
 package standart;
 
+import Message.abstractions.BinaryMessage;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
+import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 import schedulling.abstractions.DependencyContainer;
 import util.*;
 import util.crypto.ESIA.Test6ed;
@@ -12,11 +15,17 @@ import util.crypto.Sign2018;
 import util.crypto.TestSign2001;
 import util.crypto.TestSign2019;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -631,7 +640,13 @@ public class gisTest {
         assertEquals(false, deps.gis.check(notfine.getBytes()));
     }
 
-
+    @Test
+    public void signRaw() throws IOException, TransformerException, CertificateException, NoSuchAlgorithmException, ParserConfigurationException, UnrecoverableEntryException, XMLSecurityException, NoSuchProviderException, SignatureProcessorException, KeyStoreException, ClassNotFoundException, SAXException {
+        deps.gis.setinput(Files.readAllBytes(new File("xml4test/check/x277.xml").toPath()));
+        BinaryMessage.write(deps.gis.SignedSoap(), "xml4test/check/x277signed.xml");
+        deps.gis.setinput(Files.readAllBytes(new File("xml4test/check/x276.xml").toPath()));
+        BinaryMessage.write(deps.gis.SignedSoap(), "xml4test/check/x276signed.xml");
+    }
 
 
 
