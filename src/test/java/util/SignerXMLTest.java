@@ -58,12 +58,14 @@ public class SignerXMLTest {
         assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/responce.xml").toPath())));
         assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/2012.xml").toPath())));
         assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/queued.xml").toPath())));
+        assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/PKSC7.xml").toPath())));
 
 
         assertEquals(true, signer2001.check(Files.readAllBytes(new File("xml4test/gis.xml").toPath())));
         assertEquals(true, signer2001.check(Files.readAllBytes(new File("xml4test/responce.xml").toPath())));
         assertEquals(true, signer2001.check(Files.readAllBytes(new File("xml4test/2012.xml").toPath())));
         assertEquals(true, signer2001.check(Files.readAllBytes(new File("xml4test/queued.xml").toPath())));
+        assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/PKSC7.xml").toPath())));
 
     }
 
