@@ -11,7 +11,11 @@ import util.crypto.Sign2018;
 import util.crypto.TestSign2019;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
@@ -20,7 +24,7 @@ public class SignerXMLTest {
     TestSign2019 ts = new TestSign2019();
     SignerXML signer2001 = new SignerXML(new Sign2018(), new Sign2018());
     SignerXML XMLSigner = new SignerXML(ts, ts);
-    DependencyContainer useExternal = new DependencyContainer(XMLSigner);
+    DependencyContainer deps = new DependencyContainer(XMLSigner);
 
     public SignerXMLTest() throws SignatureProcessorException, InvalidTransformException, ClassNotFoundException, IOException, SQLException, AlgorithmAlreadyRegisteredException {
     }
@@ -48,5 +52,50 @@ public class SignerXMLTest {
         assertTrue(XMLSigner.check(xml.getBytes()));
     }
 
+    @Test
+    public void testOne() throws IOException, XMLSecurityException, SAXException, ParserConfigurationException {
+        assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/gis.xml").toPath())));
+        assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/responce.xml").toPath())));
+        assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/2012.xml").toPath())));
+        assertEquals(true, XMLSigner.check(Files.readAllBytes(new File("xml4test/queued.xml").toPath())));
+
+
+        assertEquals(true, signer2001.check(Files.readAllBytes(new File("xml4test/gis.xml").toPath())));
+        assertEquals(true, signer2001.check(Files.readAllBytes(new File("xml4test/responce.xml").toPath())));
+        assertEquals(true, signer2001.check(Files.readAllBytes(new File("xml4test/2012.xml").toPath())));
+        assertEquals(true, signer2001.check(Files.readAllBytes(new File("xml4test/queued.xml").toPath())));
+
+    }
+
+    @Test
+    public void testcheckimg() throws IOException {
+
+        Files.walk(Paths.get( "xml4test/check"))
+                .filter(p->p.toString().indexOf(".xml")>0)
+                .forEach(a-> {
+                    try {
+                        System.out.println("\n\n"+a.toString());
+                        assertNotEquals(null, getdata(a));
+                        System.out.println("RESULT=>"+XMLSigner.check(getdata(a)));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ParserConfigurationException e) {
+                        e.printStackTrace();
+                    } catch (XMLSecurityException e) {
+                        e.printStackTrace();
+                    } catch (SAXException e) {
+                        e.printStackTrace();
+                    }
+
+                });
+
+
+    }
+
+
+
+    public byte[] getdata(Path a) throws IOException {
+        return Files.readAllBytes(a.toFile().toPath());
+    }
 
 }

@@ -1010,7 +1010,7 @@ public class ebsTest {
     }
 
 
-    //@Test
+    @Test
     public void findMessageID() throws Exception {
             String result = getrespreq();
             while (true){
@@ -1022,7 +1022,7 @@ public class ebsTest {
                     deps.gis.Ack(id);
 
                 }
-                if ((originalid!=null) && originalid.equals("acef669a-2f6a-11e9-b4de-cd5605d96e1a"))
+                if ((originalid!=null) && originalid.equals("2ad47a3b-2f83-11e9-ad45-87269eb113d0"))
                     return;
                 result = getrespreq();
                 //   Thread.sleep(0);
@@ -1585,9 +1585,9 @@ public class ebsTest {
       //  findMessagebyID(messageId);
     }
 
-   // @Test
+    @Test
     public void letourn() throws Exception {
-        String builded = BuildSOAP("normal.wav", "2.jpg", SoundArrayNew, PhotoArray);
+        String builded = BuildSOAP("normal.wav", "rr1.jpg", SoundArrayNew, PhotoArray);
         assertNotEquals(null, builded);
         System.out.println(builded);
         ToSendCorrect  = new String(trans.burnTabsAndNs(builded.getBytes()));

@@ -173,6 +173,8 @@ public class SignerXML {
                     }
                 }
             }
+            if (sigs.getLength()==0)
+                return false;
             org.apache.xml.security.keys.KeyInfo ki = (org.apache.xml.security.keys.KeyInfo) sig.getKeyInfo();
 
             X509Certificate certificate = ki.getX509Certificate();
