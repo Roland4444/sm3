@@ -244,6 +244,23 @@ public class InjectorTest {
     }
 
     @Test
+    public void flushTagWithDataExtended() throws IOException {
+        Injector inj = new Injector();
+        String data =  "<x1><ns:x2 ns=\"fuck\"><bull>5444545454</bull>\n</ns:x2></x1>";
+        String Etalon =  "<x1><ns:x2 ns=\"fuck\"></ns:x2></x1>";
+        assertEquals(Etalon, inj.flushTagData(data, "x2"));
+    }
+
+    @Test
+    public void extendedtest() throws IOException {
+        Injector inj = new Injector();
+        String data =       "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">  <S:Body>    <ns2:SendRequestRequest>      <ns:SenderProvidedRequestData xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\">        <ns:MessageID>zGz</ns:MessageID>        <ns2:MessagePrimaryContent>          <ns0:ExportChargesRequest xmlns:sc=\"http://roskazna.ru/gisgmp/xsd/SearchConditions/2.0.1\" xmlns:com=\"http://roskazna.ru/gisgmp/xsd/Common/2.0.1\" xmlns:ns0=\"urn://roskazna.ru/gisgmp/xsd/services/export-charges/2.0.1\" senderIdentifier=\"3637c9\" senderRole=\"7\" timestamp=\"2018-10-16T09:53:54.8436798+04:00\" Id=\"PERSONAL_SIGNATURE\">            <com:Paging pageNumber=\"1\" pageLength=\"99\" />            <sc:ChargesExportConditions kind=\"CHARGE\">              <sc:ChargesConditions xmlns:sc=\"http://roskazna.ru/gisgmp/xsd/SearchConditions/2.0.1\">                <sc:SupplierBillID>18818101111512037343</sc:SupplierBillID>              </sc:ChargesConditions>            </sc:ChargesExportConditions>          </ns0:ExportChargesRequest>        </ns2:MessagePrimaryContent>        <ns:PersonalSignature />      </ns:SenderProvidedRequestData>      <ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">1212221212</ns4:CallerInformationSystemSignature>    </ns2:SendRequestRequest>  </S:Body></S:Envelope>";
+        String Etalon =     "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">  <S:Body>    <ns2:SendRequestRequest>      <ns:SenderProvidedRequestData xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\">        <ns:MessageID>zGz</ns:MessageID>        <ns2:MessagePrimaryContent>          <ns0:ExportChargesRequest xmlns:sc=\"http://roskazna.ru/gisgmp/xsd/SearchConditions/2.0.1\" xmlns:com=\"http://roskazna.ru/gisgmp/xsd/Common/2.0.1\" xmlns:ns0=\"urn://roskazna.ru/gisgmp/xsd/services/export-charges/2.0.1\" senderIdentifier=\"3637c9\" senderRole=\"7\" timestamp=\"2018-10-16T09:53:54.8436798+04:00\" Id=\"PERSONAL_SIGNATURE\">            <com:Paging pageNumber=\"1\" pageLength=\"99\" />            <sc:ChargesExportConditions kind=\"CHARGE\">              <sc:ChargesConditions xmlns:sc=\"http://roskazna.ru/gisgmp/xsd/SearchConditions/2.0.1\">                <sc:SupplierBillID>18818101111512037343</sc:SupplierBillID>              </sc:ChargesConditions>            </sc:ChargesExportConditions>          </ns0:ExportChargesRequest>        </ns2:MessagePrimaryContent>        <ns:PersonalSignature />      </ns:SenderProvidedRequestData>      <ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"></ns4:CallerInformationSystemSignature>    </ns2:SendRequestRequest>  </S:Body></S:Envelope>";
+        assertEquals(Etalon, inj.flushTagData(data, "CallerInformationSystemSignature"));
+    }
+
+
+    @Test
     public void injectAttribute() {
         Injector inj = new Injector();
         String data =  "<x1><x2 id=\"\"><bull>5444545454</bull></x2></x1>";

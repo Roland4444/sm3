@@ -642,10 +642,21 @@ public class gisTest {
 
     @Test
     public void signRaw() throws IOException, TransformerException, CertificateException, NoSuchAlgorithmException, ParserConfigurationException, UnrecoverableEntryException, XMLSecurityException, NoSuchProviderException, SignatureProcessorException, KeyStoreException, ClassNotFoundException, SAXException {
-        deps.gis.setinput(Files.readAllBytes(new File("xml4test/check/x277.xml").toPath()));
-        BinaryMessage.write(deps.gis.SignedSoap(), "xml4test/check/x277signed.xml");
-        deps.gis.setinput(Files.readAllBytes(new File("xml4test/check/x276.xml").toPath()));
-        BinaryMessage.write(deps.gis.SignedSoap(), "xml4test/check/x276signed.xml");
+        byte[] normalized1 =(Files.readAllBytes(new File("xml4test/check/x277.xml").toPath()));
+        byte[] normalized2 =(Files.readAllBytes(new File("xml4test/check/x276.xml").toPath()));
+
+
+        System.out.println(new String(normalized1));
+        deps.gis.setinput(normalized1);
+
+        byte[] signed =deps.gis.SignedSoap();
+        assertTrue(deps.gis.check(signed));
+        BinaryMessage.write(signed, "xml4test/check/x277signed.xml");
+
+        deps.gis.setinput(normalized2);
+        signed =deps.gis.SignedSoap();
+        assertTrue(deps.gis.check(signed));
+        BinaryMessage.write(signed, "xml4test/check/x276signed.xml");
     }
 
 
