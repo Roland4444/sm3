@@ -5,6 +5,7 @@ import Message.toSMEV.EBS.EBSMessage;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.transforms.InvalidTransformException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 import schedulling.Scheduller;
@@ -1009,7 +1010,7 @@ public class ebsTest {
         attaches.add("biophoto");
     }
 
-
+    @Ignore
     @Test
     public void findMessageID() throws Exception {
             String result = getrespreq();
@@ -1372,6 +1373,7 @@ public class ebsTest {
 
     }
 
+    @Ignore
     @Test
     public void restoredSignandsendAUTO() throws Exception {
 
