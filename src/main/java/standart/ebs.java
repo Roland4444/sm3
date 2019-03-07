@@ -288,7 +288,7 @@ public class ebs extends Standart {
         AudioDict.add( String.valueOf(msg.SoundBLOB.end090));
 
         AudioDict.add("voice_3_desc");
-        AudioDict.add( String.valueOf("digits_random"));
+        AudioDict.add( String.valueOf("di3gits_random"));
 
         for (int i = 0; i < AudioDict.size(); i++){
             String stage1 =inj.injectTag(MatrixAudio, "bm:Key>", AudioDict.get(i));

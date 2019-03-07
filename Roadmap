@@ -51,12 +51,16 @@ Whats done:
     Must ALL info in FIND ESIA;!!!!!!!!
         FINISH TODAY FIND ESIA acc;
         CREATE ESIA ACC;
-TODO TASKS:
+
     BouncyCastle detached PKSC7;
-    =>>
-        https://stackoverflow.com/questions/16662408/correct-way-to-sign-and-verify-signature-using-bouncycastle
-        https://www.bouncycastle.org/docs/pkixdocs1.4/org/bouncycastle/cms/CMSSignedData.html
-        https://www.bouncycastle.org/fips-java/BCFipsIn100.pdf
+        =>>
+            https://stackoverflow.com/questions/16662408/correct-way-to-sign-and-verify-signature-using-bouncycastle
+            https://www.bouncycastle.org/docs/pkixdocs1.4/org/bouncycastle/cms/CMSSignedData.html
+            https://www.bouncycastle.org/fips-java/BCFipsIn100.pdf
+
+TODO TASKS:
+    send soap builded from bin message;
+    embed normalizer to sound java record; (mono_mebs3)
 
 
 
