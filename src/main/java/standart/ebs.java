@@ -159,6 +159,11 @@ public class ebs extends Standart {
         return this.transport.send(input, SupressConsole);
     }
 
+    @Override
+    public byte[] generateUnsSOAP(byte[] input) throws Exception {
+        return BuildSOAP(input).getBytes();
+    }
+
     public String uploadfiletoftp(String filename) throws IOException {
         String uuid=gen.generate();
         String smev3addr = "smev3-n0.test.gosuslugi.ru";
@@ -213,22 +218,6 @@ public class ebs extends Standart {
         return block[i];
     }
 //+AttachPhotoBlock()               AttachSoundBlock()
-    public String  generateAttachTag(){
-        return new String(transer.burnTabsAndNs((AttachSoundBlock()+AttachPhotoBlock()).getBytes()));
-    };
-
-
-    @Override
-    public byte[] generateUnsSOAP(byte[] input) throws Exception {
-        String[] block = new String[10];
-        int i = 0;
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(input);
-        block[i]=inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", genMessagePrimaryContent(msg));
-        block[++i]=inj.injectTagDirect(block[i-1], "RefAttachmentHeaderList",generateAttachTag());
-    //    block[++i]=inj.injectTagDirect(block[i-1], "RefAttachmentHeaderList",generateAttachTag());
-        return block[i].getBytes();
-    }
-
 
     public String[] embedUUIDCortage(String[] input, String FileName) throws IOException {
         String embedUUID = uploadfiletoftp(FileName);

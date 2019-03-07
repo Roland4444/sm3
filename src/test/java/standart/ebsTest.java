@@ -1605,4 +1605,7 @@ public class ebsTest {
         findMessagebyID(messageId);
     }
 
+    @Test
+    public void generateUnsSOAP1() {
+    }
 }
