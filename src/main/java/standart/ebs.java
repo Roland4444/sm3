@@ -40,14 +40,22 @@ public class ebs extends Standart {
             "      </ns2:SendRequestRequest>\n" +
             "   </S:Body>\n" +
             "</S:Envelope>";
+    public String[] SOAP = new String[]{"<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>8f7f33cd-2dcb-11e9-a558-2bb18b512f7c</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000368304</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic>   ",
+            "</bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList>",
+            "</ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData><ns2:CallerInformationSystemSignature></ns2:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>"};
     public ArrayList<String> AudioDict = new ArrayList();
     public String currentHashSound  =   null;
     public String currentHashPhoto  =   null;
     public String currentPKSC7Sound =   null;
     public String currentPKSC7Photo =   null;
     public String Soundguuid, Photoguuid;
-    public String[] SoundCortage = new String[2];
-    public String[] PhotoCortage = new String[2];
+    public String[] SoundArray = new String[]{"  <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data>",
+            "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>"
+    };
+
+    public String[] PhotoArray = new String[]{ "<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data> ",
+            "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>image/jpg</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>"};
+
     public ebs(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp) throws IOException {
         super(sr, sihner, inj, transport, temp);
         Hasher = new Gost3411Hash();
@@ -222,11 +230,6 @@ public class ebs extends Standart {
     }
 
 
-
-    public byte[] generateUnsSOAPFunc(String soundfile, String photofile) throws Exception {
-return null;
-    };
-
     public String[] embedUUIDCortage(String[] input, String FileName) throws IOException {
         String embedUUID = uploadfiletoftp(FileName);
         return new String[]{inj.injectAttribute(input[0], "attachmentId", embedUUID),
@@ -237,8 +240,6 @@ return null;
         byte[] Arr = Files.readAllBytes(new File(FileName).toPath());
         return new String[]{input[0], inj.injectTag(inj.injectTag(input[1],                "Hash>", Hasher.h_Base64rfc2045(Arr)), ":SignaturePKCS7>", Hasher.base64(this.signer.getmainSign().SMEV3PKSC7(Arr)))};
     }
-
-
 
     public String generateSoundBlock(EBSMessage msg) throws Exception {
         StringBuffer sb = new StringBuffer();
@@ -326,19 +327,25 @@ return null;
     }
 
 
-
-    public void printMsg(EBSMessage msg){
-        System.out.println(msg.SoundBLOB.begin09);
-        System.out.println(msg.SoundBLOB.end09);
-
-        System.out.println(msg.SoundBLOB.begin90);
-        System.out.println(msg.SoundBLOB.end90);
-
-        System.out.println(msg.SoundBLOB.begin090);
-        System.out.println(msg.SoundBLOB.end090);
-
+    public String[] buildAssembly(String[] init, String FileName) throws Exception {
+        String[] uploaded = embedUUIDCortage(init, FileName);
+        return embedCrypto(uploaded, FileName);
     }
 
+    public String BuildSOAP(String soundfile, String photofile) throws Exception {
+        String[] Sound = buildAssembly(SoundArray, soundfile);
+        String[] Photo = buildAssembly(PhotoArray, photofile);
+        StringBuffer sb = new StringBuffer();
+        sb.append(SOAP[0]+Sound[0]+Photo[0]+SOAP[1]+Sound[1]+Photo[1]+SOAP[2]);
+        return sb.toString();
+    };
+
+    public String BuildSOAP(byte[] input) throws Exception {
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(input);
+        BinaryMessage.write(msg.PhotoBLOB.fileContent, msg.PhotoBLOB.filename);
+        BinaryMessage.write(msg.SoundBLOB.fileContent, msg.SoundBLOB.filename);
+        return BuildSOAP(msg.SoundBLOB.filename, msg.PhotoBLOB.filename);
+    }
 
     public String getName() {
         return "EBS";

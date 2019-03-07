@@ -1589,7 +1589,7 @@ public class ebsTest {
 
     @Test
     public void letourn() throws Exception {
-        String builded = BuildSOAP("normal.wav", "rr1.jpg", SoundArrayNew, PhotoArray);
+        String builded = BuildSOAP("normal.wav", "foto.jpg", SoundArrayNew, PhotoArray);
         assertNotEquals(null, builded);
         System.out.println(builded);
         ToSendCorrect  = new String(trans.burnTabsAndNs(builded.getBytes()));
@@ -1601,8 +1601,8 @@ public class ebsTest {
 
         System.out.println("\n"+messageId);
 
-      //  Thread.sleep(12000);
-      //  findMessagebyID(messageId);
+        Thread.sleep(12000);
+        findMessagebyID(messageId);
     }
 
 }

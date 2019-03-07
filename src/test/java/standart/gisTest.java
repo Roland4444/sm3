@@ -34,8 +34,8 @@ import static org.junit.Assert.*;
 
 public class gisTest {
   // DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
-   DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2019(), new TestSign2019()));
- //   DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
+ //  DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2019(), new TestSign2019()));
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
   //DependencyContainer deps = new DependencyContainer(new SignerXML(new Test6f1(), new Test6f1()));
 
 
@@ -486,7 +486,7 @@ public class gisTest {
 
 
 
- //   @Test
+    @Test
     public void flushSMEV3_tofirstanswer() throws Exception {
         String result = getrespreq();
         while (true){
@@ -494,7 +494,7 @@ public class gisTest {
             //   System.out.println("Extract id="+ id);
             String originalid=deps.ext.extractTagValue(result, ":OriginalMessageId");
             System.out.println("Original id="+ originalid);
-            if (id != null) {
+            if (originalid == "e4f8e00b-38f1-11e9-a9ea-115f6a16821a") {
                 deps.gis.Ack(id);
                 return;
             }
