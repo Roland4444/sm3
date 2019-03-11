@@ -1605,7 +1605,36 @@ public class ebsTest {
         findMessagebyID(messageId);
     }
 
+
     @Test
-    public void generateUnsSOAP1() {
+    public void buildEBSMessage() throws IOException {
+        float[] tags = new float[]{(float) 0.500, (float) 7.763, (float) 8.344, (float) 15.257, (float) 15.755, (float) 22.21};
+        EBSMessage ebsm =  deps.ebs.buildEBSMessage(tags, "normal.wav", "foto.jpg", deps.ebs.StockOtherInfo );
+        assertNotEquals(null, BinaryMessage.savedToBLOB(ebsm));
+        BinaryMessage.write(BinaryMessage.savedToBLOB(ebsm), "GennedMsg.bin");
+    }
+
+    @Test
+    public void generateUnsSOAP1() throws Exception {
+        byte[] arr = BinaryMessage.readBytes("GennedMsg.bin");
+        byte[] uns = deps.ebs.generateUnsSOAP(arr);
+        assertNotEquals(null, uns);
+        System.out.println(new String(uns));
+    }
+
+
+    @Test
+    public void letfromBinaryRestored() throws Exception {
+        byte[] arr = BinaryMessage.readBytes("GennedMsg.bin");
+        deps.ebs.setinput(deps.ebs.generateUnsSOAP(arr));
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        String response = new String(deps.ebs.SendSoapSigned());
+        String messageId = deps.ext.extractTagValue(response,":MessageId");
+
+        System.out.println("\n"+messageId);
+
+        Thread.sleep(12000);
+        findMessagebyID(messageId);
     }
 }

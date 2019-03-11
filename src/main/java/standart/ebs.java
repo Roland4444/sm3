@@ -2,6 +2,9 @@ package standart;
 import Message.abstractions.BinaryMessage;
 import Message.abstractions.FileInBinary;
 import Message.toSMEV.EBS.EBSMessage;
+import Message.toSMEV.EBS.Essens.OtherInfo;
+import Message.toSMEV.EBS.Essens.PhotoBundle;
+import Message.toSMEV.EBS.Essens.SoundBundle;
 import crypto.Gost3411Hash;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.xml.sax.SAXException;
@@ -27,6 +30,7 @@ import java.util.ArrayList;
 
 
 public class ebs extends Standart {
+    public Message.toSMEV.EBS.Essens.OtherInfo StockOtherInfo;
     private TransXML transer;
     public Gost3411Hash Hasher;
     public String MatrixAttach = "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>image/jpeg</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>";
@@ -61,6 +65,14 @@ public class ebs extends Standart {
         Hasher = new Gost3411Hash();
     //    rawxml = inj.injectTagDirect(emptySOAP, "MessagePrimaryContent", root);
         transer = new TransXML();
+
+
+        this.StockOtherInfo = new OtherInfo();
+        this.StockOtherInfo.RA = "1000368304";
+        this.StockOtherInfo.OID = "1000368305";
+        this.StockOtherInfo.Mnemonic="ESIA";
+        this.StockOtherInfo.RegMnemonic="981601_3T";
+        this.StockOtherInfo.OperSNILS="000-000-600 06";
     }
     public final String startroot ="<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
             "    <bm:RegistrarMnemonic></bm:RegistrarMnemonic>\n" +
@@ -361,5 +373,40 @@ public class ebs extends Standart {
             return false;
         return true;
     }
+
+    public EBSMessage buildEBSMessage(float[] audiotags, String voiceFile, String photoFile, Message.toSMEV.EBS.Essens.OtherInfo other) throws IOException {
+        EBSMessage ebsm = new EBSMessage();
+
+        int i=0;
+
+        if (audiotags.length!=6)
+            return null;
+
+        ebsm.PhotoBLOB=new PhotoBundle();
+        ebsm.SoundBLOB=new SoundBundle();
+
+        ebsm.SoundBLOB.fileContent = BinaryMessage.readBytes(voiceFile);
+        ebsm.SoundBLOB.filename=voiceFile;
+
+        ebsm.SoundBLOB.begin09  = audiotags[i++];
+        ebsm.SoundBLOB.end09    = audiotags[i++];
+
+        ebsm.SoundBLOB.begin90  = audiotags[i++];
+        ebsm.SoundBLOB.end90    = audiotags[i++];
+
+        ebsm.SoundBLOB.begin090 = audiotags[i++];
+        ebsm.SoundBLOB.begin090 = audiotags[i++];
+
+
+        ebsm.PhotoBLOB.filename = photoFile;
+        ebsm.PhotoBLOB.fileContent = BinaryMessage.readBytes(photoFile);
+
+
+        ebsm.otherinfo = other;
+
+        return ebsm;
+    }
+
+
 
     }
