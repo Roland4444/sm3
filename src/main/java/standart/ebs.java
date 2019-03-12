@@ -300,15 +300,17 @@ public class ebs extends Standart {
         AudioDict.add( String.valueOf(msg.SoundBLOB.end090));
 
         AudioDict.add("voice_3_desc");
-        AudioDict.add( String.valueOf("di3gits_random"));
-
+        AudioDict.add( String.valueOf("digits_random"));
+        System.out.println("APPENDED::\n\n");
         for (int i = 0; i < AudioDict.size(); i++){
             String stage1 =inj.injectTag(MatrixAudio, "bm:Key>", AudioDict.get(i));
             String stage2 =inj.injectTag(stage1, "bm:Value>", AudioDict.get(++i));
+            System.out.println(stage2);
             sb.append(stage2);
         }
         AudioDict.clear();
         sb.append(finisher);
+        System.out.println("GENERATED::\n"+sb.toString());
         return sb.toString();
     }
 
@@ -350,6 +352,8 @@ public class ebs extends Standart {
 
         BinaryMessage.write(msg.PhotoBLOB.fileContent, msg.PhotoBLOB.filename);
         BinaryMessage.write(msg.SoundBLOB.fileContent, msg.SoundBLOB.filename);
+
+        SoundArray[0]="<bm:Data><bm:Modality>SOUND</bm:Modality><bm:AttachmentRef attachmentId=\"\"/>"+SoundBioMethadata(msg);
         return BuildSOAP(msg.SoundBLOB.filename, msg.PhotoBLOB.filename);
     }
 
@@ -382,8 +386,6 @@ public class ebs extends Standart {
     public EBSMessage buildEBSMessage(double[] audiotags, String voiceFile, String photoFile, Message.toSMEV.EBS.Essens.OtherInfo other) throws IOException {
         EBSMessage ebsm = new EBSMessage();
 
-        int i=0;
-
         if (audiotags.length!=6)
             return null;
 
@@ -398,14 +400,15 @@ public class ebs extends Standart {
         ebsm.SoundBLOB.fileContent = BinaryMessage.readBytes(voiceFile);
         ebsm.SoundBLOB.filename=voiceFile;
 
-        ebsm.SoundBLOB.begin09  = audiotags[i++];
-        ebsm.SoundBLOB.end09    = audiotags[i++];
+        ebsm.SoundBLOB.begin09  = audiotags[0];
+        ebsm.SoundBLOB.end09    = audiotags[1];
 
-        ebsm.SoundBLOB.begin90  = audiotags[i++];
-        ebsm.SoundBLOB.end90    = audiotags[i++];
+        ebsm.SoundBLOB.begin90  = audiotags[2];
+        ebsm.SoundBLOB.end90    = audiotags[3];
 
-        ebsm.SoundBLOB.begin090 = audiotags[i++];
-        ebsm.SoundBLOB.begin090 = audiotags[i++];
+        ebsm.SoundBLOB.begin090 = audiotags[4];
+        ebsm.SoundBLOB.end090   = audiotags[5];
+
 
 
         ebsm.PhotoBLOB.filename = photoFile;

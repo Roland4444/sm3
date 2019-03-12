@@ -36,12 +36,12 @@ public class ebsTest {
     TransXML trans = new TransXML();
     EBSMessage msg;
     byte[] buff;
-    public String emtySOAP ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>8f7f33cd-2dcb-11e9-a558-2bb18b512f7c</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000368304</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic><bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"125fa68a-2dcb-11e9-a040-890a833165f2\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"125fa689-2dcb-11e9-a040-8dbdb7cf6bbe\"/></bm:Data></bm:BiometricData>\n" +
+    public String emtySOAP = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>8f7f33cd-2dcb-11e9-a558-2bb18b512f7c</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000368304</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic><bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"125fa68a-2dcb-11e9-a040-890a833165f2\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"125fa689-2dcb-11e9-a040-8dbdb7cf6bbe\"/></bm:Data></bm:BiometricData>\n" +
             "</bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader><ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>image/jpg</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>";
 
     public String[] SOAP = new String[]{"<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>8f7f33cd-2dcb-11e9-a558-2bb18b512f7c</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000368304</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic>   ",
-        "</bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList>",
-        "</ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData><ns2:CallerInformationSystemSignature></ns2:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>"};
+            "</bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList>",
+            "</ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData><ns2:CallerInformationSystemSignature></ns2:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>"};
 
 
     public String[] SoundArraySyntetic = new String[]{
@@ -58,7 +58,7 @@ public class ebsTest {
             "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>"
     };
 
-    public String[] PhotoArray = new String[]{ "<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data> ",
+    public String[] PhotoArray = new String[]{"<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data> ",
             "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>image/jpg</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>"};
 
 
@@ -155,7 +155,7 @@ public class ebsTest {
             "SIb3DQEJBTEPFw0xOTAyMTExMzMxMDdaMC8GCSqGSIb3DQEJBDEiBCCA8zj74Wud+OHtQvhh7VXd\n" +
             "P4YMnDrpH4RDTK1qMvpT5TAKBgYqhQMCAhMFAARAaJATr4mH3ao6uETW8iP3s9oTKjrVhDSocAvw\n" +
             "Vfg58Qn8yVUA3CeCmecZp7bKy7lXLTHb7xlMrW4OFNCK1Td6qQ==</ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>e1dgwQ9dYf24/jptRpGJUh6sFeaqQvX3hjH/FqAurY8=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>xZ4fvNld3/6s1NBUajaRnR6VymicjHDi7BLal6TYX2Su1F+zli+9Ejsb6aITrtxIshGG/SMuKjU9szKq4NyYLQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>";
-    String ESIAdirect ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>8f7f33cd-2dcb-11e9-a558-2bb18b512f7c</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000368304</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"9a9267e3-2dfe-11e9-b15b-e5c85658dead\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.485</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>6.373</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>7.030</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>12.374</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>12.948</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>18.494</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"9a9267e2-2dfe-11e9-b15b-e5d767ce6d03\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>9a9267e3-2dfe-11e9-b15b-e5c85658dead</ns2:uuid><ns2:Hash>0gGZXtw4Xj/x6gTZpS2aKjDbRRfF6fennLF8ZgxS82g=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>MIIKJgYJKoZIhvcNAQcCoIIKFzCCChMCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
+    String ESIAdirect = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>8f7f33cd-2dcb-11e9-a558-2bb18b512f7c</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000368304</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>ESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"9a9267e3-2dfe-11e9-b15b-e5c85658dead\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.485</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>6.373</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>7.030</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>12.374</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>12.948</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>18.494</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"9a9267e2-2dfe-11e9-b15b-e5d767ce6d03\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>9a9267e3-2dfe-11e9-b15b-e5c85658dead</ns2:uuid><ns2:Hash>0gGZXtw4Xj/x6gTZpS2aKjDbRRfF6fennLF8ZgxS82g=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>MIIKJgYJKoZIhvcNAQcCoIIKFzCCChMCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
             "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB\n" +
             "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR\n" +
             "g9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQsw\n" +
@@ -246,9 +246,9 @@ public class ebsTest {
             "SIb3DQEJBTEPFw0xOTAyMTExMzAwNDdaMC8GCSqGSIb3DQEJBDEiBCCcXTWFoQ6c4jZeHxEtQ7n+\n" +
             "RDKIY8s1bsoQC9HIceNyyDAKBgYqhQMCAhMFAARAleSUBJka3icCU9x+yRPtbBu9u2Lhv5MBjbot\n" +
             "7KL1LhmS2+Q1nAYp1R3br6oMP1T1mln2AfmSO99bg1RppBkyUg==</ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>e1dgwQ9dYf24/jptRpGJUh6sFeaqQvX3hjH/FqAurY8=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>xZ4fvNld3/6s1NBUajaRnR6VymicjHDi7BLal6TYX2Su1F+zli+9Ejsb6aITrtxIshGG/SMuKjU9szKq4NyYLQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QBEg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHRg9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQswCQYDVQQGEwJSVTEYMBYGA1UECAwPNzcg0JzQvtGB0LrQstCwMRUwEwYDVQQHDAzQnNC+0YHQutCy0LAxJDAiBgNVBAoMG9Ce0JDQniDQoNC+0YHRgtC10LvQtdC60L7QvDEwMC4GA1UECwwn0KPQtNC+0YHRgtC+0LLQtdGA0Y/RjtGJ0LjQuSDRhtC10L3RgtGAMTQwMgYDVQQDDCvQotC10YHRgtC+0LLRi9C5INCj0KYg0KDQotCaICjQoNCi0JvQsNCx0YEpMB4XDTE4MDcyMDEzMDE0MVoXDTE5MDcyMDEzMTE0MVowgfAxHTAbBgkqhkiG9w0BCQIMDtCS0JrQkNCR0JDQndCaMRowGAYIKoUDA4EDAQESDDAwMzAxNTAxMTc1NTEYMBYGBSqFA2QBEg0xMDIzMDAwMDAwMjEwMRwwGgYDVQQKDBPQkNCeINCS0JrQkNCR0JDQndCaMRswGQYDVQQHDBLQkNGB0YLRgNCw0YXQsNC90YwxMzAxBgNVBAgMKjMwINCQ0YHRgtGA0LDRhdCw0L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjDELMAkGA1UEBhMCUlUxHDAaBgNVBAMME9CQ0J4g0JLQmtCQ0JHQkNCd0JowYzAcBgYqhQMCAhMwEgYHKoUDAgIkAAYHKoUDAgIeAQNDAARAqjtC1dM6zvtwmhJbUMVVOiC+8kbOOgufkJJFKHy5rMaFG6jWxUiGKvI8AAcEE7rP93ui2TMVzaDecGOrspIW6KOCBIMwggR/MA4GA1UdDwEB/wQEAwIE8DAdBgNVHQ4EFgQU541ASZ2wBv/db7s8wxlcnshsQxAwggGIBgNVHSMEggF/MIIBe4AUPu8ZPw+5ebDx5ikho+S5lbml7pChggFOpIIBSjCCAUYxGDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1Njc4OTAxKTAnBgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZIhvcNAQkBFghjYUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEVMBMGA1UEBwwM0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+0LwxMDAuBgNVBAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIGA1UEAwwr0KLQtdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKYIRAXILAVZQALmz5xHPOr40d6AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYBBQUHAwIwCgYIKwYBBQUHAwQwHQYDVR0gBBYwFDAIBgYqhQNkcQEwCAYGKoUDZHECMCsGA1UdEAQkMCKADzIwMTgwNzIwMTMwMTQxWoEPMjAxOTA3MjAxMzAxNDFaMIIBNAYFKoUDZHAEggEpMIIBJQwrItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiICjQstC10YDRgdC40Y8gMy45KQwsItCa0YDQuNC/0YLQvtCf0YDQviDQo9CmIiAo0LLQtdGA0YHQuNC4IDIuMCkMY9Ch0LXRgNGC0LjRhNC40LrQsNGCINGB0L7QvtGC0LLQtdGC0YHRgtCy0LjRjyDQpNCh0JEg0KDQvtGB0YHQuNC4IOKEliDQodCkLzEyNC0yNTM5INC+0YIgMTUuMDEuMjAxNQxj0KHQtdGA0YLQuNGE0LjQutCw0YIg0YHQvtC+0YLQstC10YLRgdGC0LLQuNGPINCk0KHQkSDQoNC+0YHRgdC40Lgg4oSWINCh0KQvMTI4LTI4ODEg0L7RgiAxMi4wNC4yMDE2MDYGBSqFA2RvBC0MKyLQmtGA0LjQv9GC0L7Qn9GA0L4gQ1NQIiAo0LLQtdGA0YHQuNGPIDMuOSkwZQYDVR0fBF4wXDBaoFigVoZUaHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2kucnUvY2RwLzNlZWYxOTNmMGZiOTc5YjBmMWU2MjkyMWEzZTRiOTk1YjlhNWVlOTAuY3JsMFcGCCsGAQUFBwEBBEswSTBHBggrBgEFBQcwAoY7aHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2kucnUvY2RwL3Rlc3RfY2FfcnRsYWJzMi5jZXIwCAYGKoUDAgIDA0EAWIKbobPiDap0i63WV/XyVw9IeSeOGvQAgsverXl1IdpLqXAvHX1prvCUumTiu+aYvhGJIvcxjDyLuGhb3OQjGg==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>";
-    String RAPatched ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>93185319-2b9f-11e9-9a24-2f9c88041471</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000368304</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"b14f8425-2ba4-11e9-93f0-e3aad053c64b\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"b14f8424-2ba4-11e9-93f0-33572c8c9882\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>b14f8425-2ba4-11e9-93f0-e3aad053c64b</ns2:uuid><ns2:Hash>wBCdScRv+tKV4a0PkiIHsYdDqFPghOatNWYO0/Hgucs=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader><ns2:RefAttachmentHeader><ns2:uuid>b14f8424-2ba4-11e9-93f0-33572c8c9882</ns2:uuid><ns2:Hash>GT1kecLPqbm+zmUeEuvfufJgr3a/awkze4Nz+ANIN5s=</ns2:Hash><ns2:MimeType>image/jpg</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>vS4pPA+0GfTmVAO6JXsbwjWSERjEoHF6NYCS4g8U1Sg=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>0C658eDYA1mg9PequfDSHCkDGIbQIidsowUErOpRQLI3KkMCQ906yOzD+ucisuNuV9dUu2dcc0bRVN0y5JhhMQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>\n" +
+    String RAPatched = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>93185319-2b9f-11e9-9a24-2f9c88041471</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000368304</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"b14f8425-2ba4-11e9-93f0-e3aad053c64b\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"b14f8424-2ba4-11e9-93f0-33572c8c9882\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>b14f8425-2ba4-11e9-93f0-e3aad053c64b</ns2:uuid><ns2:Hash>wBCdScRv+tKV4a0PkiIHsYdDqFPghOatNWYO0/Hgucs=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader><ns2:RefAttachmentHeader><ns2:uuid>b14f8424-2ba4-11e9-93f0-33572c8c9882</ns2:uuid><ns2:Hash>GT1kecLPqbm+zmUeEuvfufJgr3a/awkze4Nz+ANIN5s=</ns2:Hash><ns2:MimeType>image/jpg</ns2:MimeType><ns2:SignaturePKCS7>MIIKJgYJKoZIhvcNAQcCoIIKFzCCChMCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfAMIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QBEg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHRg9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQswCQYDVQQGEwJSVTEYMBYGA1UECAwPNzcg0JzQvtGB0LrQstCwMRUwEwYDVQQHDAzQnNC+0YHQutCy0LAxJDAiBgNVBAoMG9Ce0JDQniDQoNC+0YHRgtC10LvQtdC60L7QvDEwMC4GA1UECwwn0KPQtNC+0YHRgtC+0LLQtdGA0Y/RjtGJ0LjQuSDRhtC10L3RgtGAMTQwMgYDVQQDDCvQotC10YHRgtC+0LLRi9C5INCj0KYg0KDQotCaICjQoNCi0JvQsNCx0YEpMB4XDTE4MDcyMDEzMDE0MVoXDTE5MDcyMDEzMTE0MVowgfAxHTAbBgkqhkiG9w0BCQIMDtCS0JrQkNCR0JDQndCaMRowGAYIKoUDA4EDAQESDDAwMzAxNTAxMTc1NTEYMBYGBSqFA2QBEg0xMDIzMDAwMDAwMjEwMRwwGgYDVQQKDBPQkNCeINCS0JrQkNCR0JDQndCaMRswGQYDVQQHDBLQkNGB0YLRgNCw0YXQsNC90YwxMzAxBgNVBAgMKjMwINCQ0YHRgtGA0LDRhdCw0L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjDELMAkGA1UEBhMCUlUxHDAaBgNVBAMME9CQ0J4g0JLQmtCQ0JHQkNCd0JowYzAcBgYqhQMCAhMwEgYHKoUDAgIkAAYHKoUDAgIeAQNDAARAqjtC1dM6zvtwmhJbUMVVOiC+8kbOOgufkJJFKHy5rMaFG6jWxUiGKvI8AAcEE7rP93ui2TMVzaDecGOrspIW6KOCBIMwggR/MA4GA1UdDwEB/wQEAwIE8DAdBgNVHQ4EFgQU541ASZ2wBv/db7s8wxlcnshsQxAwggGIBgNVHSMEggF/MIIBe4AUPu8ZPw+5ebDx5ikho+S5lbml7pChggFOpIIBSjCCAUYxGDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1Njc4OTAxKTAnBgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZIhvcNAQkBFghjYUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEVMBMGA1UEBwwM0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+0LwxMDAuBgNVBAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIGA1UEAwwr0KLQtdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKYIRAXILAVZQALmz5xHPOr40d6AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYBBQUHAwIwCgYIKwYBBQUHAwQwHQYDVR0gBBYwFDAIBgYqhQNkcQEwCAYGKoUDZHECMCsGA1UdEAQkMCKADzIwMTgwNzIwMTMwMTQxWoEPMjAxOTA3MjAxMzAxNDFaMIIBNAYFKoUDZHAEggEpMIIBJQwrItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiICjQstC10YDRgdC40Y8gMy45KQwsItCa0YDQuNC/0YLQvtCf0YDQviDQo9CmIiAo0LLQtdGA0YHQuNC4IDIuMCkMY9Ch0LXRgNGC0LjRhNC40LrQsNGCINGB0L7QvtGC0LLQtdGC0YHRgtCy0LjRjyDQpNCh0JEg0KDQvtGB0YHQuNC4IOKEliDQodCkLzEyNC0yNTM5INC+0YIgMTUuMDEuMjAxNQxj0KHQtdGA0YLQuNGE0LjQutCw0YIg0YHQvtC+0YLQstC10YLRgdGC0LLQuNGPINCk0KHQkSDQoNC+0YHRgdC40Lgg4oSWINCh0KQvMTI4LTI4ODEg0L7RgiAxMi4wNC4yMDE2MDYGBSqFA2RvBC0MKyLQmtGA0LjQv9GC0L7Qn9GA0L4gQ1NQIiAo0LLQtdGA0YHQuNGPIDMuOSkwZQYDVR0fBF4wXDBaoFigVoZUaHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2kucnUvY2RwLzNlZWYxOTNmMGZiOTc5YjBmMWU2MjkyMWEzZTRiOTk1YjlhNWVlOTAuY3JsMFcGCCsGAQUFBwEBBEswSTBHBggrBgEFBQcwAoY7aHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2kucnUvY2RwL3Rlc3RfY2FfcnRsYWJzMi5jZXIwCAYGKoUDAgIDA0EAWIKbobPiDap0i63WV/XyVw9IeSeOGvQAgsverXl1IdpLqXAvHX1prvCUumTiu+aYvhGJIvcxjDyLuGhb3OQjGjGCAi0wggIpAgEBMIIBXTCCAUYxGDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1Njc4OTAxKTAnBgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZIhvcNAQkBFghjYUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEVMBMGA1UEBwwM0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+0LwxMDAuBgNVBAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIGA1UEAwwr0KLQtdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKQIRAXILAVZQABCz6BEejDlOj3AwCgYGKoUDAgIJBQCgaTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xOTAyMDgxMjQ0MDJaMC8GCSqGSIb3DQEJBDEiBCAZPWR5ws+pub7OZR4S69+58mCvdr9rCTN7g3P4A0g3mzAKBgYqhQMCAhMFAARACchUvoRljfZ3MzsYKx48iSV+t0pyN6/+AP6saVmPCy45IaX3iq6jLKvHexQIYlpcQTJ5ZXQM96wrPjGJROSxEA==</ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>vS4pPA+0GfTmVAO6JXsbwjWSERjEoHF6NYCS4g8U1Sg=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>0C658eDYA1mg9PequfDSHCkDGIbQIidsowUErOpRQLI3KkMCQ906yOzD+ucisuNuV9dUu2dcc0bRVN0y5JhhMQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QBEg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHRg9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQswCQYDVQQGEwJSVTEYMBYGA1UECAwPNzcg0JzQvtGB0LrQstCwMRUwEwYDVQQHDAzQnNC+0YHQutCy0LAxJDAiBgNVBAoMG9Ce0JDQniDQoNC+0YHRgtC10LvQtdC60L7QvDEwMC4GA1UECwwn0KPQtNC+0YHRgtC+0LLQtdGA0Y/RjtGJ0LjQuSDRhtC10L3RgtGAMTQwMgYDVQQDDCvQotC10YHRgtC+0LLRi9C5INCj0KYg0KDQotCaICjQoNCi0JvQsNCx0YEpMB4XDTE4MDcyMDEzMDE0MVoXDTE5MDcyMDEzMTE0MVowgfAxHTAbBgkqhkiG9w0BCQIMDtCS0JrQkNCR0JDQndCaMRowGAYIKoUDA4EDAQESDDAwMzAxNTAxMTc1NTEYMBYGBSqFA2QBEg0xMDIzMDAwMDAwMjEwMRwwGgYDVQQKDBPQkNCeINCS0JrQkNCR0JDQndCaMRswGQYDVQQHDBLQkNGB0YLRgNCw0YXQsNC90YwxMzAxBgNVBAgMKjMwINCQ0YHRgtGA0LDRhdCw0L3RgdC60LDRjyDQvtCx0LvQsNGB0YLRjDELMAkGA1UEBhMCUlUxHDAaBgNVBAMME9CQ0J4g0JLQmtCQ0JHQkNCd0JowYzAcBgYqhQMCAhMwEgYHKoUDAgIkAAYHKoUDAgIeAQNDAARAqjtC1dM6zvtwmhJbUMVVOiC+8kbOOgufkJJFKHy5rMaFG6jWxUiGKvI8AAcEE7rP93ui2TMVzaDecGOrspIW6KOCBIMwggR/MA4GA1UdDwEB/wQEAwIE8DAdBgNVHQ4EFgQU541ASZ2wBv/db7s8wxlcnshsQxAwggGIBgNVHSMEggF/MIIBe4AUPu8ZPw+5ebDx5ikho+S5lbml7pChggFOpIIBSjCCAUYxGDAWBgUqhQNkARINMTIzNDU2Nzg5MDEyMzEaMBgGCCqFAwOBAwEBEgwwMDEyMzQ1Njc4OTAxKTAnBgNVBAkMINCh0YPRidC10LLRgdC60LjQuSDQstCw0Lsg0LQuIDI2MRcwFQYJKoZIhvcNAQkBFghjYUBydC5ydTELMAkGA1UEBhMCUlUxGDAWBgNVBAgMDzc3INCc0L7RgdC60LLQsDEVMBMGA1UEBwwM0JzQvtGB0LrQstCwMSQwIgYDVQQKDBvQntCQ0J4g0KDQvtGB0YLQtdC70LXQutC+0LwxMDAuBgNVBAsMJ9Cj0LTQvtGB0YLQvtCy0LXRgNGP0Y7RidC40Lkg0YbQtdC90YLRgDE0MDIGA1UEAwwr0KLQtdGB0YLQvtCy0YvQuSDQo9CmINCg0KLQmiAo0KDQotCb0LDQsdGBKYIRAXILAVZQALmz5xHPOr40d6AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYBBQUHAwIwCgYIKwYBBQUHAwQwHQYDVR0gBBYwFDAIBgYqhQNkcQEwCAYGKoUDZHECMCsGA1UdEAQkMCKADzIwMTgwNzIwMTMwMTQxWoEPMjAxOTA3MjAxMzAxNDFaMIIBNAYFKoUDZHAEggEpMIIBJQwrItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiICjQstC10YDRgdC40Y8gMy45KQwsItCa0YDQuNC/0YLQvtCf0YDQviDQo9CmIiAo0LLQtdGA0YHQuNC4IDIuMCkMY9Ch0LXRgNGC0LjRhNC40LrQsNGCINGB0L7QvtGC0LLQtdGC0YHRgtCy0LjRjyDQpNCh0JEg0KDQvtGB0YHQuNC4IOKEliDQodCkLzEyNC0yNTM5INC+0YIgMTUuMDEuMjAxNQxj0KHQtdGA0YLQuNGE0LjQutCw0YIg0YHQvtC+0YLQstC10YLRgdGC0LLQuNGPINCk0KHQkSDQoNC+0YHRgdC40Lgg4oSWINCh0KQvMTI4LTI4ODEg0L7RgiAxMi4wNC4yMDE2MDYGBSqFA2RvBC0MKyLQmtGA0LjQv9GC0L7Qn9GA0L4gQ1NQIiAo0LLQtdGA0YHQuNGPIDMuOSkwZQYDVR0fBF4wXDBaoFigVoZUaHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2kucnUvY2RwLzNlZWYxOTNmMGZiOTc5YjBmMWU2MjkyMWEzZTRiOTk1YjlhNWVlOTAuY3JsMFcGCCsGAQUFBwEBBEswSTBHBggrBgEFBQcwAoY7aHR0cDovL2NlcnRlbnJvbGwudGVzdC5nb3N1c2x1Z2kucnUvY2RwL3Rlc3RfY2FfcnRsYWJzMi5jZXIwCAYGKoUDAgIDA0EAWIKbobPiDap0i63WV/XyVw9IeSeOGvQAgsverXl1IdpLqXAvHX1prvCUumTiu+aYvhGJIvcxjDyLuGhb3OQjGg==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>\n" +
             "\n";
-    String logitechPassed ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>f470e693-2ace-11e9-9851-b563cb973ad9</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000300890</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"9e934764-2b9e-11e9-962d-d372311ea6fe\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"9e92f943-2b9e-11e9-962d-79042b7937b4\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>9e934764-2b9e-11e9-962d-d372311ea6fe</ns2:uuid><ns2:Hash>wBCdScRv+tKV4a0PkiIHsYdDqFPghOatNWYO0/Hgucs=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>MIIKJgYJKoZIhvcNAQcCoIIKFzCCChMCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
+    String logitechPassed = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>f470e693-2ace-11e9-9851-b563cb973ad9</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000300890</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"9e934764-2b9e-11e9-962d-d372311ea6fe\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"9e92f943-2b9e-11e9-962d-79042b7937b4\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>9e934764-2b9e-11e9-962d-d372311ea6fe</ns2:uuid><ns2:Hash>wBCdScRv+tKV4a0PkiIHsYdDqFPghOatNWYO0/Hgucs=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>MIIKJgYJKoZIhvcNAQcCoIIKFzCCChMCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
             "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB\n" +
             "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR\n" +
             "g9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQsw\n" +
@@ -340,8 +340,8 @@ public class ebsTest {
             "8mCvdr9rCTN7g3P4A0g3mzAKBgYqhQMCAhMFAARACchUvoRljfZ3MzsYKx48iSV+t0pyN6/+AP6s\n" +
             "aVmPCy45IaX3iq6jLKvHexQIYlpcQTJ5ZXQM96wrPjGJROSxEA==</ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>14rRlr+bWqiGa+6LqG6kNc7edu4v/jD64l2+YklLc6g=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>Eag5+NQ88YPcUGPo5Hq+Rk+3aQIN+VaKl/topOEPbhjMhSU8jqIawedXO6t0lnhpHZAx7N4j2Pr0iVAEUREKrQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>";
     String manualformedDroppedSoundTags = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>182b6e56-2ad9-11e9-b4c0-0367b7e239fa</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000300890</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"f3f32a0c-2ad9-11e9-9335-174757e2b2d7\"/></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"f3f32a0b-2ad9-11e9-9335-7b17a60eab7c\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>f3f32a0c-2ad9-11e9-9335-174757e2b2d7</ns2:uuid><ns2:Hash>llR2gMNfJys2ZTC3HxoetWV4bUZEe/rdtFVeZiJDp3w=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader><ns2:RefAttachmentHeader><ns2:uuid>f3f32a0b-2ad9-11e9-9335-7b17a60eab7c</ns2:uuid><ns2:Hash>GT1kecLPqbm+zmUeEuvfufJgr3a/awkze4Nz+ANIN5s=</ns2:Hash><ns2:MimeType>image/jpg</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>WF4HGUVF7edxDmQHfVXe28o7uEXIBdlFHY+ZdgMeeyY=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>Xq2BZcyi21VSyd+KgNKvOIzIBpr+l227cDdgpd1SdSq4HehC0tDttfGmNlNGtK6PZsrkVtVoD4Qmhjw38VnJlg==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>";
-    String manualFormedCorrect ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>f470e693-2ace-11e9-9851-b563cb973ad9</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000300890</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"c67db3aa-2ad8-11e9-a155-2173456e8a3d\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"c67db3a9-2ad8-11e9-a155-c541248e631c\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>c67db3aa-2ad8-11e9-a155-2173456e8a3d</ns2:uuid><ns2:Hash>llR2gMNfJys2ZTC3HxoetWV4bUZEe/rdtFVeZiJDp3w=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader><ns2:RefAttachmentHeader><ns2:uuid>c67db3a9-2ad8-11e9-a155-c541248e631c</ns2:uuid><ns2:Hash>GT1kecLPqbm+zmUeEuvfufJgr3a/awkze4Nz+ANIN5s=</ns2:Hash><ns2:MimeType>image/jpg</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>14rRlr+bWqiGa+6LqG6kNc7edu4v/jD64l2+YklLc6g=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>Eag5+NQ88YPcUGPo5Hq+Rk+3aQIN+VaKl/topOEPbhjMhSU8jqIawedXO6t0lnhpHZAx7N4j2Pr0iVAEUREKrQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>";
-    String correct ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
+    String manualFormedCorrect = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">   <S:Body>      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><ns:MessageID>f470e693-2ace-11e9-9851-b563cb973ad9</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>    <bm:BiometricData>        <bm:Id>ID-1</bm:Id>        <bm:Date>2019-02-05T10:55:16.3120000+04:00</bm:Date>        <bm:RaId>1000300890</bm:RaId>        <bm:PersonId>1000368305</bm:PersonId>        <bm:IdpMnemonic>TESIA</bm:IdpMnemonic>      <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"c67db3aa-2ad8-11e9-a155-2173456e8a3d\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"c67db3a9-2ad8-11e9-a155-c541248e631c\"/></bm:Data>    </bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList><ns2:RefAttachmentHeader><ns2:uuid>c67db3aa-2ad8-11e9-a155-2173456e8a3d</ns2:uuid><ns2:Hash>llR2gMNfJys2ZTC3HxoetWV4bUZEe/rdtFVeZiJDp3w=</ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader><ns2:RefAttachmentHeader><ns2:uuid>c67db3a9-2ad8-11e9-a155-c541248e631c</ns2:uuid><ns2:Hash>GT1kecLPqbm+zmUeEuvfufJgr3a/awkze4Nz+ANIN5s=</ns2:Hash><ns2:MimeType>image/jpg</ns2:MimeType><ns2:SignaturePKCS7>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</ns2:SignaturePKCS7></ns2:RefAttachmentHeader></ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData>         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"sigID\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>14rRlr+bWqiGa+6LqG6kNc7edu4v/jD64l2+YklLc6g=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>Eag5+NQ88YPcUGPo5Hq+Rk+3aQIN+VaKl/topOEPbhjMhSU8jqIawedXO6t0lnhpHZAx7N4j2Pr0iVAEUREKrQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>      </ns2:SendRequestRequest>   </S:Body></S:Envelope>";
+    String correct = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
             "   <S:Body>\n" +
             "      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">\n" +
             "         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\t<ns:MessageID>ffebbbec-2912-11e9-b81e-4f6789178263</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
@@ -361,7 +361,7 @@ public class ebsTest {
             "      </ns2:SendRequestRequest>\n" +
             "   </S:Body>\n" +
             "</S:Envelope>";
-    String dirtyraw="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
+    String dirtyraw = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
             "   <S:Body>\n" +
             "      <ns2:SendRequestRequest xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\">\n" +
             "         <ns:SenderProvidedRequestData xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\t<ns:MessageID>0b8faa84-2850-11e9-bb7a-b35b614a5f88</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
@@ -383,8 +383,7 @@ public class ebsTest {
             "</S:Envelope>";
 
 
-
-    String prepared2Tag ="<ns2:RefAttachmentHeader><ns2:uuid>872b8bb6-2550-11e9-9666-6f90870395fd</ns2:uuid><ns2:Hash>LwX76ZiKWn7FXljFxxL09Q1J+lCj9aXoWNFZDkuTZZU=</ns2:Hash><ns2:MimeType>audio/x-wav</ns2:MimeType><ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
+    String prepared2Tag = "<ns2:RefAttachmentHeader><ns2:uuid>872b8bb6-2550-11e9-9666-6f90870395fd</ns2:uuid><ns2:Hash>LwX76ZiKWn7FXljFxxL09Q1J+lCj9aXoWNFZDkuTZZU=</ns2:Hash><ns2:MimeType>audio/x-wav</ns2:MimeType><ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA\n" +
             "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB\n" +
             "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR\n" +
             "g9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQsw\n" +
@@ -429,7 +428,7 @@ public class ebsTest {
             "ABCz6BEejDlOj3AwCgYGKoUDAgIJBQAwCgYGKoUDAgITBQAEQPJ5GfornCHIxDyaLFkWf6gkFBAy\n" +
             "Q7NHWuRZJ8fbB71ScxeUiFa9MN02RvszloYvoajxeOdiobR1aqDK5ALl+T4=</ns2:SignaturePKCS7></ns2:RefAttachmentHeader>";
 
-    String preparedAudioTag ="<ns2:RefAttachmentHeader><ns2:uuid>872b8bb6-2550-11e9-9666-6f90870395fd</ns2:uuid><ns2:Hash>LwX76ZiKWn7FXljFxxL09Q1J+lCj9aXoWNFZDkuTZZU=</ns2:Hash><ns2:MimeType>audio/x-wav</ns2:MimeType><ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA" +
+    String preparedAudioTag = "<ns2:RefAttachmentHeader><ns2:uuid>872b8bb6-2550-11e9-9666-6f90870395fd</ns2:uuid><ns2:Hash>LwX76ZiKWn7FXljFxxL09Q1J+lCj9aXoWNFZDkuTZZU=</ns2:Hash><ns2:MimeType>audio/x-wav</ns2:MimeType><ns2:SignaturePKCS7>MIIJuwYJKoZIhvcNAQcCoIIJrDCCCagCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggfA" +
             "MIIHvDCCB2ugAwIBAgIRAXILAVZQABCz6BEejDlOj3AwCAYGKoUDAgIDMIIBRjEYMBYGBSqFA2QB" +
             "Eg0xMjM0NTY3ODkwMTIzMRowGAYIKoUDA4EDAQESDDAwMTIzNDU2Nzg5MDEpMCcGA1UECQwg0KHR" +
             "g9GJ0LXQstGB0LrQuNC5INCy0LDQuyDQtC4gMjYxFzAVBgkqhkiG9w0BCQEWCGNhQHJ0LnJ1MQsw" +
@@ -594,24 +593,25 @@ public class ebsTest {
     DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
     Scheduller sch = new Scheduller(deps);
     Sign signer = new Sign2018();
-    public boolean supress=false;
+    public boolean supress = false;
     Injector inj = new Injector();
     String photofile = "biophoto.jpg";
     String soundfile = "biosound.wav";
     public String filename__ = "EBSMessageFUll.bin";
+
     public ebsTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
         //msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         buff = Files.readAllBytes(new File(filename__).toPath());
 
-        String flushedprepared  = new String(trans.burnTabsAndNs(prepared2Tag.getBytes()));
+        String flushedprepared = new String(trans.burnTabsAndNs(prepared2Tag.getBytes()));
 
-        String cleared = inj.flushTagData(flushedprepared,"ns2:SignaturePKCS7");
+        String cleared = inj.flushTagData(flushedprepared, "ns2:SignaturePKCS7");
 
         String embed = new String(Files.readAllBytes(new File("pksc.bin").toPath()));
 
         withData = inj.injectTagDirect(cleared, "ns2:SignaturePKCS7", embed);
 
-        ToSendCorrect  = new String(trans.burnTabsAndNs(manualFormedCorrect.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(manualFormedCorrect.getBytes()));
 
     }
 
@@ -622,18 +622,18 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.signer.getmainSign());
         assertNotEquals(null, deps.ebs.signer.getPersonalSign());
         String data = "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
-        "   <S:Body>\n" +
-        "      <ns2:SendRequestRequest xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" + "         <ns:SenderProvidedRequestData Id=\"SIGNED_BY_CONSUMER\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\t<ns:MessageID>6fefa07c-5e7f-11e4-a9ff-d4c9eff07b77</ns:MessageID><ns2:MessagePrimaryContent><ns1:BreachRequest Id=\"PERSONAL_SIGNATURE\" xmlns:ns1=\"urn://x-artefacts-gibdd-gov-ru/breach/root/1.0\" xmlns:ns2=\"urn://x-artefacts-gibdd-gov-ru/breach/commons/1.0\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1\"> <ns1:RequestedInformation> <ns2:RegPointNum>Т785ЕС57</ns2:RegPointNum> </ns1:RequestedInformation> <ns1:Governance> <ns2:Name>ГИБДД РФ</ns2:Name> <ns2:Code>GIBDD</ns2:Code> <ns2:OfficialPerson> <ns3:FamilyName>Загурский</ns3:FamilyName> <ns3:FirstName>Андрей</ns3:FirstName> <ns3:Patronymic>Петрович</ns3:Patronymic> </ns2:OfficialPerson></ns1:Governance> </ns1:BreachRequest> </ns2:MessagePrimaryContent>\t<ns2:AttachmentHeaderList>\t<ns2:AttachmentHeader>\t<ns2:contentId>attach5MB.jpg</ns2:contentId>\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7>MIICyAYJKoZIhvcNAQcCoIICuTCCArUCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggGLMIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHsxggEEMIIBAAIBATA2MC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUCBQDBXZBUMAoGBiqFAwICCQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTQxMDI4MDg1MDE2WjAvBgkqhkiG9w0BCQQxIgQgmZUE4Hn2Dtr05pue921ZxU60Ia3toLVEQfIs24PTdT8wCgYGKoUDAgITBQAEQBwEN+RenIpvL6lZHzzsPj5H4xgqZjs330i1JjAhjcACqQcCyt3vorTEX9/gfs16s9Lt9XxNj9Y88NvvLIrfFaw=</ns2:SignaturePKCS7>\t</ns2:AttachmentHeader>\t</ns2:AttachmentHeaderList></ns:SenderProvidedRequestData>\t<AttachmentContentList>\t<AttachmentContent>\t<Id>attach5MB.jpg</Id>\t<Content><xop:Include href=\"cid:attach5MB.jpg\" xmlns:xop=\"http://www.w3.org/2004/08/xop/include\"/></Content>\t</AttachmentContent>\t</AttachmentContentList>\n" +
-        "         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>jTP0hndqPRXO9O+5euAtKsysn83a9+gVkvUpojGTL84=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>i3PzufK7XEmCtElirdXqtYh7/CdZCIIgowfj+TbBHPw/Mk+1YA+/LSdIM3MO2tcH8ZeFA5e04VSz0deGcnVAaA==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHs=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>\n" +
-        "      </ns2:SendRequestRequest>\n" +
-        "   </S:Body>\n" +
-        "</S:Envelope>";
+                "   <S:Body>\n" +
+                "      <ns2:SendRequestRequest xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" + "         <ns:SenderProvidedRequestData Id=\"SIGNED_BY_CONSUMER\" xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\t<ns:MessageID>6fefa07c-5e7f-11e4-a9ff-d4c9eff07b77</ns:MessageID><ns2:MessagePrimaryContent><ns1:BreachRequest Id=\"PERSONAL_SIGNATURE\" xmlns:ns1=\"urn://x-artefacts-gibdd-gov-ru/breach/root/1.0\" xmlns:ns2=\"urn://x-artefacts-gibdd-gov-ru/breach/commons/1.0\" xmlns:ns3=\"urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1\"> <ns1:RequestedInformation> <ns2:RegPointNum>Т785ЕС57</ns2:RegPointNum> </ns1:RequestedInformation> <ns1:Governance> <ns2:Name>ГИБДД РФ</ns2:Name> <ns2:Code>GIBDD</ns2:Code> <ns2:OfficialPerson> <ns3:FamilyName>Загурский</ns3:FamilyName> <ns3:FirstName>Андрей</ns3:FirstName> <ns3:Patronymic>Петрович</ns3:Patronymic> </ns2:OfficialPerson></ns1:Governance> </ns1:BreachRequest> </ns2:MessagePrimaryContent>\t<ns2:AttachmentHeaderList>\t<ns2:AttachmentHeader>\t<ns2:contentId>attach5MB.jpg</ns2:contentId>\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7>MIICyAYJKoZIhvcNAQcCoIICuTCCArUCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggGLMIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHsxggEEMIIBAAIBATA2MC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUCBQDBXZBUMAoGBiqFAwICCQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTQxMDI4MDg1MDE2WjAvBgkqhkiG9w0BCQQxIgQgmZUE4Hn2Dtr05pue921ZxU60Ia3toLVEQfIs24PTdT8wCgYGKoUDAgITBQAEQBwEN+RenIpvL6lZHzzsPj5H4xgqZjs330i1JjAhjcACqQcCyt3vorTEX9/gfs16s9Lt9XxNj9Y88NvvLIrfFaw=</ns2:SignaturePKCS7>\t</ns2:AttachmentHeader>\t</ns2:AttachmentHeaderList></ns:SenderProvidedRequestData>\t<AttachmentContentList>\t<AttachmentContent>\t<Id>attach5MB.jpg</Id>\t<Content><xop:Include href=\"cid:attach5MB.jpg\" xmlns:xop=\"http://www.w3.org/2004/08/xop/include\"/></Content>\t</AttachmentContent>\t</AttachmentContentList>\n" +
+                "         <ns2:CallerInformationSystemSignature><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411\"/><ds:Reference URI=\"#SIGNED_BY_CONSUMER\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:Transform Algorithm=\"urn://smev-gov-ru/xmldsig/transform\"/></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#gostr3411\"/><ds:DigestValue>jTP0hndqPRXO9O+5euAtKsysn83a9+gVkvUpojGTL84=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>i3PzufK7XEmCtElirdXqtYh7/CdZCIIgowfj+TbBHPw/Mk+1YA+/LSdIM3MO2tcH8ZeFA5e04VSz0deGcnVAaA==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHs=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></ns2:CallerInformationSystemSignature>\n" +
+                "      </ns2:SendRequestRequest>\n" +
+                "   </S:Body>\n" +
+                "</S:Envelope>";
         deps.ebs.setinput(data.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
         System.out.println(response);
-        if (response.indexOf("fault")>0)
+        if (response.indexOf("fault") > 0)
             System.out.println("FAULT");
 
 
@@ -717,13 +717,13 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
         System.out.println(response);
-        if (response.indexOf("fault")>0) {
+        if (response.indexOf("fault") > 0) {
             System.out.println("FAULT");
         }
     }
 
     @Test
-    public void notNull(){
+    public void notNull() {
 
     }
 
@@ -802,7 +802,7 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
         System.out.println(response);
-        if (response.indexOf("fault")>0) {
+        if (response.indexOf("fault") > 0) {
             System.out.println("FAULT");
         }
     }
@@ -813,7 +813,7 @@ public class ebsTest {
     }
 
     @Test
-    public void printEtalon(){
+    public void printEtalon() {
         String testData = "<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
                 "    <bm:RegistrarMnemonic>TEST01</bm:RegistrarMnemonic>\n" +
                 "    <bm:EmployeeId>123-456-789 00</bm:EmployeeId>\n" +
@@ -878,7 +878,7 @@ public class ebsTest {
                 "</bm:RegisterBiometricDataRequest>";
         System.out.println(testData);
 
-        String blob ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID>d8161c55-1ecc-11e9-90eb-1dec74fcc959</ns:MessageID><ns2:MessagePrimaryContent><tns:ESIAFindAccountRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/find_account/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
+        String blob = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID>d8161c55-1ecc-11e9-90eb-1dec74fcc959</ns:MessageID><ns2:MessagePrimaryContent><tns:ESIAFindAccountRequest xmlns:tns=\"urn://mincomsvyaz/esia/reg_service/find_account/1.4.1\" xmlns:ns2=\"urn://mincomsvyaz/esia/commons/rg_sevices_types/1.4.1\">\n" +
                 "   \t<tns:RoutingCode>TESIA</tns:RoutingCode>\n" +
                 "  \t<tns:SnilsOperator>000-000-600 06</tns:SnilsOperator>\n" +
                 "    <tns:ra>1000300890</tns:ra>\n" +
@@ -902,7 +902,7 @@ public class ebsTest {
 
     @Test
     public void sendEBSSAFAR() throws Exception {
-        String blob ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID>d8161c55-1ecc-11e9-90eb-1dec74fcc959</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
+        String blob = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\"><S:Body><ns2:SendRequestRequest><ns:SenderProvidedRequestData xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CONSUMER\"><ns:MessageID>d8161c55-1ecc-11e9-90eb-1dec74fcc959</ns:MessageID><ns2:MessagePrimaryContent><bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
                 "    <bm:RegistrarMnemonic>981601_3T</bm:RegistrarMnemonic>\n" +
                 "    <bm:EmployeeId>000-000-600 06</bm:EmployeeId>\n" +
                 "    <bm:BiometricData>\n" +
@@ -969,7 +969,7 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
         System.out.println(response);
-        if (response.indexOf("fault")>0) {
+        if (response.indexOf("fault") > 0) {
             System.out.println("FAULT");
         }
 
@@ -978,7 +978,7 @@ public class ebsTest {
 
     @Test
     public void GetresponcerequestwoFilter() throws Exception {//2014-02-11T17:10:03.616+04:00
-        String prepared="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
+        String prepared = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "<ns:GetResponseRequest>\n" +
@@ -992,20 +992,20 @@ public class ebsTest {
         deps.gis.setinput(prepared.getBytes());
         assertNotEquals(null, deps.gis.GetSoap());
         String response = new String(deps.gis.GetResponseRequestwoFilter());
-        String originalid = deps.ext.extractTagValue(response,":OriginalMessageId");
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
-        System.out.println("\n@\n"+ originalid);
+        String originalid = deps.ext.extractTagValue(response, ":OriginalMessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
+        System.out.println("\n@\n" + originalid);
         System.out.println(response);
-        if (response.indexOf("fault")>0) {
+        if (response.indexOf("fault") > 0) {
             System.out.println("FAULT");
         }
-        if (originalid!=null)
+        if (originalid != null)
             deps.gis.Ack(messageId);
     }
 
 
     @Test
-    public void attachment(){
+    public void attachment() {
         ArrayList<String> attaches = new ArrayList();
         attaches.add("biophoto");
     }
@@ -1013,35 +1013,35 @@ public class ebsTest {
     @Ignore
     @Test
     public void findMessageID() throws Exception {
-            String result = getrespreq();
-            while (true){
-                String id=deps.ext.extractTagValue(result, ":MessageID");
-                //   System.out.println("Extract id="+ id);
-                String originalid=deps.ext.extractTagValue(result, ":OriginalMessageId");
-                System.out.println("\nOriginal id="+ originalid);
-                if (id != null) {
-                    deps.gis.Ack(id);
-
-                }
-                if ((originalid!=null) && originalid.equals("3b03ad1c-35da-11e9-b534-cb20987c92fb"))
-                    return;
-                result = getrespreq();
-                //   Thread.sleep(0);
-            }
-    }
-
-    public void findMessagebyID(String msgId) throws Exception {
         String result = getrespreq();
-        while (true){
-            String id=deps.ext.extractTagValue(result, ":MessageID");
+        while (true) {
+            String id = deps.ext.extractTagValue(result, ":MessageID");
             //   System.out.println("Extract id="+ id);
-            String originalid=deps.ext.extractTagValue(result, ":OriginalMessageId");
-            System.out.println("\nOriginal id="+ originalid);
+            String originalid = deps.ext.extractTagValue(result, ":OriginalMessageId");
+            System.out.println("\nOriginal id=" + originalid);
             if (id != null) {
                 deps.gis.Ack(id);
 
             }
-            if ((originalid!=null) && originalid.equals(msgId))
+            if ((originalid != null) && originalid.equals("3b03ad1c-35da-11e9-b534-cb20987c92fb"))
+                return;
+            result = getrespreq();
+            //   Thread.sleep(0);
+        }
+    }
+
+    public void findMessagebyID(String msgId) throws Exception {
+        String result = getrespreq();
+        while (true) {
+            String id = deps.ext.extractTagValue(result, ":MessageID");
+            //   System.out.println("Extract id="+ id);
+            String originalid = deps.ext.extractTagValue(result, ":OriginalMessageId");
+            System.out.println("\nOriginal id=" + originalid);
+            if (id != null) {
+                deps.gis.Ack(id);
+
+            }
+            if ((originalid != null) && originalid.equals(msgId))
                 return;
             result = getrespreq();
             //   Thread.sleep(0);
@@ -1050,7 +1050,7 @@ public class ebsTest {
 
 
     String getrespreq() throws Exception {
-        String prepared="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
+        String prepared = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns1=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "<ns:GetResponseRequest>\n" +
@@ -1065,7 +1065,9 @@ public class ebsTest {
         assertNotEquals(null, deps.gis.GetSoap());
         String response = new String(deps.gis.GetResponseRequestwoFilter());
         return response;
-    };
+    }
+
+    ;
 
 
     @Test
@@ -1077,13 +1079,13 @@ public class ebsTest {
     @Test
     public void generateSoundBlob() throws Exception {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.generateSoundBlock(msg) );
+        assertNotEquals(null, deps.ebs.generateSoundBlock(msg));
     }
 
     @Test
     public void soundBioMethadata() throws IOException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.SoundBioMethadata(msg) );
+        assertNotEquals(null, deps.ebs.SoundBioMethadata(msg));
         System.out.println(deps.ebs.SoundBioMethadata(msg));
     }
 
@@ -1120,8 +1122,8 @@ public class ebsTest {
 
         assertNotEquals(null, deps.ebs.AttachPhotoBlock());
         assertNotEquals(null, deps.ebs.AttachSoundBlock());
-        System.out.println( deps.ebs.AttachPhotoBlock());
-        System.out.println( deps.ebs.AttachSoundBlock());
+        System.out.println(deps.ebs.AttachPhotoBlock());
+        System.out.println(deps.ebs.AttachSoundBlock());
 
     }
 
@@ -1135,7 +1137,7 @@ public class ebsTest {
 
     @Test
     public void generateUnsSOAP() throws Exception {
-        String usnigned =new String(deps.ebs.generateUnsSOAP(buff));
+        String usnigned = new String(deps.ebs.generateUnsSOAP(buff));
         assertNotEquals(null, usnigned);
         System.out.println(usnigned);
     }
@@ -1143,7 +1145,7 @@ public class ebsTest {
     @Test
     public void restoredSignandsend() throws Exception {
 
-        String usnigned =new String(deps.ebs.generateUnsSOAP(buff));
+        String usnigned = new String(deps.ebs.generateUnsSOAP(buff));
 
         deps.ebs.setinput(usnigned.getBytes());
         assertNotEquals(null, usnigned);
@@ -1154,13 +1156,13 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
         System.out.println(response);
-        if (response.indexOf("fault")>0) {
-           System.out.println("FAULT");
+        if (response.indexOf("fault") > 0) {
+            System.out.println("FAULT");
         }
     }
 
     @Test
-    public void printAll(){
+    public void printAll() {
         System.out.println(deps.gis.emptySOAP);
 
         System.out.println("\n\n");
@@ -1188,7 +1190,7 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
         System.out.println(response);
-        if (response.indexOf("fault")>0) {
+        if (response.indexOf("fault") > 0) {
             System.out.println("FAULT");
         }
     }
@@ -1241,9 +1243,9 @@ public class ebsTest {
 
     @Test
     public void sendhoocked__2() throws Exception {
-        String flushedprepared  = new String(trans.burnTabsAndNs(prepared2Tag.getBytes()));
+        String flushedprepared = new String(trans.burnTabsAndNs(prepared2Tag.getBytes()));
 
-        System.out.println("######>>>>\n"+ flushedprepared);
+        System.out.println("######>>>>\n" + flushedprepared);
 
         String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
         String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
@@ -1266,12 +1268,12 @@ public class ebsTest {
     public void sendhoocked124() throws Exception {
         System.out.println(dumped);
         String injected = "<ns2:RefAttachmentHeader>\t\t<ns2:uuid>e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77</ns2:uuid>\t\t<ns2:Hash>VpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJA=</ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7>MIICyAYJKoZIhvcNAQcCoIICuTCCArUCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggGLMIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHsxggEEMIIBAAIBATA2MC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUCBQDBXZBUMAoGBiqFAwICCQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTQxMDI4MDg1ODAzWjAvBgkqhkiG9w0BCQQxIgQgVpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJAwCgYGKoUDAgITBQAEQIXxbWJSNu/oGOxFOKcDO5wE1riXWDqyffOPZnIfoUk3QNI/qvRas+0V+713qvOL9iGQ3QrKFD1PkeJVditDDP4=</ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>";
-       // String injected2 = inj.injectTag(injected, "ns2:uuid", e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77)
+        // String injected2 = inj.injectTag(injected, "ns2:uuid", e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77)
         String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
         String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
         System.out.println(hook2);
-        String hook3 = deps.inj.injectTagDirect(hook2,"ns2:RefAttachmentHeaderList", injected );
-        System.out.println("\n\n"+hook3);
+        String hook3 = deps.inj.injectTagDirect(hook2, "ns2:RefAttachmentHeaderList", injected);
+        System.out.println("\n\n" + hook3);
 
         deps.ebs.setinput(hook3.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
@@ -1286,12 +1288,12 @@ public class ebsTest {
     public void doubleinjected() throws Exception {
         System.out.println(dumped);
         String injected = "<ns2:RefAttachmentHeader>\t\t<ns2:uuid>e74b2cb9-5aa3-11e4-a9ff-d4c9eff07b77</ns2:uuid>\t\t<ns2:Hash>VpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJA=</ns2:Hash>\t\t<ns2:MimeType>image/jpeg</ns2:MimeType>\t<ns2:SignaturePKCS7>MIICyAYJKoZIhvcNAQcCoIICuTCCArUCAQExDDAKBgYqhQMCAgkFADALBgkqhkiG9w0BBwGgggGLMIIBhzCCATagAwIBAgIFAMFdkFQwCAYGKoUDAgIDMC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUwHhcNMTQwMjIxMTMzNDMyWhcNMTUwMjIxMTMzNDMyWjAtMRAwDgYDVQQLEwdTWVNURU0xMQwwCgYDVQQKEwNPVjIxCzAJBgNVBAYTAlJVMGMwHAYGKoUDAgITMBIGByqFAwICJAAGByqFAwICHgEDQwAEQLjcuMDezt3MrljIr+54Cy64Gvgy8uuGgTpjvlrDAkiGdTL/m9EDDJvMARnMjzSb1JTxovUWfTV8j2bns+KZXNyjOzA5MA4GA1UdDwEB/wQEAwID6DATBgNVHSUEDDAKBggrBgEFBQcDAjASBgNVHRMBAf8ECDAGAQH/AgEFMAgGBiqFAwICAwNBAMVRmhKGKFtRbBlGLl++KtOAvm96C5wnj+6L/wMYpw7Gd7WBM21Zqh9wu+3eZotglDsJMEYbKgiLRprSxKz+DHsxggEEMIIBAAIBATA2MC0xEDAOBgNVBAsTB1NZU1RFTTExDDAKBgNVBAoTA09WMjELMAkGA1UEBhMCUlUCBQDBXZBUMAoGBiqFAwICCQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTQxMDI4MDg1ODAzWjAvBgkqhkiG9w0BCQQxIgQgVpT3sc999CJI8TVYX35ZZfXpc/dCWO5e1MgoUg8YiJAwCgYGKoUDAgITBQAEQIXxbWJSNu/oGOxFOKcDO5wE1riXWDqyffOPZnIfoUk3QNI/qvRas+0V+713qvOL9iGQ3QrKFD1PkeJVditDDP4=</ns2:SignaturePKCS7>\t</ns2:RefAttachmentHeader>";
-        String injected2 = injected+injected;
+        String injected2 = injected + injected;
         String hook = deps.inj.flushTagData(dumped, "ns2:CallerInformationSystemSignature");
         String hook2 = deps.inj.flushTagData(hook, "ns2:RefAttachmentHeaderList");
         System.out.println(hook2);
-        String hook3 = deps.inj.injectTagDirect(hook2,"ns2:RefAttachmentHeaderList", injected2 );
-        System.out.println("\n\n"+hook3);
+        String hook3 = deps.inj.injectTagDirect(hook2, "ns2:RefAttachmentHeaderList", injected2);
+        System.out.println("\n\n" + hook3);
 
         deps.ebs.setinput(hook3.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
@@ -1312,7 +1314,7 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
         System.out.println(response);
-        if (response.indexOf("fault")>0) {
+        if (response.indexOf("fault") > 0) {
             System.out.println("FAULT");
         }
     }
@@ -1320,8 +1322,8 @@ public class ebsTest {
     @Test
     public void changeName() throws IOException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        System.out.println(filename__+'\n'+msg.SoundBLOB.filename);
-        msg.SoundBLOB.filename="tested.wav";
+        System.out.println(filename__ + '\n' + msg.SoundBLOB.filename);
+        msg.SoundBLOB.filename = "tested.wav";
         BinaryMessage.write(BinaryMessage.savedToBLOB(msg), filename__);
     }
 
@@ -1337,8 +1339,8 @@ public class ebsTest {
         String photouuid = deps.ebs.uploadfiletoftp(pngFile);
 
         System.out.println("\n\n\nUPLOAD COMPLETE!");
-        String fullpathWav = "/"+wavuuid+"/"+wavFile;
-        String fullpathPhoto =  "/"+photouuid+"/"+pngFile;
+        String fullpathWav = "/" + wavuuid + "/" + wavFile;
+        String fullpathPhoto = "/" + photouuid + "/" + pngFile;
         System.out.println(fullpathWav);
         System.out.println(fullpathPhoto);
 
@@ -1363,7 +1365,7 @@ public class ebsTest {
     @Test
     public void restoredSignandsendAUTO() throws Exception {
 
-        String usnigned =new String(deps.ebs.generateUnsSOAP(buff));
+        String usnigned = new String(deps.ebs.generateUnsSOAP(buff));
 
         deps.ebs.setinput(usnigned.getBytes());
         assertNotEquals(null, usnigned);
@@ -1373,86 +1375,86 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
         findMessagebyID(messageId);
 
     }
 
 
-   // @Test
+    // @Test
     public void senddirectauto() throws Exception {
         deps.ebs.setinput(correct.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
-    //    findMessagebyID(messageId);
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
+        //    findMessagebyID(messageId);
     }
 
-  //  @Test
+    //  @Test
     public void getCorrect() throws Exception {
         System.out.println(ToSendCorrect);
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
-      //  findMessagebyID(messageId);
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
+        //  findMessagebyID(messageId);
     }
 
 
-   // @Test
+    // @Test
     public void testmalformed() throws Exception {
-        ToSendCorrect  = new String(trans.burnTabsAndNs(manualformedDroppedSoundTags.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(manualformedDroppedSoundTags.getBytes()));
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
         findMessagebyID(messageId);
     }
 
     //@Test
     public void testlogi() throws Exception {
-        ToSendCorrect  = new String(trans.burnTabsAndNs(logitechPassed.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(logitechPassed.getBytes()));
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
         findMessagebyID(messageId);
     }
 
-   // @Test
+    // @Test
     public void testpatchedRA() throws Exception {
-        ToSendCorrect  = new String(trans.burnTabsAndNs(RAPatched.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(RAPatched.getBytes()));
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
         findMessagebyID(messageId);
     }
 
-  //  @Test
+    //  @Test
     public void ESIAdirect() throws Exception {
-        ToSendCorrect  = new String(trans.burnTabsAndNs(ESIAdirect.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(ESIAdirect.getBytes()));
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
-     //   findMessagebyID(messageId);
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
+        //   findMessagebyID(messageId);
     }
 
- //   @Test
+    //   @Test
     public void ESIAFake() throws Exception {
-        ToSendCorrect  = new String(trans.burnTabsAndNs(ESIAdirect.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(ESIAdirect.getBytes()));
         deps.ebs.setinput(fake.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
         //   findMessagebyID(messageId);
     }
 
@@ -1463,8 +1465,8 @@ public class ebsTest {
         };
         assertNotEquals(null, deps.ebs.embedCrypto(input, "s1.wav"));
         String[] result = deps.ebs.embedCrypto(input, "s1.wav");
-        System.out.println("\n\n\n"+result[0]);
-        System.out.println("\n\n\n"+result[1]);
+        System.out.println("\n\n\n" + result[0]);
+        System.out.println("\n\n\n" + result[1]);
         assertEquals(result[0], input[0]);
     }
 
@@ -1475,27 +1477,27 @@ public class ebsTest {
         };
         assertNotEquals(null, deps.ebs.embedUUIDCortage(input, "s1.wav"));
         String[] result = deps.ebs.embedUUIDCortage(input, "s1.wav");
-        System.out.println("\n\n\n"+result[0]);
-        System.out.println("\n\n\n"+result[1]);
+        System.out.println("\n\n\n" + result[0]);
+        System.out.println("\n\n\n" + result[1]);
         Extractor ext = new Extractor();
-        assertNotEquals(null, ext.extractAttribute(result[0].getBytes(), "attachmentId" ));
+        assertNotEquals(null, ext.extractAttribute(result[0].getBytes(), "attachmentId"));
     }
 
     @Test
     public void genSoundAssembly() throws Exception {
         String filename = "s1.wav";
         String[] emptySound = new String[]{"<bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data><bm:Data>",
-        "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>"};
+                "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>"};
         String[] uploaded = deps.ebs.embedUUIDCortage(emptySound, filename);
         String[] Signed = deps.ebs.embedCrypto(uploaded, filename);
-        System.out.println(Signed[0]+"\n\n\n");
+        System.out.println(Signed[0] + "\n\n\n");
         System.out.println(Signed[1]);
     }
 
     @Test
-    public void buildSoap(){
+    public void buildSoap() {
         StringBuffer sb = new StringBuffer();
-        sb.append(SOAP[0]+SoundArray[0]+PhotoArray[0]+SOAP[1]+SoundArray[1]+PhotoArray[1]+SOAP[2]);
+        sb.append(SOAP[0] + SoundArray[0] + PhotoArray[0] + SOAP[1] + SoundArray[1] + PhotoArray[1] + SOAP[2]);
         System.out.println(sb.toString());
         assertNotEquals(null, sb.toString().getBytes());
     }
@@ -1509,68 +1511,70 @@ public class ebsTest {
         String[] Sound = buildAssembly(SoundArray, soundfile);
         String[] Photo = buildAssembly(PhotoArray, photofile);
         StringBuffer sb = new StringBuffer();
-        sb.append(SOAP[0]+Sound[0]+Photo[0]+SOAP[1]+Sound[1]+Photo[1]+SOAP[2]);
+        sb.append(SOAP[0] + Sound[0] + Photo[0] + SOAP[1] + Sound[1] + Photo[1] + SOAP[2]);
         return sb.toString();
-    };
+    }
+
+    ;
 
 
     public String BuildSOAP(String soundfile, String photofile, String[] SoundArr, String[] PhotoArr) throws Exception {
         String[] Sound = buildAssembly(SoundArr, soundfile);
         String[] Photo = buildAssembly(PhotoArr, photofile);
         StringBuffer sb = new StringBuffer();
-        sb.append(SOAP[0]+Sound[0]+Photo[0]+SOAP[1]+Sound[1]+Photo[1]+SOAP[2]);
+        sb.append(SOAP[0] + Sound[0] + Photo[0] + SOAP[1] + Sound[1] + Photo[1] + SOAP[2]);
         return sb.toString();
-    };
+    }
 
-   // @Test
+    ;
+
+    // @Test
     public void letsgen() throws Exception {
         String builded = BuildSOAP("s1.wav", "Russian_passport_photo.jpg");
         assertNotEquals(null, builded);
         System.out.println(builded);
-        ToSendCorrect  = new String(trans.burnTabsAndNs(builded.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(builded.getBytes()));
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
         findMessagebyID(messageId);
 
     }
 
 
-
-
-   // @Test
+    // @Test
     public void letsyntetic() throws Exception {
         String builded = BuildSOAP("lol.wav", "Russian_passport_photo.jpg", SoundArraySyntetic, PhotoArray);
         assertNotEquals(null, builded);
         System.out.println(builded);
-        ToSendCorrect  = new String(trans.burnTabsAndNs(builded.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(builded.getBytes()));
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
         findMessagebyID(messageId);
 
     }
 
-  //  @Test
+    //  @Test
     public void letsagain() throws Exception {
         String builded = BuildSOAP("lol.wav", "3.jpg", SoundArraySyntetic, PhotoArray);
         assertNotEquals(null, builded);
         System.out.println(builded);
-        ToSendCorrect  = new String(trans.burnTabsAndNs(builded.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(builded.getBytes()));
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
 
-        System.out.println("\n"+messageId);
+        System.out.println("\n" + messageId);
 
-      //  Thread.sleep(13000);
-      //  findMessagebyID(messageId);
+        //  Thread.sleep(13000);
+        //  findMessagebyID(messageId);
     }
 
     @Test
@@ -1578,26 +1582,67 @@ public class ebsTest {
         String builded = BuildSOAP("normal.wav", "foto.jpg", SoundArrayNew, PhotoArray);
         assertNotEquals(null, builded);
         System.out.println(builded);
-        ToSendCorrect  = new String(trans.burnTabsAndNs(builded.getBytes()));
+        ToSendCorrect = new String(trans.burnTabsAndNs(builded.getBytes()));
         deps.ebs.setinput(ToSendCorrect.getBytes());
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
 
-        System.out.println("\n"+messageId);
+        System.out.println("\n" + messageId);
 
-      //  Thread.sleep(12000);
-      //  findMessagebyID(messageId);
+        //  Thread.sleep(12000);
+        //  findMessagebyID(messageId);
+    }
+
+    @Test
+    public void soundBioMethadata__() throws IOException {
+        buildEBSMessage();
+        byte[] arr = BinaryMessage.readBytes("GennedMsg.bin");
+        EBSMessage msg = (EBSMessage) BinaryMessage.restored(arr);
+        msg.SoundBLOB.printSelf();
+        String etalon = "<bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.5</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.763</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.344</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.257</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>15.755</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>22.21</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data>";
+        System.out.println(deps.ebs.SoundBioMethadata(msg));
+        assertEquals(etalon, deps.ebs.SoundBioMethadata(msg));
+    }
+
+    @Test
+    public void buildEBSMessage1() throws IOException {
+        double[] tags = new double[]{0.500, 7.763, 8.344, 15.257, 15.755, 22.21};
+        EBSMessage ebsm = deps.ebs.buildEBSMessage(tags, "normal.wav", "foto.jpg", deps.ebs.StockOtherInfo);
+
+        assertEquals(String.valueOf(tags[0]), String.valueOf(ebsm.SoundBLOB.begin09));
+        assertEquals(String.valueOf(tags[1]), String.valueOf(ebsm.SoundBLOB.end09));
+        assertEquals(String.valueOf(tags[2]), String.valueOf(ebsm.SoundBLOB.begin90));
+        assertEquals(String.valueOf(tags[3]), String.valueOf(ebsm.SoundBLOB.end90));
+        assertEquals(String.valueOf(tags[4]), String.valueOf(ebsm.SoundBLOB.begin090));
     }
 
 
     @Test
+    public void saveRestoredEBS() throws IOException {
+        double[] tags = new double[]{0.500, 7.763, 8.344, 15.257, 15.755, 22.21};
+        EBSMessage ebsm = deps.ebs.buildEBSMessage(tags, "normal.wav", "foto.jpg", deps.ebs.StockOtherInfo);
+        BinaryMessage.write(BinaryMessage.savedToBLOB(ebsm), "GennedMsg.bin");
+
+
+        EBSMessage restored = (EBSMessage) BinaryMessage.restored(BinaryMessage.readBytes("GennedMsg.bin"));
+        assertEquals(String.valueOf(restored.SoundBLOB.begin09), String.valueOf(ebsm.SoundBLOB.begin09));
+        assertEquals(String.valueOf(restored.SoundBLOB.end09), String.valueOf(ebsm.SoundBLOB.end09));
+        assertEquals(String.valueOf(restored.SoundBLOB.begin90), String.valueOf(ebsm.SoundBLOB.begin90));
+        assertEquals(String.valueOf(restored.SoundBLOB.end90), String.valueOf(ebsm.SoundBLOB.end90));
+        assertEquals(String.valueOf(restored.SoundBLOB.begin090), String.valueOf(ebsm.SoundBLOB.begin090));
+        assertEquals(String.valueOf(restored.SoundBLOB.end090), String.valueOf(ebsm.SoundBLOB.end090));
+
+        ebsm.SoundBLOB.printSelf();
+        restored.SoundBLOB.printSelf();
+
+    }
+
+    @Test
     public void buildEBSMessage() throws IOException {
-
-
-        double[] tags = new double[]{ 55555555.500,  7.763,  8.344,  15.257,  15.755,  22.21};
-        EBSMessage ebsm =  deps.ebs.buildEBSMessage(tags, "normal.wav", "foto.jpg", deps.ebs.StockOtherInfo );
+        double[] tags = new double[]{0.500, 7.763, 8.344, 15.257, 15.755, 22.21};
+        EBSMessage ebsm = deps.ebs.buildEBSMessage(tags, "normal.wav", "foto.jpg", deps.ebs.StockOtherInfo);
         assertNotEquals(null, BinaryMessage.savedToBLOB(ebsm));
         BinaryMessage.write(BinaryMessage.savedToBLOB(ebsm), "GennedMsg.bin");
     }
@@ -1619,11 +1664,12 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
         String response = new String(deps.ebs.SendSoapSigned());
-        String messageId = deps.ext.extractTagValue(response,":MessageId");
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
 
-        System.out.println("\n"+messageId);
+        System.out.println("\n" + messageId);
 
-      //  Thread.sleep(12000);
-      //  findMessagebyID(messageId);
+        //  Thread.sleep(12000);
+        //  findMessagebyID(messageId);
     }
+
 }
