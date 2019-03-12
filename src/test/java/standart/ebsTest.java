@@ -1591,8 +1591,8 @@ public class ebsTest {
 
         System.out.println("\n" + messageId);
 
-        //  Thread.sleep(12000);
-        //  findMessagebyID(messageId);
+        Thread.sleep(12000);
+        findMessagebyID(messageId);
     }
 
     @Test
@@ -1668,8 +1668,8 @@ public class ebsTest {
 
         System.out.println("\n" + messageId);
 
-        //  Thread.sleep(12000);
-        //  findMessagebyID(messageId);
+        Thread.sleep(12000);
+        findMessagebyID(messageId);
     }
 
 }

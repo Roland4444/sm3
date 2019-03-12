@@ -173,7 +173,7 @@ public class ebs extends Standart {
 
     @Override
     public byte[] generateUnsSOAP(byte[] input) throws Exception {
-        return BuildSOAP(input).getBytes();
+        return transer.burnTabsAndNs(BuildSOAP(input).getBytes());
     }
 
     public String uploadfiletoftp(String filename) throws IOException {
@@ -408,8 +408,6 @@ public class ebs extends Standart {
 
         ebsm.SoundBLOB.begin090 = audiotags[4];
         ebsm.SoundBLOB.end090   = audiotags[5];
-
-
 
         ebsm.PhotoBLOB.filename = photoFile;
         ebsm.PhotoBLOB.fileContent = BinaryMessage.readBytes(photoFile);
