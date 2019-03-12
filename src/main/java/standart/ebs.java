@@ -196,39 +196,7 @@ public class ebs extends Standart {
         return uuid;
     }
 
-    public String AttachSoundBlock(){
-        String stage1 = inj.injectTag(MatrixAttach,"ns2:uuid>", Soundguuid );
-        String stage2 = inj.injectTag(stage1,"ns2:Hash>", currentHashSound );
-        String stage3 = inj.injectTag(stage2, "ns2:SignaturePKCS7>", currentPKSC7Sound);
-        String stage4 = inj.injectTag(stage3, "ns2:MimeType>", "audio/pcm");
-        return stage4;
-    };
 
-
-
-    public String AttachPhotoBlock(){
-        String stage1 = inj.injectTag(MatrixAttach,"ns2:uuid>", Photoguuid );
-        String stage2 = inj.injectTag(stage1,"ns2:Hash>", currentHashPhoto );
-        String stage3 = inj.injectTag(stage2, "ns2:SignaturePKCS7>", currentPKSC7Photo);
-        String stage4 = inj.injectTag(stage3, "ns2:MimeType>", "image/png");
-        return stage4;
-    };
-
-
-    public String genMessagePrimaryContent(EBSMessage msg) throws Exception {
-        String[] block = new String[10];
-        int i = 0;
-        block[i]=inj.injectTag(startroot, "bm:RegistrarMnemonic>", msg.otherinfo.RegMnemonic);
-        block[++i]=inj.injectTag(block[i-1], "bm:EmployeeId>", msg.otherinfo.OperSNILS);
-        block[++i]=inj.injectTag(block[i-1], "bm:Date>", inj.generateTimeStamp());
-        block[++i]=inj.injectTag(block[i-1], "bm:RegistrarMnemonic>", msg.otherinfo.RegMnemonic);
-        block[++i]=inj.injectTag(block[i-1], "bm:RaId>", msg.otherinfo.RA);
-        block[++i]=inj.injectTag(block[i-1], "bm:PersonId>", msg.otherinfo.OID);
-        block[++i]=inj.injectTag(block[i-1], "bm:IdpMnemonic>", msg.otherinfo.Mnemonic);
-//generateSoundBlock(msg)+generatePhotoBlock(msg)+endroot;
-        block[++i]=block[i-1]+generateSoundBlock(msg)+generatePhotoBlock(msg)+endroot;
-        return block[i];
-    }
 //+AttachPhotoBlock()               AttachSoundBlock()
 
     public String[] embedUUIDCortage(String[] input, String FileName) throws IOException {
@@ -241,30 +209,6 @@ public class ebs extends Standart {
         byte[] Arr = Files.readAllBytes(new File(FileName).toPath());
         return new String[]{input[0], inj.injectTag(inj.injectTag(input[1],                "Hash>", Hasher.h_Base64rfc2045(Arr)), ":SignaturePKCS7>", Hasher.base64(this.signer.getmainSign().SMEV3PKSC7(Arr)))};
     }
-
-    public String generateSoundBlock(EBSMessage msg) throws Exception {
-        StringBuffer sb = new StringBuffer();
-        FileInBinary.suspendToDisk(msg.SoundBLOB);
-        String result =uploadfiletoftp(msg.SoundBLOB.filename);
-        if (result.equals(""))
-            return null;
-        Soundguuid = result;
-        sb.append(generateSoundHeader(result));
-        sb.append(SoundBioMethadata(msg));
-        processCryptoGraphy(msg);
-        return sb.toString();
-    }
-
-    public String generateSoundHeader(String guuid){
-        StringBuffer sb = new StringBuffer();
-        sb.append("<bm:Data>\n<bm:Modality>SOUND</bm:Modality>\n" +
-                "            <bm:AttachmentRef attachmentId=\"");
-        sb.append(guuid);
-        sb.append("\"/>");
-        return sb.toString();
-    }
-
-
 
 
     public String SoundBioMethadata(EBSMessage msg){
@@ -313,22 +257,6 @@ public class ebs extends Standart {
         System.out.println("GENERATED::\n"+sb.toString());
         return sb.toString();
     }
-
-
-    public String generatePhotoBlock(EBSMessage msg) throws Exception {
-        StringBuffer sb = new StringBuffer();
-
-        FileInBinary.suspendToDisk(msg.PhotoBLOB);
-        String result =uploadfiletoftp(msg.PhotoBLOB.filename);
-        System.out.println("RESULT=>"+result);
-        if (result.equals(""))
-            return null;
-        Photoguuid = result;
-        processCryptoGraphy(msg);
-        sb.append(inj.injectAttribute(MatrixPhoto, "attachmentId", result));
-        return sb.toString();
-    }
-
 
     public String[] buildAssembly(String[] init, String FileName) throws Exception {
         String[] uploaded = embedUUIDCortage(init, FileName);
@@ -389,11 +317,6 @@ public class ebs extends Standart {
         if (audiotags.length!=6)
             return null;
 
-        System.out.println("TAGS>>>");
-        for (int j=0;j<=5;j++)
-            System.out.println(audiotags[j]);
-
-
         ebsm.PhotoBLOB=new PhotoBundle();
         ebsm.SoundBLOB=new SoundBundle();
 
@@ -412,12 +335,9 @@ public class ebs extends Standart {
         ebsm.PhotoBLOB.filename = photoFile;
         ebsm.PhotoBLOB.fileContent = BinaryMessage.readBytes(photoFile);
 
-
         ebsm.otherinfo = other;
 
         return ebsm;
     }
 
-
-
-    }
+}
