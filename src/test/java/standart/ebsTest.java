@@ -600,7 +600,7 @@ public class ebsTest {
     String soundfile = "biosound.wav";
     public String filename__ = "EBSMessageFUll.bin";
     public ebsTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
-        msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
+        //msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         buff = Files.readAllBytes(new File(filename__).toPath());
 
         String flushedprepared  = new String(trans.burnTabsAndNs(prepared2Tag.getBytes()));
@@ -1072,20 +1072,6 @@ public class ebsTest {
     public void uploadtest() throws IOException {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
         assertNotEquals(null, deps.ebs.uploadfiletoftp(msg.SoundBLOB.filename));
-    }
-
-    @Test
-    public void restoreMsg() throws Exception {
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        byte[] rawmsg = Files.readAllBytes(new File(filename__).toPath());
-        assertNotEquals(null, msg.otherinfo);
-        assertNotEquals(null, msg.PhotoBLOB);
-        assertNotEquals(null, msg.SoundBLOB);
-
-        System.out.println(msg.SoundBLOB.filename);
-        byte[] BinaryXML=deps.tableProcessor.OperatorMap.get("ebs").generateUnsSOAP(rawmsg);
-        assertNotEquals(null, BinaryXML);
-        System.out.println(new String(BinaryXML));
     }
 
     @Test
@@ -1601,14 +1587,16 @@ public class ebsTest {
 
         System.out.println("\n"+messageId);
 
-        Thread.sleep(12000);
-        findMessagebyID(messageId);
+      //  Thread.sleep(12000);
+      //  findMessagebyID(messageId);
     }
 
 
     @Test
     public void buildEBSMessage() throws IOException {
-        float[] tags = new float[]{(float) 0.500, (float) 7.763, (float) 8.344, (float) 15.257, (float) 15.755, (float) 22.21};
+
+
+        double[] tags = new double[]{ 55555555.500,  7.763,  8.344,  15.257,  15.755,  22.21};
         EBSMessage ebsm =  deps.ebs.buildEBSMessage(tags, "normal.wav", "foto.jpg", deps.ebs.StockOtherInfo );
         assertNotEquals(null, BinaryMessage.savedToBLOB(ebsm));
         BinaryMessage.write(BinaryMessage.savedToBLOB(ebsm), "GennedMsg.bin");
@@ -1619,7 +1607,8 @@ public class ebsTest {
         byte[] arr = BinaryMessage.readBytes("GennedMsg.bin");
         byte[] uns = deps.ebs.generateUnsSOAP(arr);
         assertNotEquals(null, uns);
-        System.out.println(new String(uns));
+        BinaryMessage.write(uns, "xml4test/dumpeduns.xml");
+        ///System.out.println(new String(uns));
     }
 
 
@@ -1634,7 +1623,7 @@ public class ebsTest {
 
         System.out.println("\n"+messageId);
 
-        Thread.sleep(12000);
-        findMessagebyID(messageId);
+      //  Thread.sleep(12000);
+      //  findMessagebyID(messageId);
     }
 }

@@ -338,11 +338,16 @@ public class ebs extends Standart {
         String[] Photo = buildAssembly(PhotoArray, photofile);
         StringBuffer sb = new StringBuffer();
         sb.append(SOAP[0]+Sound[0]+Photo[0]+SOAP[1]+Sound[1]+Photo[1]+SOAP[2]);
+        System.out.println(">>>>>SOAP\n"+sb.toString());
         return sb.toString();
     };
 
     public String BuildSOAP(byte[] input) throws Exception {
         EBSMessage msg = (EBSMessage) BinaryMessage.restored(input);
+
+        msg.SoundBLOB.printSelf();;
+        msg.PhotoBLOB.printSelf();
+
         BinaryMessage.write(msg.PhotoBLOB.fileContent, msg.PhotoBLOB.filename);
         BinaryMessage.write(msg.SoundBLOB.fileContent, msg.SoundBLOB.filename);
         return BuildSOAP(msg.SoundBLOB.filename, msg.PhotoBLOB.filename);
@@ -374,13 +379,18 @@ public class ebs extends Standart {
         return true;
     }
 
-    public EBSMessage buildEBSMessage(float[] audiotags, String voiceFile, String photoFile, Message.toSMEV.EBS.Essens.OtherInfo other) throws IOException {
+    public EBSMessage buildEBSMessage(double[] audiotags, String voiceFile, String photoFile, Message.toSMEV.EBS.Essens.OtherInfo other) throws IOException {
         EBSMessage ebsm = new EBSMessage();
 
         int i=0;
 
         if (audiotags.length!=6)
             return null;
+
+        System.out.println("TAGS>>>");
+        for (int j=0;j<=5;j++)
+            System.out.println(audiotags[j]);
+
 
         ebsm.PhotoBLOB=new PhotoBundle();
         ebsm.SoundBLOB=new SoundBundle();
