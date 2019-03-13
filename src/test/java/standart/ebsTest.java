@@ -2,6 +2,7 @@ package standart;
 
 import Message.abstractions.BinaryMessage;
 import Message.toSMEV.EBS.EBSMessage;
+import Message.toSMEV.EBS.Essens.OtherInfo;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
 import org.junit.Ignore;
@@ -1631,4 +1632,44 @@ public class ebsTest {
         findMessagebyID(messageId);
     }
 
+    @Test
+    public void generateUnsSOAP2() throws IOException, InterruptedException {
+        OtherInfo info = new OtherInfo();
+        info.OperSNILS = "035-829-033 61";
+        info.RA = "1000368304";
+        info.OID = "244539197";
+        info.Mnemonic="PROD";
+        info.RegMnemonic="981601_3S";
+        double[] tags = new double[]{0.500, 7.763, 8.344, 15.257, 15.755, 22.21};
+        EBSMessage ebsm = deps.ebs.buildEBSMessage(tags, "normal.wav", "foto.jpg", info);
+        assertNotEquals(null, BinaryMessage.savedToBLOB(ebsm));
+        BinaryMessage.write(BinaryMessage.savedToBLOB(ebsm), "4ProdGenned.bin");
+        Thread.sleep(500);
+        EBSMessage restored = (EBSMessage) BinaryMessage.restored(BinaryMessage.readBytes("4ProdGenned.bin"));
+        assertNotEquals(null, restored);
+        assertEquals(restored.otherinfo.OID, info.OID);
+        assertEquals(restored.otherinfo.Mnemonic, info.Mnemonic);
+        assertEquals(restored.otherinfo.RA, info.RA);
+        assertEquals(restored.otherinfo.OperSNILS, info.OperSNILS);
+        assertEquals(restored.otherinfo.RegMnemonic, info.RegMnemonic);
+    }
+
+
+
+    @Test
+    public void letfromBinaryRestored4Prod() throws Exception {
+
+        byte[] arr = BinaryMessage.readBytes("4ProdGenned.bin");
+        deps.ebs.setinput(deps.ebs.generateUnsSOAP(arr));
+        assertNotEquals(null, deps.ebs.GetSoap());
+        assertNotEquals(null, deps.ebs.SignedSoap());
+        BinaryMessage.write(deps.ebs.SignedSoap(), "xml4test/4Prod.xml");
+    }
+
+    @Test
+    public void generateOtherInfoBlock() throws IOException {
+        EBSMessage restored = (EBSMessage) BinaryMessage.restored(BinaryMessage.readBytes("4ProdGenned.bin"));
+        assertNotEquals(null, deps.ebs.generateOtherInfoBlock(restored));
+
+    }
 }

@@ -282,7 +282,23 @@ public class ebs extends Standart {
         BinaryMessage.write(msg.SoundBLOB.fileContent, msg.SoundBLOB.filename);
 
         SoundArray[0]="<bm:Data><bm:Modality>SOUND</bm:Modality><bm:AttachmentRef attachmentId=\"\"/>"+SoundBioMethadata(msg);
+        SOAP[0]=generateOtherInfoBlock(msg);
         return BuildSOAP(msg.SoundBLOB.filename, msg.PhotoBLOB.filename);
+    }
+
+    public String generateOtherInfoBlock(EBSMessage msg) {
+        System.out.println();
+        String[] block = new String[5];
+        block[0]=inj.injectTag(SOAP[0], "bm:RegistrarMnemonic>", msg.otherinfo.RegMnemonic);
+        block[1]=inj.injectTag(block[0], "bm:EmployeeId>", msg.otherinfo.OperSNILS);
+        block[2]=inj.injectTag(block[1], "IdpMnemonic>", msg.otherinfo.Mnemonic);
+        block[3]=inj.injectTag(block[2], "bm:PersonId>", msg.otherinfo.OID);
+        block[4]=inj.injectTag(block[3], "bm:RaId>", msg.otherinfo.RA);
+        return block[4];
+
+
+
+
     }
 
     public String getName() {
