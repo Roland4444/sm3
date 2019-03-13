@@ -91,6 +91,19 @@ public class Readfile {
 
     }
 
+    public String FTP(){
+        FileInputStream fprop;
+        Properties property = new Properties();
+        try {
+            fprop = new FileInputStream(filename);
+            property.load(fprop);
+            return property.getProperty("FTP");
+        } catch (IOException e) {
+            System.err.println("ОШИБКА: Файл свойств отсуствует!");
+            return null;
+        }
+    }
+
 
 
 }

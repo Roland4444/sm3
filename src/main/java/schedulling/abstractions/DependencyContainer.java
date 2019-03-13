@@ -211,6 +211,14 @@ public class DependencyContainer implements Serializable {
     }
 
 
+    public DependencyContainer(SignerXML signer, boolean isolate){
+        this.xmlsign = signer;
+        System.out.println("MUST specify::\n1)SOAP Address(Transport)\n2) FTP address");
+    };
+
+    public void ignite() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
+        init();
+    }
 
 
 

@@ -1076,11 +1076,7 @@ public class ebsTest {
         assertNotEquals(null, deps.ebs.uploadfiletoftp(msg.SoundBLOB.filename));
     }
 
-    @Test
-    public void generateSoundBlob() throws Exception {
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.generateSoundBlock(msg));
-    }
+
 
     @Test
     public void soundBioMethadata() throws IOException {
@@ -1089,19 +1085,7 @@ public class ebsTest {
         System.out.println(deps.ebs.SoundBioMethadata(msg));
     }
 
-    @Test
-    public void generateSoundHeader() throws IOException {
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.generateSoundHeader("7878778"));
-        System.out.println(deps.ebs.generateSoundHeader("7878778"));
-    }
 
-    @Test
-    public void photoBlock() throws Exception {
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.generatePhotoBlock(msg));
-        System.out.println(deps.ebs.generatePhotoBlock(msg));
-    }
 
     @Test
     public void processCryptoGraphy() throws Exception {
@@ -1113,25 +1097,6 @@ public class ebsTest {
 
         assertNotEquals(null, deps.ebs.currentPKSC7Photo);
         assertNotEquals(null, deps.ebs.currentPKSC7Sound);
-    }
-
-    @Test
-    public void attachSoundBlock() throws Exception {
-        deps.ebs.generateSoundBlock(msg);
-        deps.ebs.generatePhotoBlock(msg);
-
-        assertNotEquals(null, deps.ebs.AttachPhotoBlock());
-        assertNotEquals(null, deps.ebs.AttachSoundBlock());
-        System.out.println(deps.ebs.AttachPhotoBlock());
-        System.out.println(deps.ebs.AttachSoundBlock());
-
-    }
-
-    @Test
-    public void genMessagePrimaryContent() throws Exception {
-        String block = deps.ebs.genMessagePrimaryContent(msg);
-        assertNotEquals(null, block);
-        System.out.println(block);
     }
 
 

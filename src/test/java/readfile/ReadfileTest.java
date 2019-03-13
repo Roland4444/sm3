@@ -35,4 +35,10 @@ public class ReadfileTest {
         Readfile r = new Readfile("sqlset");
         assertEquals("saved/send/", r.saveSendMessagesTo());
     }
+
+    @Test
+    public void FTP() {
+        Readfile r = new Readfile("sqlset");
+        assertEquals("#####", r.FTP());
+    }
 }
