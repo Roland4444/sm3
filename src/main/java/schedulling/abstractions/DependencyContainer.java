@@ -160,6 +160,7 @@ public class DependencyContainer implements Serializable {
         this.inn =  new inn(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
         this.esia = new esia(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
         this.ebs = new ebs(this.sr, this.xmlsign, this.inj,this.transport, this.temp);
+        ebs.ftpAddr = this.ftpAddr;
         this.findesia = new findesia(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
         this.upgradesia = new upgradesia(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
         this.createsia = new createsia(this.sr, this.xmlsign, this.inj, this.transport, this.temp);
@@ -207,6 +208,7 @@ public class DependencyContainer implements Serializable {
     public DependencyContainer(SignerXML signer) throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
         this.transport = new SAAJ("http://smev3-n0.test.gosuslugi.ru:7500/smev/v1.1/ws?wsdl");
         this.xmlsign = signer;
+        this.ftpAddr="smev3-n0.test.gosuslugi.ru";
         init();
     }
 

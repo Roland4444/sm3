@@ -1,6 +1,5 @@
 package standart;
 import Message.abstractions.BinaryMessage;
-import Message.abstractions.FileInBinary;
 import Message.toSMEV.EBS.EBSMessage;
 import Message.toSMEV.EBS.Essens.OtherInfo;
 import Message.toSMEV.EBS.Essens.PhotoBundle;
@@ -33,6 +32,7 @@ public class ebs extends Standart {
     public Message.toSMEV.EBS.Essens.OtherInfo StockOtherInfo;
     private TransXML transer;
     public Gost3411Hash Hasher;
+    public String ftpAddr;
     public String MatrixAttach = "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>image/jpeg</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>";
     public String MatrixAudio = "<bm:BioMetadata><bm:Key></bm:Key><bm:Value>00.000</bm:Value></bm:BioMetadata>";
     public String MatrixPhoto = "<bm:Data><bm:Modality>PHOTO</bm:Modality><bm:AttachmentRef attachmentId=\"\"/></bm:Data>";
@@ -178,8 +178,8 @@ public class ebs extends Standart {
 
     public String uploadfiletoftp(String filename) throws IOException {
         String uuid=gen.generate();
-        String smev3addr = "smev3-n0.test.gosuslugi.ru";
-        util.ftpClient ftpcl = new ftpClient(smev3addr, "anonymous", "smev");
+
+        util.ftpClient ftpcl = new ftpClient(ftpAddr, "anonymous", "smev");
         ftpcl.port = 21;
         System.out.println("port=>>"+ftpcl.port);
         if (ftpcl.open()!=0)

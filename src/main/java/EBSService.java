@@ -57,6 +57,7 @@ public class EBSService extends JAktor {
             deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()), true);
             deps.transport = new SAAJ(r.addressSAAJ());
             deps.ftpAddr=r.FTP();
+            deps.ignite();
             try {
                 sch = new Scheduller(deps);
             } catch (SQLException e) {
@@ -120,6 +121,10 @@ public class EBSService extends JAktor {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (AlgorithmAlreadyRegisteredException e) {
             e.printStackTrace();
         }
     }
