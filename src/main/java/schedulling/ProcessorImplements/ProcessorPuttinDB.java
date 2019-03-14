@@ -2,6 +2,7 @@ package schedulling.ProcessorImplements;
 
 
 import DB.Executor;
+import Message.abstractions.BinaryMessage;
 import logging.MyLogger;
 import schedulling.SQLWrapper;
 import schedulling.abstractions.*;
@@ -175,7 +176,6 @@ public class ProcessorPuttinDB implements Processor {
 
             RequestData info = new RequestData();
             info.Identifier = Identifier;
-            assert (info.Identifier.equals(inputcluster.Id));
             info.GennedId = this.temp.StringContainer;
 
             System.out.println("************************************");
@@ -232,11 +232,16 @@ public class ProcessorPuttinDB implements Processor {
             info.Identifier = Identifier;
             assert (info.Identifier.equals(inputcluster.Id));
             info.GennedId = this.temp.StringContainer;
+            info.OriginalXML=new String(this.mapprocessor.OperatorMap.get(pseudoOperator).SignedSoap());  //<<--adding original signed xml
             System.out.println("************************************");
             System.out.println(this.temp.StringContainer+"quwuwd!");
             System.out.println("************************************");
             info.operator = pseudoOperator;
             String result = new String(this.mapprocessor.OperatorMap.get(info.operator).SendSoapSigned());
+            //****************
+            System.out.println("\n\n\n\n\nWRITE ORIGINAL to >>>>>\n\n\n"+info.GennedId+"SENDED.XML");
+            BinaryMessage.write(info.OriginalXML.getBytes(), info.GennedId+"SENDED.XML");
+            //****************
             if (result.indexOf("requestIsQueued") > 0) {
                 info.Status = this.currentnewId;
                 this.succesquued(info);

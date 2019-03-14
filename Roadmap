@@ -58,10 +58,12 @@ Whats done:
             https://www.bouncycastle.org/docs/pkixdocs1.4/org/bouncycastle/cms/CMSSignedData.html
             https://www.bouncycastle.org/fips-java/BCFipsIn100.pdf
 
-TODO TASKS:
-    send soap builded from bin message;
-    embed normalizer to sound java record; (mono_mebs3)
+        send soap builded from bin message;
 
+
+TODO TASKS:
+    adding pickup
+    embed normalizer to sound java record; (mono_mebs3)
 
 
 

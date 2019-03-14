@@ -125,7 +125,7 @@ public class TransXML {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i<input__.length(); i++){
             char current = input__.charAt(i);
-            if ((current == '\n') || (current == '\t'))
+            if ((current == '\n') || (current == '\t') || (current == '\r'))
                 continue;
             sb.append(current);
         }

@@ -1640,7 +1640,7 @@ public class ebsTest {
         info.OperSNILS = "035-829-033 61";
         info.RA = "1090172758";
         info.OID = "244539197";
-        info.Mnemonic="PROD";
+        info.Mnemonic="ESIA";
         info.RegMnemonic="981601_3S";
         double[] tags = new double[]{0.500, 7.763, 8.344, 15.257, 15.755, 22.21};
         EBSMessage ebsm = deps.ebs.buildEBSMessage(tags, "normal.wav", "foto.jpg", info);
@@ -1660,7 +1660,6 @@ public class ebsTest {
 
     @Test
     public void letfromBinaryRestored4Prod() throws Exception {
-        generateUnsSOAP2();
         byte[] arr = BinaryMessage.readBytes("4ProdGenned.bin");
         deps.ebs.setinput(deps.ebs.generateUnsSOAP(arr));
         assertNotEquals(null, deps.ebs.GetSoap());
@@ -1678,6 +1677,6 @@ public class ebsTest {
         assertEquals("1090172758", deps.ext.extractTagValue(header, "bm:RaId"));
         assertEquals("035-829-033 61", deps.ext.extractTagValue(header, "bm:EmployeeId"));
         assertEquals("244539197", deps.ext.extractTagValue(header, "bm:PersonId"));
-        assertEquals("PROD", deps.ext.extractTagValue(header, "bm:IdpMnemonic"));
+        assertEquals("ESIA", deps.ext.extractTagValue(header, "bm:IdpMnemonic"));
     }
 }
