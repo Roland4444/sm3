@@ -12,6 +12,7 @@ import schedulling.abstractions.DependencyContainer;
 import schedulling.abstractions.Sign;
 import se.roland.Extractor;
 import util.*;
+import util.crypto.FNS2001;
 import util.crypto.Sign2018;
 import util.crypto.TestSign2001;
 import java.io.File;
@@ -585,7 +586,8 @@ public class ebsTest {
             "   </S:Body>\n" +
             "</S:Envelope>";
 
-    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
+   // DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new FNS2001(), new FNS2001()));
     Scheduller sch = new Scheduller(deps);
     Sign signer = new Sign2018();
     public boolean supress = false;
@@ -1636,7 +1638,7 @@ public class ebsTest {
     public void generateUnsSOAP2() throws IOException, InterruptedException {
         OtherInfo info = new OtherInfo();
         info.OperSNILS = "035-829-033 61";
-        info.RA = "1000368304";
+        info.RA = "1090172758";
         info.OID = "244539197";
         info.Mnemonic="PROD";
         info.RegMnemonic="981601_3S";
@@ -1658,7 +1660,7 @@ public class ebsTest {
 
     @Test
     public void letfromBinaryRestored4Prod() throws Exception {
-
+        generateUnsSOAP2();
         byte[] arr = BinaryMessage.readBytes("4ProdGenned.bin");
         deps.ebs.setinput(deps.ebs.generateUnsSOAP(arr));
         assertNotEquals(null, deps.ebs.GetSoap());
@@ -1673,12 +1675,9 @@ public class ebsTest {
         System.out.println(deps.ebs.generateOtherInfoBlock(restored));
         String header = deps.ebs.generateOtherInfoBlock(restored);
         assertEquals("981601_3S", deps.ext.extractTagValue(header, "bm:RegistrarMnemonic"));
-        assertEquals("1000368304", deps.ext.extractTagValue(header, "bm:RaId"));
+        assertEquals("1090172758", deps.ext.extractTagValue(header, "bm:RaId"));
         assertEquals("035-829-033 61", deps.ext.extractTagValue(header, "bm:EmployeeId"));
         assertEquals("244539197", deps.ext.extractTagValue(header, "bm:PersonId"));
         assertEquals("PROD", deps.ext.extractTagValue(header, "bm:IdpMnemonic"));
-
-
-
     }
 }

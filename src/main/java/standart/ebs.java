@@ -295,10 +295,6 @@ public class ebs extends Standart {
         block[3]=inj.injectTag(block[2], "bm:PersonId>", msg.otherinfo.OID);
         block[4]=inj.injectTag(block[3], "bm:RaId>", msg.otherinfo.RA);
         return block[4];
-
-
-
-
     }
 
     public String getName() {
