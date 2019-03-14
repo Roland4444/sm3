@@ -1670,6 +1670,15 @@ public class ebsTest {
     public void generateOtherInfoBlock() throws IOException {
         EBSMessage restored = (EBSMessage) BinaryMessage.restored(BinaryMessage.readBytes("4ProdGenned.bin"));
         assertNotEquals(null, deps.ebs.generateOtherInfoBlock(restored));
+        System.out.println(deps.ebs.generateOtherInfoBlock(restored));
+        String header = deps.ebs.generateOtherInfoBlock(restored);
+        assertEquals("981601_3S", deps.ext.extractTagValue(header, "bm:RegistrarMnemonic"));
+        assertEquals("1000368304", deps.ext.extractTagValue(header, "bm:RaId"));
+        assertEquals("035-829-033 61", deps.ext.extractTagValue(header, "bm:EmployeeId"));
+        assertEquals("244539197", deps.ext.extractTagValue(header, "bm:PersonId"));
+        assertEquals("PROD", deps.ext.extractTagValue(header, "bm:IdpMnemonic"));
+
+
 
     }
 }
