@@ -8,17 +8,22 @@ import schedulling.abstractions.DependencyContainer;
 import util.SignatureProcessorException;
 import util.SignerXML;
 import util.crypto.Sign2018;
+import util.crypto.TestSign2001;
 
 import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
 public class esiaTest {
-    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));    Scheduller sch = new Scheduller(deps);
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));    Scheduller sch = new Scheduller(deps);
     public boolean supress=false;
 
-    public esiaTest() throws ClassNotFoundException, SQLException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, IOException {
+    public esiaTest() throws ClassNotFoundException, SQLException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, IOException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
     }
 
     @Test

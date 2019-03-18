@@ -15,6 +15,7 @@ import schedulling.gettingDataImplem.getData;
 import se.roland.Extractor;
 import util.*;
 import util.crypto.Sign2018;
+import util.crypto.TestSign2001;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +24,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +37,7 @@ import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 
 public class ProcessorPuttinDBTest {
-    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
     Scheduller sch = new Scheduller(deps);
 
     Extractor ext = new Extractor();
@@ -51,7 +56,7 @@ public class ProcessorPuttinDBTest {
     String resulttext="xml4test/resulttext.xml";
 
 
-    public ProcessorPuttinDBTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
+    public ProcessorPuttinDBTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
     }
 
     public void init(){

@@ -48,11 +48,6 @@ public class ebs extends Standart {
             "</bm:BiometricData></bm:RegisterBiometricDataRequest></ns2:MessagePrimaryContent><ns2:RefAttachmentHeaderList>",
             "</ns2:RefAttachmentHeaderList></ns:SenderProvidedRequestData><ns2:CallerInformationSystemSignature></ns2:CallerInformationSystemSignature></ns2:SendRequestRequest></S:Body></S:Envelope>"};
     public ArrayList<String> AudioDict = new ArrayList();
-    public String currentHashSound  =   null;
-    public String currentHashPhoto  =   null;
-    public String currentPKSC7Sound =   null;
-    public String currentPKSC7Photo =   null;
-    public String Soundguuid, Photoguuid;
     public String[] SoundArray = new String[]{"  <bm:Data><bm:Modality>SOUND</bm:Modality>            <bm:AttachmentRef attachmentId=\"\"/><bm:BioMetadata><bm:Key>voice_1_start</bm:Key><bm:Value>0.489</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_end</bm:Key><bm:Value>7.741</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_1_desc</bm:Key><bm:Value>digits_asc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_start</bm:Key><bm:Value>8.765</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_end</bm:Key><bm:Value>15.594</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_2_desc</bm:Key><bm:Value>digits_desc</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_start</bm:Key><bm:Value>16.483</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_end</bm:Key><bm:Value>23.424</bm:Value></bm:BioMetadata><bm:BioMetadata><bm:Key>voice_3_desc</bm:Key><bm:Value>digits_random</bm:Value></bm:BioMetadata></bm:Data>",
             "<ns2:RefAttachmentHeader><ns2:uuid></ns2:uuid><ns2:Hash></ns2:Hash><ns2:MimeType>audio/pcm</ns2:MimeType><ns2:SignaturePKCS7></ns2:SignaturePKCS7></ns2:RefAttachmentHeader>"
     };
@@ -74,32 +69,12 @@ public class ebs extends Standart {
         this.StockOtherInfo.RegMnemonic="981601_3T";
         this.StockOtherInfo.OperSNILS="000-000-600 06";
     }
-    public final String startroot ="<bm:RegisterBiometricDataRequest xmlns:bm=\"urn://x-artefacts-nbp-rtlabs-ru/register/1.2.0\">\n" +
-            "    <bm:RegistrarMnemonic></bm:RegistrarMnemonic>\n" +
-            "    <bm:EmployeeId></bm:EmployeeId>\n" +
-            "    <bm:BiometricData>\n" +
-            "        <bm:Id>ID-1</bm:Id>\n" +
-            "        <bm:Date></bm:Date>\n" +
-            "        <bm:RaId></bm:RaId>\n" +
-            "        <bm:PersonId></bm:PersonId>\n" +
-            "        <bm:IdpMnemonic></bm:IdpMnemonic>      \n" ;
-    public final String endroot =
-            "    </bm:BiometricData>\n" +
-            "</bm:RegisterBiometricDataRequest>";
+
     public byte[] GetSoap() {
         System.out.println("GET SOAP===>");
         System.out.println(new String(InfoToRequest));
         return InfoToRequest;
     }
-
-
-    public void processCryptoGraphy(EBSMessage msg) throws Exception {
-        currentHashPhoto = Hasher.h_Base64rfc2045(msg.PhotoBLOB.fileContent);
-        currentHashSound = Hasher.h_Base64rfc2045(msg.SoundBLOB.fileContent);
-        currentPKSC7Photo = Hasher.base64(this.signer.getmainSign().SMEV3PKSC7(msg.PhotoBLOB.fileContent));////////old>>>this.signer.getmainSign().AdvancedPKSC7(msg.PhotoBLOB.filename));
-        currentPKSC7Sound = Hasher.base64(this.signer.getmainSign().SMEV3PKSC7(msg.SoundBLOB.fileContent));////////this.signer.getmainSign().AdvancedPKSC7(msg.SoundBLOB.filename));
-
-    };
 
 
     public byte[] SignedSoap() throws ClassNotFoundException, SignatureProcessorException, XMLSecurityException,

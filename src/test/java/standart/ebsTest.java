@@ -1062,66 +1062,10 @@ public class ebsTest {
         assertNotEquals(null, deps.gis.GetSoap());
         String response = new String(deps.gis.GetResponseRequestwoFilter());
         return response;
-    }
-
-    ;
-
-
-    @Test
-    public void uploadtest() throws IOException {
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.uploadfiletoftp(msg.SoundBLOB.filename));
-    }
+    };
 
 
 
-    @Test
-    public void soundBioMethadata() throws IOException {
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        assertNotEquals(null, deps.ebs.SoundBioMethadata(msg));
-        System.out.println(deps.ebs.SoundBioMethadata(msg));
-    }
-
-
-
-    @Test
-    public void processCryptoGraphy() throws Exception {
-        deps.ebs.processCryptoGraphy(msg);
-        assertNotEquals(null, deps.ebs.currentHashPhoto);
-        assertNotEquals(null, deps.ebs.currentHashSound);
-        System.out.println(deps.ebs.currentHashPhoto);
-        System.out.println(deps.ebs.currentHashSound);
-
-        assertNotEquals(null, deps.ebs.currentPKSC7Photo);
-        assertNotEquals(null, deps.ebs.currentPKSC7Sound);
-    }
-
-
-    @Test
-    public void generateUnsSOAP() throws Exception {
-        String usnigned = new String(deps.ebs.generateUnsSOAP(buff));
-        assertNotEquals(null, usnigned);
-        System.out.println(usnigned);
-    }
-
-    @Test
-    public void restoredSignandsend() throws Exception {
-
-        String usnigned = new String(deps.ebs.generateUnsSOAP(buff));
-
-        deps.ebs.setinput(usnigned.getBytes());
-        assertNotEquals(null, usnigned);
-        System.out.println(usnigned);
-
-
-        assertNotEquals(null, deps.ebs.GetSoap());
-        assertNotEquals(null, deps.ebs.SignedSoap());
-        String response = new String(deps.ebs.SendSoapSigned());
-        System.out.println(response);
-        if (response.indexOf("fault") > 0) {
-            System.out.println("FAULT");
-        }
-    }
 
     @Test
     public void printAll() {
@@ -1281,13 +1225,7 @@ public class ebsTest {
         }
     }
 
-    @Test
-    public void changeName() throws IOException {
-        EBSMessage msg = (EBSMessage) BinaryMessage.restored(Files.readAllBytes(new File(filename__).toPath()));
-        System.out.println(filename__ + '\n' + msg.SoundBLOB.filename);
-        msg.SoundBLOB.filename = "tested.wav";
-        BinaryMessage.write(BinaryMessage.savedToBLOB(msg), filename__);
-    }
+
 
     @Test
     public void uploadfiletoftpTest() throws IOException {
@@ -1323,8 +1261,8 @@ public class ebsTest {
 
     }
 
-    @Ignore
-    @Test
+
+    //@Test
     public void restoredSignandsendAUTO() throws Exception {
 
         String usnigned = new String(deps.ebs.generateUnsSOAP(buff));
@@ -1539,7 +1477,7 @@ public class ebsTest {
         //  findMessagebyID(messageId);
     }
 
-    @Test
+    //@Test
     public void letourn() throws Exception {
         String builded = BuildSOAP("normal.wav", "foto.jpg", SoundArrayNew, PhotoArray);
         assertNotEquals(null, builded);
@@ -1619,7 +1557,7 @@ public class ebsTest {
     }
 
 
-    @Test
+  //  @Test
     public void letfromBinaryRestored() throws Exception {
         byte[] arr = BinaryMessage.readBytes("GennedMsg.bin");
         deps.ebs.setinput(deps.ebs.generateUnsSOAP(arr));
@@ -1658,7 +1596,7 @@ public class ebsTest {
 
 
 
-    @Test
+   @Test
     public void letfromBinaryRestored4Prod() throws Exception {
         byte[] arr = BinaryMessage.readBytes("4ProdGenned.bin");
         deps.ebs.setinput(deps.ebs.generateUnsSOAP(arr));

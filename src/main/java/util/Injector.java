@@ -145,19 +145,15 @@ public class Injector implements Serializable{
 
 
     public String flushTagData(String input, String TagnameToBurnWithoutEmbraces) throws IOException {
-
-       // String input0=input.replace('\n',' ');
         int startpos=input.indexOf(TagnameToBurnWithoutEmbraces);
         if (startpos <0) return input;
         int stoppos=input.indexOf(TagnameToBurnWithoutEmbraces,startpos+1);
-        while (input.charAt(startpos)!='>'){
-            if (input.charAt(startpos)=='/') {
-                System.out.println("Tag closed");
-                return input;
-            }
-            startpos++;
+        if (stoppos < 0){
+            System.out.println("Tag closed");
+            return input;
         }
-
+        while (input.charAt(startpos)!='>')
+          startpos++;
         startpos++;
         while (input.charAt(stoppos)!='<')
             stoppos--;

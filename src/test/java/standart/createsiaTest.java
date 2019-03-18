@@ -10,8 +10,13 @@ import schedulling.abstractions.DependencyContainer;
 import util.SignatureProcessorException;
 import util.SignerXML;
 import util.crypto.Sign2018;
+import util.crypto.TestSign2001;
 
 import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -19,9 +24,9 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 public class createsiaTest {
-    DependencyContainer deps = new DependencyContainer(new SignerXML(new Sign2018(), new Sign2018()));
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
     ESIACreateInit msg = new ESIACreateInit();
-    public createsiaTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException {
+    public createsiaTest() throws AlgorithmAlreadyRegisteredException, InvalidTransformException, IOException, SQLException, SignatureProcessorException, ClassNotFoundException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
         deps.createsia.ProdModeRoutingEnabled=false;
 
         msg.ID="0000";

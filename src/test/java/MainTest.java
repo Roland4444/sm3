@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 import java.sql.SQLException;
 
 import static java.lang.Thread.sleep;
@@ -18,9 +22,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import util.SignerXML;
 import util.crypto.Sign2018;
+import util.crypto.TestSign2001;
 
 public class MainTest {
-    SignerXML signer = new SignerXML(new Sign2018(), new Sign2018());
+    SignerXML signer = new SignerXML(new TestSign2001(), new TestSign2001());
     DependencyContainer deps = new DependencyContainer(signer);
 
     Scheduller sch = new Scheduller(deps);
@@ -30,7 +35,7 @@ public class MainTest {
     String rawSave0 = "binData/dumpREQS.bin0";
     String SaveInputFlow0 = "binData/dumpINPUTFLOW.bin0";
 
-    public MainTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
+    public MainTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException {
     }
 
    // @Test

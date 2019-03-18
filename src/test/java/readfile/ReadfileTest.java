@@ -39,6 +39,6 @@ public class ReadfileTest {
     @Test
     public void FTP() {
         Readfile r = new Readfile("sqlset");
-        assertEquals("#####", r.FTP());
+        assertEquals("smev3-n0.test.gosuslugi.ru", r.FTP());
     }
 }

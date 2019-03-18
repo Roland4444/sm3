@@ -8,21 +8,26 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 import schedulling.abstractions.Sign;
 import util.crypto.Sign2018;
+import util.crypto.TestSign2001;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 
 import static org.junit.Assert.assertNotEquals;
 
 public class SignTest {
-    Sign signer = new Sign2018();
+    Sign signer = new TestSign2001();
 
     SignerXML n= new SignerXML(signer, signer);
 
-    public SignTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException {
+    public SignTest() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, NoSuchAlgorithmException, CertificateException, NoSuchProviderException, KeyStoreException, IOException {
     }
     @Test
     public void init() throws XMLSecurityException, ClassNotFoundException, SignatureProcessorException, IOException, GeneralSecurityException, TransformerException, ParserConfigurationException, SAXException, OperatorCreationException {
