@@ -587,7 +587,7 @@ public class ebsTest {
             "</S:Envelope>";
 
    // DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
-    DependencyContainer deps = new DependencyContainer(new SignerXML(new FNS2001(), new FNS2001()));
+    DependencyContainer deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()));
     Scheduller sch = new Scheduller(deps);
     Sign signer = new Sign2018();
     public boolean supress = false;
@@ -1007,7 +1007,7 @@ public class ebsTest {
         attaches.add("biophoto");
     }
 
-    @Ignore
+
     @Test
     public void findMessageID() throws Exception {
         String result = getrespreq();
@@ -1020,7 +1020,7 @@ public class ebsTest {
                 deps.gis.Ack(id);
 
             }
-            if ((originalid != null) && originalid.equals("3b03ad1c-35da-11e9-b534-cb20987c92fb"))
+            if ((originalid != null) && originalid.equals("18bb857b-4ecf-11e9-ae6f-6f1d1d59f7b9"))
                 return;
             result = getrespreq();
             //   Thread.sleep(0);
@@ -1459,7 +1459,7 @@ public class ebsTest {
 
     }
 
-    //  @Test
+    @Test
     public void letsagain() throws Exception {
         String builded = BuildSOAP("lol.wav", "3.jpg", SoundArraySyntetic, PhotoArray);
         assertNotEquals(null, builded);
@@ -1477,7 +1477,7 @@ public class ebsTest {
         //  findMessagebyID(messageId);
     }
 
-    //@Test
+  //  @Test
     public void letourn() throws Exception {
         String builded = BuildSOAP("normal.wav", "foto.jpg", SoundArrayNew, PhotoArray);
         assertNotEquals(null, builded);

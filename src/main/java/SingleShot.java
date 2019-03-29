@@ -13,6 +13,8 @@ import transport.SAAJ;
 import util.SignatureProcessorException;
 import util.SignerXML;
 import util.crypto.FNS2001;
+import util.crypto.TestSign2001;
+
 import java.io.IOException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -54,7 +56,7 @@ public class SingleShot extends JAktor {
 
         Readfile r = new Readfile("sqlset");
         try {
-            deps = new DependencyContainer(new SignerXML(new FNS2001(), new FNS2001()), true);
+            deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()), true);
             deps.transport = new SAAJ(r.addressSAAJ());
             deps.ftpAddr=r.FTP();
             deps.ignite();
@@ -156,11 +158,7 @@ public class SingleShot extends JAktor {
             msg.addressToReply="http://127.0.0.1:12121/";
             //     for (int i=0; i<10; i++){
             msg.ID=Integer.toString(0);
-            try {
-                sender.send(BinaryMessage.savedToBLOB(msg),"http://127.0.0.1:20005/");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //       sender.send(BinaryMessage.savedToBLOB(msg),"http://127.0.0.1:20005/");//<==8!!!!
         }
     }
 }
