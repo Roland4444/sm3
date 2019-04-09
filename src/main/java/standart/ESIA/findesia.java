@@ -180,7 +180,7 @@ public class findesia extends Standart {
         massive[7] = inj.injectTag(massive[6], "tns:mobile>", msg.MobileNumber);
         massive[8] = inj.injectTag(massive[7], "tns:snils>", msg.SNILS);
         if (this.ProdModeRoutingEnabled)
-            massive[9] = inj.injectTag(massive[8], "tns:RoutingCode>", "PROD");
+            massive[9] = inj.injectTag(massive[8], "tns:RoutingCode>", "ESIA");
         else
             massive[9] = inj.injectTag(massive[8], "tns:RoutingCode>", "TESIA");
         return massive[9];
