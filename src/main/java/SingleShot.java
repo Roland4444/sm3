@@ -1,6 +1,7 @@
 import Message.abstractions.BinaryMessage;
 import Message.toSMEV.MessageSMEV;
 import crypto.Gost3411Hash;
+import essent.J8Client;
 import impl.JAktor;
 import impl.echoJAKtor;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
@@ -77,6 +78,8 @@ public class SingleShot extends JAktor {
             SingleShot ebss = new SingleShot(deps);
             ebss.setAddress("http://127.0.0.1:20005/");
             ebss.spawn();
+
+            deps.ebsResult.setHttpclient((J8Client) ebss.client);
 
             Integer delay = Integer.valueOf(r.delay());
             int i = 0;
@@ -158,7 +161,7 @@ public class SingleShot extends JAktor {
             msg.addressToReply="http://127.0.0.1:12121/";
             //     for (int i=0; i<10; i++){
             msg.ID=Integer.toString(0);
-            //       sender.send(BinaryMessage.savedToBLOB(msg),"http://127.0.0.1:20005/");//<==8!!!!
+            //       sender.send(BinaryMessage.savedToBLOB(msg),"http://127.0.0.1:20005/");//<==8!!!!а
         }
     }
 }
