@@ -343,5 +343,31 @@ public class findesiaTest {
         assertNotEquals(null, deps.findesia.emptySOAP);
         System.out.println(deps.findesia.emptySOAP);
     }
+
+    @Test
+    public void buildontheFlyAndSend() throws Exception {
+        ESIAFindMessageInitial msg = new ESIAFindMessageInitial();
+        deps.findesia.ProdModeRoutingEnabled=false;
+        msg.OperatorSnils="000-000-600 06";
+        msg.MobileNumber="+7(964)8827042";
+        msg.MiddleName="ТАндреевна";
+        msg.Name="ТАнастасия";
+        msg.Surname="ТЩипакина";
+        msg.Passnumber="525129";
+        msg.Passseria="1213";
+        msg.Ra="1000300890";
+        msg.ID="12";
+        deps.findesia.setinput(deps.findesia.generateUnsSOAP(BinaryMessage.savedToBLOB(msg)));
+        assertNotEquals(null, deps.findesia.GetSoap());
+        assertNotEquals(null, deps.findesia.SignedSoap());
+        String response = new String(deps.findesia.SendSoapSigned());
+        String messageId = deps.ext.extractTagValue(response, ":MessageId");
+        findMessagebyID(messageId);
+    }
+
+    @Test
+    public void findanswer() throws Exception {
+       findMessagebyID("Z7557975-5ac9-11e9-aadf-351d468f44fe");
+    }
 }
 

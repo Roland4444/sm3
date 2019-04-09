@@ -51,7 +51,7 @@ public class findesia extends Standart {
             "        <ns2:number></ns2:number>\n" +
             "    </tns:doc>\n" +
             "<tns:mobile></tns:mobile>\n"+
-            "<tns:snils></tns:snils>\n"+
+        //    "<tns:snils></tns:snils>\n"+
             "</tns:ESIAFindAccountRequest>\n";
 
     public findesia(StreamResult sr, SignerXML sihner, Injector inj, Transport transport, TempDataContainer temp){
@@ -67,7 +67,7 @@ public class findesia extends Standart {
             IOException, CertificateException, NoSuchAlgorithmException, TransformerException,
             ParserConfigurationException, UnrecoverableEntryException,
             NoSuchProviderException, SAXException, KeyStoreException {
-        return signer.signconsumerns4(signer.getmainSign(), GetSoap());
+        return signer.signcallerns2(signer.getmainSign(), GetSoap());
     };
 
     public byte[] GetResponseRequest() throws Exception {
@@ -182,7 +182,7 @@ public class findesia extends Standart {
         if (this.ProdModeRoutingEnabled)
             massive[9] = inj.injectTag(massive[8], "tns:RoutingCode>", "PROD");
         else
-            massive[9] = inj.injectTag(massive[8], "tns:RoutingCode>", "DEV");
+            massive[9] = inj.injectTag(massive[8], "tns:RoutingCode>", "TESIA");
         return massive[9];
     }
 
