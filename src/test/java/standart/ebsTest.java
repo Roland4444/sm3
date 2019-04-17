@@ -1563,13 +1563,15 @@ public class ebsTest {
         deps.ebs.setinput(deps.ebs.generateUnsSOAP(arr));
         assertNotEquals(null, deps.ebs.GetSoap());
         assertNotEquals(null, deps.ebs.SignedSoap());
+       // System.out.println(new String(deps.ebs.SignedSoap()));
+        BinaryMessage.write(deps.ebs.SignedSoap(), "xml4test/g.xml");
+        ///*
         String response = new String(deps.ebs.SendSoapSigned());
         String messageId = deps.ext.extractTagValue(response, ":MessageId");
-
         System.out.println("\n" + messageId);
-
         Thread.sleep(12000);
         findMessagebyID(messageId);
+        //*/
     }
 
     @Test
