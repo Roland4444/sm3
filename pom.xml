@@ -15,7 +15,7 @@
         <dependency>
             <groupId>eu.roland</groupId>
             <artifactId>JAKtor</artifactId>
-            <version>1.5-ROLLBACK</version>
+            <version>1.8-ROLLBACK</version>
         </dependency>
         <dependency>
             <groupId>se.roland</groupId>
@@ -187,4 +187,4 @@
             </plugin>
             </plugins>
     </build>
-    </project>
+</project>

@@ -27,7 +27,7 @@ public class NetworkLoggerTest {
         String pathtoLog = "logs/binary/";
         NetworkLogger nl = new NetworkLogger(pathtoLog);
         nl.setFreezer(new Freezer());
-    //    nl.watch();
+       // nl.watch();
     }
 
     @Test

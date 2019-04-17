@@ -31,7 +31,7 @@ public class findesiaResult implements ResultProcess {
         String result = Result.ResponsedXML;
         ESIAFindMessageResult Rmsg = new ESIAFindMessageResult();
         Rmsg.oid=Ext.extractTagValue(result, "oid");
-        Rmsg.trusted=Ext.extractTagValue(result, "tns:stu");
+        Rmsg.trusted=Ext.extractTagValue(result, "stu");
         Rmsg.ID=inputFlow.get(Result.Identifier).Id;
         Rmsg.BioStu=Ext.extractTagValue(result, "biomStu");
         System.out.println(Ext.extractTagValue(result, "biomStu"));

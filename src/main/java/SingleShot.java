@@ -83,8 +83,6 @@ public class SingleShot extends JAktor {
 
             Integer delay = Integer.valueOf(r.delay());
             int i = 0;
-            ClientMock cmck = new ClientMock();
-            cmck.run();
             while (true) {
                 try {
                     System.out.println("\n\n\nSENDING ALL ==>");
@@ -136,32 +134,5 @@ public class SingleShot extends JAktor {
         }
     }
 
-    static class ClientMock extends Thread{
-        public void run(){
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            echoJAKtor sender = new echoJAKtor();
-            sender.setAddress("http://127.0.0.1:12121/");
-            try {
-                sender.spawn();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            MessageSMEV msg = new MessageSMEV();
-            msg.ID="0000";
-            msg.pseudo="ebs";
-            try {
-                msg.DataToWork =BinaryMessage.readBytes("4ProdGenned.bin");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            msg.addressToReply="http://127.0.0.1:12121/";
-            //     for (int i=0; i<10; i++){
-            msg.ID=Integer.toString(0);
-            //       sender.send(BinaryMessage.savedToBLOB(msg),"http://127.0.0.1:20005/");//<==8!!!!а
-        }
-    }
+
 }
