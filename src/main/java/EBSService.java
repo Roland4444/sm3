@@ -1,6 +1,7 @@
 import Message.abstractions.BinaryMessage;
 import Message.toSMEV.MessageSMEV;
 import crypto.Gost3411Hash;
+import essent.J8Client;
 import impl.JAktor;
 import org.apache.xml.security.exceptions.AlgorithmAlreadyRegisteredException;
 import org.apache.xml.security.transforms.InvalidTransformException;
@@ -11,7 +12,6 @@ import schedulling.abstractions.InputDataBlock;
 import transport.SAAJ;
 import util.SignatureProcessorException;
 import util.SignerXML;
-import util.crypto.Sign2018;
 import util.crypto.TestSign2001;
 
 import java.io.IOException;
@@ -52,6 +52,7 @@ public class EBSService extends JAktor {
     static Scheduller sch;
 
     public static void main(String[] args) throws InterruptedException {
+
         Readfile r = new Readfile("sqlset");
         try {
             deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()), true);
@@ -75,6 +76,8 @@ public class EBSService extends JAktor {
             EBSService ebss = new EBSService(deps);
             ebss.setAddress("http://127.0.0.1:20005/");
             ebss.spawn();
+
+            deps.ebsResult.setHttpclient((J8Client) ebss.client);
 
             Integer delay = Integer.valueOf(r.delay());
             int i = 0;
@@ -128,4 +131,6 @@ public class EBSService extends JAktor {
             e.printStackTrace();
         }
     }
+
+
 }

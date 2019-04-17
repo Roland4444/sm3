@@ -1557,7 +1557,7 @@ public class ebsTest {
     }
 
 
-  //  @Test
+    @Test
     public void letfromBinaryRestored() throws Exception {
         byte[] arr = BinaryMessage.readBytes("GennedMsg.bin");
         deps.ebs.setinput(deps.ebs.generateUnsSOAP(arr));

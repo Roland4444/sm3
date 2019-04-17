@@ -144,7 +144,7 @@
                 </descriptorRefs>
             <archive>
             <manifest>
-                <mainClass>SingleShot</mainClass>
+                <mainClass>EBSService</mainClass>
             </manifest>
             </archive>
             </configuration>
@@ -170,7 +170,7 @@
                                     <configuration>
                                         <transformers>
                                             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                                <mainClass>SingleShot</mainClass>
+                                                <mainClass>EBSService</mainClass>
                                             </transformer>
                                         </transformers>
                                     </configuration>
