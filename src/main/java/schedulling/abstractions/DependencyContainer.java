@@ -31,7 +31,6 @@ import java.util.HashMap;
 import schedulling.ResultsProcessors.*;
 
 public class DependencyContainer implements Serializable {
-    public Client HttpClient;
     public Readfile r;
     public String ftpAddr;
     public String pathtoLog="";
@@ -131,7 +130,6 @@ public class DependencyContainer implements Serializable {
 
 
     private void init() throws ClassNotFoundException, SignatureProcessorException, InvalidTransformException, AlgorithmAlreadyRegisteredException, SQLException, IOException {
-        HttpClient = new J8Client();
         initDataSource();
         this.r = new Readfile("sqlset");
         pathtoLog = r.binaryLogPath();
@@ -180,7 +178,6 @@ public class DependencyContainer implements Serializable {
         this.passResult.setExtractor(this.ext);
         this.ebsResult = new ebsResult();
         this.findesiaResult = new findesiaResult();
-        this.findesiaResult.setPost(this.HttpClient);
         this.findesiaResult.setExtractor(this.ext);
 
 

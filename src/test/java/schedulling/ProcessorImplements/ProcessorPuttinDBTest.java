@@ -31,6 +31,8 @@ import java.security.cert.CertificateException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import static java.lang.Thread.sleep;
@@ -534,6 +536,19 @@ public class ProcessorPuttinDBTest {
         }
         assertEquals(0, sch.deps.inputDataFlow.pool.size());
 
+    }
+
+    @Test
+    public void TestMapBehavior() {
+        Map<String, Boolean> oper = new HashMap<>();
+        int i =0;
+        String key = "ebs";
+        oper.put(key, true);
+        oper.put(key, false);
+        i++;
+        assertEquals(1, i);
+        assertEquals(1, oper.size());
+        assertEquals(false, oper.get(key));
     }
 
 

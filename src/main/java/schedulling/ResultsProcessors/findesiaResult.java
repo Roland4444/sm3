@@ -3,6 +3,7 @@ package schedulling.ResultsProcessors;
 import Message.abstractions.BinaryMessage;
 import Message.toSMEV.ESIAFind.ESIAFindMessageResult;
 import essent.Client;
+import essent.J8Client;
 import schedulling.abstractions.InputDataContainer;
 import schedulling.abstractions.OutDataPerform.ResultProcess;
 import schedulling.abstractions.RequestData;
@@ -11,11 +12,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class findesiaResult implements ResultProcess {
-    private Client HttpClient;
+    J8Client httpclient;
     private Extractor Ext;
-    public void setPost(Client postman){
-        this.HttpClient =postman;
+    public void setHttpclient(J8Client httpclient){
+        this.httpclient = httpclient;
     }
+
     public void setExtractor(Extractor ext){
         this.Ext=ext;
     }
@@ -36,7 +38,7 @@ public class findesiaResult implements ResultProcess {
         Rmsg.BioStu=Ext.extractTagValue(result, "biomStu");
         System.out.println(Ext.extractTagValue(result, "biomStu"));
         System.out.println("Sending asyncronously! to "+inputFlow.get(Result.Identifier).addressToReply);
-        HttpClient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
+        httpclient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
         System.out.println("Cleaning UP UUID=>"+ Result.Identifier);
         inputFlow.destroy(Result.Identifier);
     }
@@ -50,7 +52,7 @@ public class findesiaResult implements ResultProcess {
         Rmsg.trusted=Ext.extractTagValue(result, "tns:stu");
         Rmsg.ID=inputFlow.get(Result.Identifier).Id;
         System.out.println("Sending asyncronously! to "+inputFlow.get(Result.Identifier).addressToReply);
-        HttpClient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
+        httpclient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
         System.out.println("Cleaning UP UUID=>"+ Result.Identifier);
         inputFlow.destroy(Result.Identifier);
     }
@@ -64,7 +66,7 @@ public class findesiaResult implements ResultProcess {
         Rmsg.trusted="bad";
         Rmsg.ID=inputFlow.get(Result.Identifier).Id;
         System.out.println("Sending asyncronously! to "+inputFlow.get(Result.Identifier).addressToReply);
-        HttpClient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
+        httpclient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
         System.out.println("Cleaning UP UUID=>"+ Result.Identifier);
         inputFlow.destroy(Result.Identifier);
     }
@@ -77,7 +79,7 @@ public class findesiaResult implements ResultProcess {
         Rmsg.trusted="bad";
         Rmsg.ID=inputFlow.get(Result.Identifier).Id;
         System.out.println("Sending asyncronously! to "+inputFlow.get(Result.Identifier).addressToReply);
-        HttpClient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
+        httpclient.send(BinaryMessage.savedToBLOB(Rmsg), inputFlow.get(Result.Identifier).addressToReply);
         System.out.println("Cleaning UP UUID=>"+ Result.Identifier);
         inputFlow.destroy(Result.Identifier);
     }

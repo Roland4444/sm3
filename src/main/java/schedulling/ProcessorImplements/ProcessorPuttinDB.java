@@ -17,8 +17,10 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import static java.lang.Thread.sleep;
 
@@ -441,5 +443,40 @@ public class ProcessorPuttinDB implements Processor {
 
         //Write the content using put methods
         buffer.put(this.freezer.saveInputFlow(this.inputFlow));
+    }
+
+    public Map<String, Boolean> calculatesInputOpers(){
+        Map<String, Boolean> opers = new HashMap<>();
+        for (int i = 0; i< inputFlow.pool.size(); i++)
+            opers.put(inputFlow.pool.get(i).operator, true);
+        return opers;
+    }
+
+    public void getResponsesIntelligent() throws Exception {
+        for (Map.Entry<String, Boolean> entry : calculatesInputOpers().entrySet()) {
+            System.out.println("FOREACHING INPUT FLOW(<GETTING FILTERED RESPONCES>)");
+            String activeOperator = entry.getKey();
+            System.out.println("\n\n\n\nGet responces!!!!\n\n\n\n");
+            System.out.println("OPERATOR >>"+activeOperator);
+            String resss = new String(this.mapprocessor.OperatorMap.get(activeOperator).GetResponceFilteredCompiled());
+            while (!resss.equals(this.stopperGetResponce)) {
+                String originalMessageID = this.ext.extractTagValue(resss, ":OriginalMessageId");
+                System.out.println( "Original ID\n"+ originalMessageID+"\n" );
+                String MessageID = this.ext.extractTagValue(resss, ":MessageId");
+                if (MessageID == null)
+                    return;
+                this.mylogger.logToBuffer("getting data @MessageIDReq" + originalMessageID);
+                if (this.dbReqs.get(originalMessageID, false) != null){
+                    this.dbReqs.get(originalMessageID,  false).ResponsedXML = resss;
+                    System.out.println("\n\n\n\n\n\nWRITING RESPONCE XML!\n\n\n\n\n");
+                    this.mylogger.logToBuffer("SIZE!"+originalMessageID,  String.valueOf(resss.length()));
+                }
+                System.out.println("MAKING ACK TO"+MessageID+"Oper=>"+this.pseudoStarterOperator+"\n\n\n");
+                this.mapprocessor.OperatorMap.get(this.pseudoStarterOperator).Ack(MessageID);
+                this.mylogger.logToBuffer("ack",  MessageID);
+                resss = new String( this.mapprocessor.OperatorMap.get(this.pseudoStarterOperator).GetResponceRequestCompiled());
+            }
+        }
+        System.out.println("\n\n###########REQUESTS COMPLETES!########");
     }
 }
