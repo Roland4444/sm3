@@ -7,7 +7,9 @@ import schedulling.abstractions.InputDataContainer;
 import schedulling.abstractions.OutDataPerform.ResultProcess;
 import schedulling.abstractions.RequestData;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 
 public class ebsResult implements ResultProcess {
@@ -22,8 +24,10 @@ public class ebsResult implements ResultProcess {
 
     @Override
     public void perform(RequestData input, InputDataContainer inputFlow) throws SQLException, IOException {
+        String dir = "xmls";
         System.out.println("\n\n\nWRITING TO =>>>>"+input.Identifier+".XML");
-        BinaryMessage.write(input.ResponsedXML.getBytes(), input.Identifier+".XML");
+        (new File(dir)).mkdirs();
+        BinaryMessage.write(input.ResponsedXML.getBytes(), dir+File.separator+input.Identifier+".XML");
 
         if (input.ResponsedXML.indexOf("<Code>SUCCESS</Code>")>0) {
             System.out.println("\n\nREGISTER SUCCESS\n\n");

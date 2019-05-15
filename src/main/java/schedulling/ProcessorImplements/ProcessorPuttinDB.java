@@ -241,8 +241,11 @@ public class ProcessorPuttinDB implements Processor {
             info.operator = pseudoOperator;
             String result = new String(this.mapprocessor.OperatorMap.get(info.operator).SendSoapSigned());
             //****************
+            String dir = "xmls";
+            (new File(dir)).mkdirs();
+            BinaryMessage.write(info.OriginalXML.getBytes(), dir+File.separator+info.GennedId+"SENDED.XML");
             System.out.println("\n\n\n\n\nWRITE ORIGINAL to >>>>>\n\n\n"+info.GennedId+"SENDED.XML");
-            BinaryMessage.write(info.OriginalXML.getBytes(), info.GennedId+"SENDED.XML");
+
             //****************
             if (result.indexOf("requestIsQueued") > 0) {
                 info.Status = this.currentnewId;
@@ -458,7 +461,7 @@ public class ProcessorPuttinDB implements Processor {
             String activeOperator = entry.getKey();
             System.out.println("\n\n\n\nGet responces!!!!\n\n\n\n");
             System.out.println("OPERATOR >>"+activeOperator);
-            String resss = new String(this.mapprocessor.OperatorMap.get(activeOperator).GetResponceFilteredCompiled());
+            String resss = new String(this.mapprocessor.OperatorMap.get(activeOperator).GetResponceRequestCompiled());
             while (!resss.equals(this.stopperGetResponce)) {
                 String originalMessageID = this.ext.extractTagValue(resss, ":OriginalMessageId");
                 System.out.println( "Original ID\n"+ originalMessageID+"\n" );

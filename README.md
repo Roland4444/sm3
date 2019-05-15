@@ -48,6 +48,8 @@ EBS  клиент и сервер стоят на одной машине
 <ns2:MessagePrimaryContent>
 
 
+По фильтру ==> Namespace URI	>>urn://ru/mvd/sovm/p002/1.0.0  <<example @ https://smev3.gosuslugi.ru/portal/inquirytype_one.jsp?id=66003&zone=fed&page=1&dTest=true
+
 
 Программа работает в гибком (настраиваем бесконечном цикле)
 
