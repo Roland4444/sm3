@@ -461,7 +461,7 @@ public class ProcessorPuttinDB implements Processor {
             String activeOperator = entry.getKey();
             System.out.println("\n\n\n\nGet responces!!!!\n\n\n\n");
             System.out.println("OPERATOR >>"+activeOperator);
-            String resss = new String(this.mapprocessor.OperatorMap.get(activeOperator).GetResponceRequestCompiled());
+            String resss = new String(this.mapprocessor.OperatorMap.get(activeOperator).GetResponceFilteredCompiled());
             while (!resss.equals(this.stopperGetResponce)) {
                 String originalMessageID = this.ext.extractTagValue(resss, ":OriginalMessageId");
                 System.out.println( "Original ID\n"+ originalMessageID+"\n" );

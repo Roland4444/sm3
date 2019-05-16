@@ -110,7 +110,24 @@ public class findesia extends Standart {
     }
 
     public byte[] GetResponceFilteredCompiled() throws Exception{
-        return GetResponceRequestCompiled();
+        String prepared="\uFEFF<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                "  <soapenv:Header />\n" +
+                "  <soapenv:Body xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\">\n" +
+                "    <ns:GetResponseRequest>\n" +
+                "      <ns2:MessageTypeSelector xmlns=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ns2=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1\" Id=\"SIGNED_BY_CALLER\">\n" +
+                "        <ns2:NamespaceURI>urn://mincomsvyaz/esia/reg_service/find_account/1.4.1</ns2:NamespaceURI>\n" +
+                "        <ns2:RootElementLocalName>request</ns2:RootElementLocalName>\n" +
+                "        <ns2:Timestamp></ns2:Timestamp>\n" +
+                "      </ns2:MessageTypeSelector>\n" +
+                "      <ns4:CallerInformationSystemSignature xmlns:ns4=\"urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n" +
+                "      </ns4:CallerInformationSystemSignature>\n" +
+                "    </ns:GetResponseRequest>\n" +
+                "  </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
+        this.setinput(prepared.getBytes());
+        InputStream in = new ByteArrayInputStream(signer.signcallerns4bycaller(signer.getmainSign(), GetSoap()));
+        StreamSource input = new StreamSource(in);
+        return this.transport.send(input, SupressConsole);
     }
 
     public byte[] Ack(String id) throws Exception {

@@ -76,7 +76,7 @@ public class EBSService extends JAktor {
             EBSService ebss = new EBSService(deps);
             ebss.setAddress("http://127.0.0.1:20005/");
             ebss.spawn();
-
+            deps.findesiaResult.setHttpclient((J8Client) ebss.client);
             deps.ebsResult.setHttpclient((J8Client) ebss.client);
 
 
