@@ -39,6 +39,7 @@ public class ebsResult implements ResultProcess {
         System.out.println("\n\nREGISTER FAILED\n\n");
         ResponceMessage resp = new ResponceMessage(1, input.Identifier);
         httpclient.send(BinaryMessage.savedToBLOB(resp), inputFlow.get(input.Identifier).addressToReply);
+        inputFlow.destroy(input.Identifier);
 
     }
 }

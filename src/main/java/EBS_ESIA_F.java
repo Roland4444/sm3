@@ -12,6 +12,7 @@ import schedulling.abstractions.InputDataBlock;
 import transport.SAAJ;
 import util.SignatureProcessorException;
 import util.SignerXML;
+import util.crypto.EBSReal;
 import util.crypto.TestSign2001;
 
 import java.io.IOException;
@@ -54,7 +55,8 @@ public class EBS_ESIA_F extends JAktor {
     public static void main(String[] args) throws InterruptedException {
         Readfile r = new Readfile("sqlset");
         try {
-            deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()), true);
+            //deps = new DependencyContainer(new SignerXML(new TestSign2001(), new TestSign2001()), true);
+            deps = new DependencyContainer(new SignerXML(new EBSReal(), new EBSReal()), true);
             deps.transport = new SAAJ(r.addressSAAJ());
             deps.ftpAddr=r.FTP();
             deps.ignite();
